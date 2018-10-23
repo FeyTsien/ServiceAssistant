@@ -1,0 +1,55 @@
+apply plugin: 'com.android.application'
+
+android {
+
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    defaultConfig {
+        applicationId rootProject.ext.android.applicationId
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //support
+    implementation rootProject.ext.support["appcompat-v7"]
+    implementation rootProject.ext.support["design"]
+    testImplementation rootProject.ext.support["junit"]
+    implementation rootProject.ext.support["constraint-layout"]
+    implementation 'com.android.support:support-vector-drawable:27.1.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //==================================以下为个人增配======================================
+    //    配置方法数超过 64K 的应用
+    implementation 'com.android.support:multidex:1.0.0'
+    api rootProject.ext.dependencies["gson"]
+    api rootProject.ext.dependencies["rxjava"]
+    api rootProject.ext.dependencies["rxandroid"]
+    api rootProject.ext.dependencies["retrofit"]
+    //    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    api rootProject.ext.dependencies["adapter-rxjava"]
+    api 'com.squareup.retrofit2:converter-scalars:2.0.2'
+    api rootProject.ext.dependencies["okhttp"]
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    //Android超强util库  -- 算不上超强,跟apache-commons相比差太远
+    api 'com.blankj:utilcode:latest.release'
+    //一个 Android 系统的 View 注入框架，能够通过『注解』的方式来绑定 View 的属性或方法
+    api 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    implementation project(':my_widget')
+}

@@ -1,0 +1,36 @@
+<resources>
+
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item> <!--所有本APP内的控件颜色-->
+    </style>
+
+    <!-- Base application theme. -->
+    <!--<style name="BaseAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+    <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+    <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+    <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <!--<item name="colorAccent">@color/colorAccent</item>-->
+    <!--</style>-->
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--启动页style-->
+    <style name="SplashTheme" parent="BaseAppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <!-- 是否填充慢屏幕，引用android:windowNoTitle 的值 ?android:windowNoTitle，取决于android:windowNoTitle的值-->
+        <item name="android:windowFullscreen">?android:windowNoTitle</item>
+    </style>
+
+</resources>
+
