@@ -1,4 +1,4 @@
-package com.dt.serviceassistant.ui.fragment.buy;
+package com.dt.serviceassistant.ui.fragment.shipments;
 
 
 import android.os.Bundle;
@@ -12,15 +12,22 @@ import com.dt.serviceassistant.mvp.MVPBaseFragment;
 
 
 /**
- * MVPPlugin
- *  邮箱 784787081@qq.com
+ * ================
+ * ===== 发货 =====
+ * ================
  */
 
-public class BuyFragment extends MVPBaseFragment<BuyContract.View, BuyPresenter> implements BuyContract.View {
+public class ShipmentsFragment extends MVPBaseFragment<ShipmentsContract.View, ShipmentsPresenter> implements ShipmentsContract.View {
 
     private String TAG = getClass().getSimpleName();
 
     private View mRootView;
+
+
+    public static ShipmentsFragment newInstance() {
+        return new ShipmentsFragment();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +36,7 @@ public class BuyFragment extends MVPBaseFragment<BuyContract.View, BuyPresenter>
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_buy, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_shipments, container, false);
         return mRootView;
     }
 }

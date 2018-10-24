@@ -1,4 +1,4 @@
-package com.dt.serviceassistant.ui.fragment.configuration;
+package com.dt.serviceassistant.ui.fragment.shipments;
 
 import com.dt.serviceassistant.mvp.BasePresenter;
 import com.dt.serviceassistant.mvp.BaseView;
@@ -8,7 +8,7 @@ import com.dt.serviceassistant.mvp.BaseView;
  *  邮箱 784787081@qq.com
  */
 
-public class ConfigurationContract {
+public class ShipmentsContract {
     interface View extends BaseView {
         
     }

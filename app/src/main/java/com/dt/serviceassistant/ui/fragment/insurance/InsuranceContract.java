@@ -1,4 +1,4 @@
-package com.dt.serviceassistant.ui.fragment.notice;
+package com.dt.serviceassistant.ui.fragment.insurance;
 
 
 import com.dt.serviceassistant.mvp.BasePresenter;
@@ -9,7 +9,7 @@ import com.dt.serviceassistant.mvp.BaseView;
  *  邮箱 784787081@qq.com
  */
 
-public class NoticeContract {
+public class InsuranceContract {
     interface View extends BaseView {
         
     }

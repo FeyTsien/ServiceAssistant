@@ -1,14 +1,8 @@
-package com.dt.serviceassistant.ui.fragment.account;
+package com.dt.serviceassistant.ui.fragment.me;
 
 import com.dt.serviceassistant.mvp.BasePresenter;
 import com.dt.serviceassistant.mvp.BaseView;
-
-/**
- * MVPPlugin
- *  邮箱 784787081@qq.com
- */
-
-public class AccountContract {
+public class MeContract {
     interface View extends BaseView {
         
     }

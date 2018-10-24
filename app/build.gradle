@@ -32,6 +32,7 @@ dependencies {
     testImplementation rootProject.ext.support["junit"]
     implementation rootProject.ext.support["constraint-layout"]
     implementation 'com.android.support:support-vector-drawable:27.1.1'
+
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //==================================以下为个人增配======================================
@@ -51,5 +52,8 @@ dependencies {
     //一个 Android 系统的 View 注入框架，能够通过『注解』的方式来绑定 View 的属性或方法
     api 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    //https://github.com/XRecyclerView/XRecyclerView（一个retriclerview，实现了pullrefresh和加载更多特性。你可以像标准的recycling view一样使用它）
+    implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
     implementation project(':my_widget')
 }

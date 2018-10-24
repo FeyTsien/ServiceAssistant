@@ -1,4 +1,4 @@
-package com.dt.serviceassistant.ui.fragment.notice;
+package com.dt.serviceassistant.ui.fragment.me;
 
 
 import android.os.Bundle;
@@ -10,16 +10,23 @@ import android.view.ViewGroup;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.mvp.MVPBaseFragment;
 
+
 /**
- * MVPPlugin
- * 邮箱 784787081@qq.com
+ * ================
+ * ===== 我的 =====
+ * ================
  */
 
-public class NoticeFragment extends MVPBaseFragment<NoticeContract.View, NoticePresenter> implements NoticeContract.View {
+public class MeFragment extends MVPBaseFragment<MeContract.View, MePresenter> implements MeContract.View {
 
     private String TAG = getClass().getSimpleName();
 
     private View mRootView;
+
+
+    public static MeFragment newInstance() {
+        return new MeFragment();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,7 +36,7 @@ public class NoticeFragment extends MVPBaseFragment<NoticeContract.View, NoticeP
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_notice, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_me, container, false);
         return mRootView;
     }
 }

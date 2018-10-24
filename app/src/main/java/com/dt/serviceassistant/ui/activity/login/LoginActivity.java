@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.ft.widget.CountDownButton;
 
-public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPresenter> implements LoginContract.View {
+public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPresenter2> implements LoginContract.View {
 
 
     public static LoginActivity instance;

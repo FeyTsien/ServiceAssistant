@@ -1,11 +1,15 @@
 package com.dt.serviceassistant.interfaces;
 
+import com.google.gson.annotations.JsonAdapter;
+
 import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -31,6 +35,12 @@ public interface ProjectAPI {
     @FormUrlEncoded
     @POST
     Observable<String> postMethod(@Url String url, @FieldMap Map<String, String> map);
+
+    //json方式请求
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST
+    Call<ResponseBody> postJson(@Url String url, @Body RequestBody route);
+
 
     //带有请求头的post请求方式
     @Headers({"os:android","version:1"})

@@ -13,6 +13,11 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -51,7 +56,7 @@ public class HttpManager {
     }
 
     /**
-     * Post方式请求
+     * Post方式请求（表单）
      * 封装时，传递observer
      *
      * @param url
@@ -66,6 +71,24 @@ public class HttpManager {
         Observable<String> observable = RetrofitUtil.getInstance().get1(ProjectAPI.class, UrlUtils.BASEURL).postMethod(url, map);
         //在子线程中执行请求，在主线程观察，将信息设置给观察者
         observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
+
+    }
+
+    /**
+     * Post方式请求(json)
+     * 封装时，传递observer
+     *
+     * @param url
+     */
+    public void postJson(String url, Callback<ResponseBody> callback, String datas) {
+
+        if (!NetworkUtils.isConnected()) {
+            ToastUtils.showLong("网络崩溃了");
+            return;
+        }
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), datas);//datas是json字符串
+        Call<ResponseBody> call = RetrofitUtil.getInstance().get1(ProjectAPI.class, UrlUtils.BASEURL).postJson(url, body);
+        call.enqueue(callback);
 
     }
 
