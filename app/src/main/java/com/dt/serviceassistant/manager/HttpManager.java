@@ -80,16 +80,15 @@ public class HttpManager {
      *
      * @param url
      */
-    public void postJson(String url, Callback<ResponseBody> callback, String datas) {
+    public void postJson(String url,String jsonData, Callback<ResponseBody> callback ) {
 
         if (!NetworkUtils.isConnected()) {
             ToastUtils.showLong("网络崩溃了");
             return;
         }
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), datas);//datas是json字符串
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonData);//datas是json字符串
         Call<ResponseBody> call = RetrofitUtil.getInstance().get1(ProjectAPI.class, UrlUtils.BASEURL).postJson(url, body);
         call.enqueue(callback);
-
     }
 
 

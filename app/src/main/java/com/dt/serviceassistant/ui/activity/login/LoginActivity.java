@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,13 +18,14 @@ import com.dt.serviceassistant.bean.AppBean;
 import com.dt.serviceassistant.mvp.MVPBaseActivity;
 import com.dt.serviceassistant.ui.activity.main.MainActivity;
 import com.dt.serviceassistant.utils.CommonUtils;
+import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.ft.widget.CountDownButton;
 
-public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPresenter2> implements LoginContract.View {
+public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPresenter> implements LoginContract.View {
 
 
     public static LoginActivity instance;
@@ -80,38 +80,20 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         });
     }
 
-    ProgressDialog loginDialog;
 
     /**
      * TODO:登录
      */
     @OnClick(R.id.btn_login)
     void login() {
-
-        loginDialog = CommonUtils.showProgressDialog(this, "正在登录");
-        if (!NetworkUtils.isConnected()) {
-            loginDialog.dismiss();
-            CommonUtils.showInfoDialog(this, "网络不给力，请检查网络设置。", "提示", "知道了", null, null, null);
-            return;
-        }
         mPhoneNumber = mEtPhone.getText().toString();
         mCode = mEtCode.getText().toString();
-        if (!TextUtils.isEmpty(mPhoneNumber) && !TextUtils.isEmpty(mCode)) {
-            mPresenter.login(mPhoneNumber, mCode);
-        } else {
-            loginDialog.dismiss();
-            mTvErrors.setVisibility(View.VISIBLE);
-            mTvErrors.setText(R.string.code_error);
-        }
-
+        mPresenter.login(mPhoneNumber,mCode);
     }
-
-
 
 
     @Override
     public void loginSuccess(AppBean appBean) {
-        loginDialog.dismiss();
         ToastUtils.showShort("登录成功");
 //        //清空之前登录信息
 //        AppData.clearLogin();
@@ -129,9 +111,10 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     }
 
     @Override
-    public void loginError() {
-        loginDialog.dismiss();
-        LogUtils.i(TAG, "登录故障");
+    public void loginError(String error) {
+        mTvErrors.setVisibility(View.VISIBLE);
+        mTvErrors.setText(error);
+        LogUtils.i(TAG, error);
     }
 
 }

@@ -19,7 +19,7 @@ public class LoginContract {
 
         void loginSuccess(AppBean appBean);
 
-        void loginError();
+        void loginError(String error);
 
     }
 
@@ -29,6 +29,7 @@ public class LoginContract {
 //        void checkIsRegist(String username);
         //登录
         void login(String email, String password);
+//        void login(String jsonData);
 
     }
 }
