@@ -55,6 +55,26 @@ public class HttpManager {
 
     }
 
+
+    /**
+     * Post方式请求
+     * 封装时，传递observer
+     *
+     * @param url
+     * @param observer
+     */
+    public void postMethod1(String url, Observer<String> observer, Map map) {
+
+        if (!NetworkUtils.isConnected()) {
+            ToastUtils.showLong("网络崩溃了");
+            return;
+        }
+        Observable<String> observable = RetrofitUtil.getInstance().get(ProjectAPI.class).postMethod(url, map);
+        //在子线程中执行请求，在主线程观察，将信息设置给观察者
+        observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
+
+    }
+
     /**
      * Post方式请求（表单）
      * 封装时，传递observer
@@ -76,7 +96,7 @@ public class HttpManager {
 
     /**
      * Post方式请求(json)
-     * 封装时，传递observer
+     * 封装时，callback
      *
      * @param url
      */
@@ -89,26 +109,6 @@ public class HttpManager {
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonData);//datas是json字符串
         Call<ResponseBody> call = RetrofitUtil.getInstance().get1(ProjectAPI.class, UrlUtils.BASEURL).postJson(url, body);
         call.enqueue(callback);
-    }
-
-
-    /**
-     * Post方式请求
-     * 封装时，传递observer
-     *
-     * @param url
-     * @param observer
-     */
-    public void postMethod1(String url, Observer<String> observer, Map map) {
-
-        if (!NetworkUtils.isConnected()) {
-            ToastUtils.showLong("网络崩溃了");
-            return;
-        }
-        Observable<String> observable = RetrofitUtil.getInstance().get(ProjectAPI.class).postMethod(url, map);
-        //在子线程中执行请求，在主线程观察，将信息设置给观察者
-        observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
-
     }
 
 }

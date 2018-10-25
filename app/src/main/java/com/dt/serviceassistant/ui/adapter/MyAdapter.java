@@ -16,16 +16,8 @@ import java.util.List;
  */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-    public void setClickCallBack(ItemClickCallBack clickCallBack) {
-        this.clickCallBack = clickCallBack;
-    }
-
-    public interface ItemClickCallBack {
-        void onItemClick(int pos);
-    }
-
     public ArrayList<String> datas = null;
-    private ItemClickCallBack clickCallBack;
+    private OnItemClickListener mOnItemClickListener;
 
     public MyAdapter(ArrayList<String> datas) {
         this.datas = datas;
@@ -42,16 +34,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         viewHolder.mTextView.setText(datas.get(position));
-        viewHolder.mTextView.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (clickCallBack != null) {
-                            clickCallBack.onItemClick(position);
-                        }
-                    }
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.onItemClick(position);
                 }
-        );
+            }
+        });
     }
 
     @Override
@@ -74,6 +64,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             mTextView = (TextView) view.findViewById(R.id.tv_message_title);
         }
     }
+
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.mOnItemClickListener = onItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int pos);
+    }
+
 }
 
 

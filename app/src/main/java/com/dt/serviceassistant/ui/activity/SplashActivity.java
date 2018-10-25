@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.dt.serviceassistant.R;
+import com.dt.serviceassistant.app.AppData;
 import com.dt.serviceassistant.ui.activity.login.LoginActivity;
 import com.dt.serviceassistant.ui.activity.main.MainActivity;
 
@@ -54,7 +55,11 @@ public class SplashActivity extends BaseActivity {
 //            CommonUtils.startActivity(this, WelcomeGuideActivity.class);
 //            finish();
 //        }else {
-        ActivityUtils.startActivity(this, LoginActivity .class);
+        if (AppData.isLogined()) {
+            ActivityUtils.startActivity(this, MainActivity.class);
+        } else {
+            ActivityUtils.startActivity(this, LoginActivity.class);
+        }
         finish();
 //        }
     }

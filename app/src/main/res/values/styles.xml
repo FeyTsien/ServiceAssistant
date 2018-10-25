@@ -27,9 +27,9 @@
     <!--启动页style-->
     <style name="SplashTheme" parent="BaseAppTheme">
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
         <!-- 是否填充慢屏幕，引用android:windowNoTitle 的值 ?android:windowNoTitle，取决于android:windowNoTitle的值-->
         <item name="android:windowFullscreen">?android:windowNoTitle</item>
+
     </style>
 
 </resources>

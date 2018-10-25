@@ -1,6 +1,7 @@
 package com.dt.serviceassistant.ui.fragment.information;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -9,9 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.mvp.MVPBaseFragment;
+import com.dt.serviceassistant.mywebview.WebTestActivity;
+import com.dt.serviceassistant.mywebview.WebViewActivity;
 import com.dt.serviceassistant.ui.adapter.MyAdapter;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -73,6 +77,16 @@ public class InformationFragment extends MVPBaseFragment<InformationContract.Vie
         initData();   //初始化数据
         mAdapter = new MyAdapter(listData);
         mRecyclerView.setAdapter(mAdapter);
+
+//        item点击事件
+        mAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int pos) {
+//                ActivityUtils.startActivity(new Intent(InformationFragment.this.getActivity(),WebActivity.class));
+                String baiDuUrl = "http://www.baidu.com";
+                WebViewActivity.loadUrl(InformationFragment.this.getActivity(), baiDuUrl, "");
+            }
+        });
 
         mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
