@@ -4,18 +4,21 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
+
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/darkGray"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-    </android.support.v7.widget.Toolbar>
+        android:layout_height="70dp"
+        android:layout_marginBottom="3dp"
+        android:background="@drawable/side_nav_bar"
+        android:elevation="2dp"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        app:contentInsetStart="0.0dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <FrameLayout
         android:id="@+id/fragment"

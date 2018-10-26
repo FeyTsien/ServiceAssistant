@@ -9,5 +9,9 @@ import com.dt.serviceassistant.mvp.BasePresenterImpl;
  */
 
 public class InsurancePresenter extends BasePresenterImpl<InsuranceContract.View> implements InsuranceContract.Presenter{
-    
+
+    @Override
+    public void get(String userId) {
+
+    }
 }

@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by admin on 2018/7/2.
  */
 
-public class AppBean {// implements Serializable
+public class AppBean extends CodeBean {// implements Serializable
 
 
     /**
@@ -15,25 +15,7 @@ public class AppBean {// implements Serializable
      * msg":"手机号不存在，请联系管理员"
      */
 
-    private int code;
-    private String msg;
     private DataBean data;
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
 
     public DataBean getData() {
         return data;
@@ -60,7 +42,10 @@ public class AppBean {// implements Serializable
         private String userid;
         private String password;
         private String headurl;
+
         private String roletype;
+
+        private int messagetype;
 
         public String getSex() {
             return sex;
@@ -117,5 +102,14 @@ public class AppBean {// implements Serializable
         public void setRoletype(String roletype) {
             this.roletype = roletype;
         }
+
+        public int getMessagetype() {
+            return messagetype;
+        }
+
+        public void setMessagetype(int messagetype) {
+            this.messagetype = messagetype;
+        }
+
     }
 }

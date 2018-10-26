@@ -12,24 +12,15 @@ public class CodeBean {
      * msg : ok
      */
 
-    private String code;
-    private int sid;
+    private int code;
     private String msg;
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
-    }
-
-    public int getSid() {
-        return sid;
-    }
-
-    public void setSid(int sid) {
-        this.sid = sid;
     }
 
     public String getMsg() {

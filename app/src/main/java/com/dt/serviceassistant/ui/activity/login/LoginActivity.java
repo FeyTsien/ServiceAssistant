@@ -99,12 +99,13 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 //        AppData.clearLogin();
 //        //保存最新登录信息
 //        AppData.saveLogin(appBean);
+
+        AppData.setLogined(true);
+        AppData.setUserId(appBean.getData().getUserid());
         AppData.setPhoneNumber(mPhoneNumber);
 //        AppData.setPassword(password);
-        AppData.setLogined(true);
 
         Intent intent = new Intent(this, MainActivity.class);
-//        intent.putExtra("appbean", appBean);
         startActivity(intent);
 
         finish();

@@ -15,6 +15,7 @@ public class InsuranceContract {
     }
 
     interface  Presenter extends BasePresenter<View> {
-        
+
+        void get(String userId);
     }
 }

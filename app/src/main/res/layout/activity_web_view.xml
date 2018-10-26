@@ -20,8 +20,9 @@
         <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/title_tool_bar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
+            android:layout_height="70dp"
+            android:background="@drawable/side_nav_bar"
+            android:fitsSystemWindows="true"
             app:contentInsetStartWithNavigation="0dp"
             app:navigationContentDescription="返回"
             app:navigationIcon="@mipmap/icon_back"
@@ -47,8 +48,7 @@
                 android:id="@+id/webview_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbarSize="3dp"
-                />
+                android:scrollbarSize="3dp" />
 
             <ProgressBar
                 android:id="@+id/pb_progress"

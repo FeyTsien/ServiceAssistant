@@ -1,6 +1,7 @@
 package com.dt.serviceassistant.ui.fragment.message;//package com.dt.serviceassistant.ui.fragment.account;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -9,15 +10,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
+import com.dt.serviceassistant.app.AppData;
+import com.dt.serviceassistant.bean.MessageBean;
 import com.dt.serviceassistant.mvp.MVPBaseFragment;
+import com.dt.serviceassistant.mywebview.WebViewActivity;
+import com.dt.serviceassistant.ui.activity.messagelist.MessageListAcitivity;
 import com.dt.serviceassistant.ui.adapter.MyAdapter;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
+import com.dt.serviceassistant.ui.fragment.information.InformationFragment;
+import com.dt.serviceassistant.utils.CommonUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,10 +40,10 @@ import me.ft.widget.MultiItemDivider;
  * ==============
  */
 
-public class MessageFragment extends MVPBaseFragment<MessageContract.View, MessagePresenter> implements MessageContract.View , XRecyclerView.LoadingListener {
+public class MessageFragment extends MVPBaseFragment<MessageContract.View, MessagePresenter> implements MessageContract.View, XRecyclerView.LoadingListener {
     private String TAG = getClass().getSimpleName();
 
-    private ArrayList<String> listData;
+    private List<MessageBean.DataBean> mDataBeanList;
 
     private View mRootView;
     private MyBaseAdapter mAdapter;
@@ -55,8 +65,13 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_message, container, false);
         ButterKnife.bind(this, mRootView);
+        initData();
         initView();
         return mRootView;
+    }
+    private void initData() {
+        mDataBeanList = new ArrayList<MessageBean.DataBean>();
+        mPresenter.getTpyeMessages(AppData.getUserId());
     }
 
     private void initView() {
@@ -70,27 +85,44 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
         mRecyclerView.addItemDecoration(itemDivider);
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
-        mRecyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);
-        initData();   //初始化数据
-        mAdapter = new MyBaseAdapter<String>(listData, R.layout.item_message) {
+        mRecyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);//下拉刷新图片
+        mRecyclerView.setLoadingListener(this);
+
+        mAdapter = new MyBaseAdapter<MessageBean.DataBean>(mDataBeanList, R.layout.item_message) {
             @Override
             public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
-                holder.setTextView(R.id.tv_message_title, listData.get(position));
-
+                holder.setTextView(R.id.tv_message_title, mDataBeanList.get(position).getTypename());
+                holder.setTextView(R.id.tv_message_time, mDataBeanList.get(position).getRtime());
+                holder.setTextView(R.id.tv_content, mDataBeanList.get(position).getContent());
             }
         };
         mRecyclerView.setAdapter(mAdapter);
 
-
-        mRecyclerView.setLoadingListener(this);
+        //item点击事件
+        mAdapter.setOnItemClickListener(new MyBaseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int pos) {
+                Intent intent = new Intent(MessageFragment.this.getActivity(), MessageListAcitivity.class);
+                intent.putExtra(MessageListAcitivity.MESSAGE_TYPE_NAME, mDataBeanList.get(pos).getTypename());
+                intent.putExtra(MessageListAcitivity.MESSAGE_TYPE, mDataBeanList.get(pos).getMessagetype());
+                startActivity(intent);
+            }
+        });
     }
 
-    private void initData() {
 
-        listData = new ArrayList<String>();
-        for (int i = 0; i < 15; i++) {
-            listData.add("item" + i);
-        }
+
+    @Override
+    public void getTpyeMessagesSuccess(MessageBean messageBean) {
+        mDataBeanList.clear();
+        mDataBeanList.addAll(messageBean.getData());
+        mRecyclerView.refreshComplete();
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getTpyeMessagesFail(String error) {
+
     }
 
     /**
@@ -98,18 +130,12 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
      */
     @Override
     public void onRefresh() {//refresh data here
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                listData.clear();
-                for (int i = 0; i < 15; i++) {
-                    listData.add("item" + i + "after times of refresh");
-                }
-                mAdapter.notifyDataSetChanged();
-                mRecyclerView.refreshComplete();
-                ToastUtils.showLong("已刷新");
-            }
-
-        }, 1000);
+        if (!NetworkUtils.isConnected()) {
+            mRecyclerView.refreshComplete();
+            CommonUtils.showInfoDialog(getActivity(), "网络不给力，请检查网络设置。", "提示", "知道了", null, null, null);
+            return;
+        }
+        mPresenter.getTpyeMessages(AppData.getUserId());
     }
 
     /**
@@ -120,9 +146,9 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 mRecyclerView.loadMoreComplete();
-                for (int i = 0; i < 15; i++) {
-                    listData.add("item" + (i + listData.size()));
-                }
+//                for (int i = 0; i < 15; i++) {
+//                    listData.add("item" + (i + listData.size()));
+//                }
                 mRecyclerView.loadMoreComplete();
                 mAdapter.notifyDataSetChanged();
             }

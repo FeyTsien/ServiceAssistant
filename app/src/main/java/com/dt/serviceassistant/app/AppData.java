@@ -20,6 +20,8 @@ public class AppData {
     private static final String KEY_IS_LOGIN_ED = "is_logined";
     //邮箱
     private static final String KEY_EMAIL = "email";
+    //UserId
+    private static final String KEY_USER_ID = "user_id";
     //手机号
     private static final String KEY_PHONE_NUMBER = "phone_number";
     //密码
@@ -82,6 +84,20 @@ public class AppData {
         return SPUtils.getInstance().getBoolean(KEY_IS_LOGIN_ED, false);
     }
 
+    /**
+     * 保存UserId
+     */
+    public static void setUserId(String userId) {
+        SPUtils.getInstance().put(KEY_USER_ID, userId);
+    }
+
+
+    /**
+     * 获取UserId
+     */
+    public static String getUserId() {
+        return SPUtils.getInstance().getString(KEY_USER_ID);
+    }
     /**
      * 保存手机号
      */

@@ -1,6 +1,7 @@
 package com.dt.serviceassistant.ui.fragment.insurance;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -9,10 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.mvp.MVPBaseFragment;
 import com.dt.serviceassistant.mywebview.WebViewActivity;
+import com.dt.serviceassistant.ui.activity.insurance.InsuranceAcitivity;
+import com.dt.serviceassistant.ui.activity.shipmentinfo.ShipmentInfoAcitivity;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
 import com.dt.serviceassistant.ui.fragment.information.InformationFragment;
 import com.dt.serviceassistant.ui.fragment.shipments.ShipmentsFragment;
@@ -76,10 +80,10 @@ public class InsuranceFragment extends MVPBaseFragment<InsuranceContract.View, I
         mRecyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);
         initData();   //初始化数据
 
-        mAdapter = new MyBaseAdapter<String>(listData, R.layout.item_information) {
+        mAdapter = new MyBaseAdapter<String>(listData, R.layout.item_insurance) {
             @Override
             public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
-                holder.setTextView(R.id.tv_information_title, listData.get(position));
+//                holder.setTextView(R.id.tv_information_title, listData.get(position));
 
             }
         };
@@ -89,9 +93,7 @@ public class InsuranceFragment extends MVPBaseFragment<InsuranceContract.View, I
         mAdapter.setOnItemClickListener(new MyBaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int pos) {
-//                ActivityUtils.startActivity(new Intent(InformationFragment.this.getActivity(),WebActivity.class));
-                String baiDuUrl = "http://www.baidu.com";
-                WebViewActivity.loadUrl(InsuranceFragment.this.getActivity(), baiDuUrl, "");
+                ActivityUtils.startActivity(new Intent(InsuranceFragment.this.getActivity(),InsuranceAcitivity.class));
             }
         });
 

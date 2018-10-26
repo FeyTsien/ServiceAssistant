@@ -76,7 +76,6 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                         if (mView != null) {
                             mView.loginError(appBean.getMsg());
                         }
-//                        ToastUtils.showShort(appBean.getReason());
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

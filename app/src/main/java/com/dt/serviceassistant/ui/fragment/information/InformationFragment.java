@@ -11,17 +11,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
+import com.dt.serviceassistant.app.AppData;
+import com.dt.serviceassistant.bean.MessageBean;
 import com.dt.serviceassistant.mvp.MVPBaseFragment;
 import com.dt.serviceassistant.mywebview.WebTestActivity;
 import com.dt.serviceassistant.mywebview.WebViewActivity;
+import com.dt.serviceassistant.ui.activity.messagelist.MessageListAcitivity;
 import com.dt.serviceassistant.ui.adapter.MyAdapter;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
+import com.dt.serviceassistant.ui.fragment.message.MessageFragment;
+import com.dt.serviceassistant.utils.CommonUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +44,7 @@ import me.ft.widget.MultiItemDivider;
 public class InformationFragment extends MVPBaseFragment<InformationContract.View, InformationPresenter> implements InformationContract.View, XRecyclerView.LoadingListener {
     private String TAG = getClass().getSimpleName();
 
-    private ArrayList<String> listData;
+    private List<MessageBean.DataBean> mDataBeanList;
 
     private View mRootView;
     //    private MyAdapter mAdapter;
@@ -61,8 +68,14 @@ public class InformationFragment extends MVPBaseFragment<InformationContract.Vie
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_information, container, false);
         ButterKnife.bind(this, mRootView);
+        initData();
         initView();
         return mRootView;
+    }
+
+    private void initData() {
+        mDataBeanList = new ArrayList<MessageBean.DataBean>();
+        mPresenter.getNews(AppData.getUserId());
     }
 
     private void initView() {
@@ -77,13 +90,15 @@ public class InformationFragment extends MVPBaseFragment<InformationContract.Vie
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         mRecyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);
-        initData();   //初始化数据
+        //下拉刷新，上拉加载监听
+        mRecyclerView.setLoadingListener(this);
 
-        mAdapter = new MyBaseAdapter<String>(listData, R.layout.item_information) {
+        mAdapter = new MyBaseAdapter<MessageBean.DataBean>(mDataBeanList, R.layout.item_information) {
             @Override
             public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
-                holder.setTextView(R.id.tv_information_title, listData.get(position));
-
+                holder.setTextView(R.id.tv_information_time, mDataBeanList.get(position).getRtime());
+                holder.setTextView(R.id.tv_app, mDataBeanList.get(position).getNtitle());
+                holder.setTextView(R.id.tv_information_title, mDataBeanList.get(position).getContent());
             }
         };
         mRecyclerView.setAdapter(mAdapter);
@@ -92,26 +107,31 @@ public class InformationFragment extends MVPBaseFragment<InformationContract.Vie
         mAdapter.setOnItemClickListener(new MyBaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int pos) {
-//                ActivityUtils.startActivity(new Intent(InformationFragment.this.getActivity(),WebActivity.class));
-                String baiDuUrl = "http://www.baidu.com";
-                WebViewActivity.loadUrl(InformationFragment.this.getActivity(), baiDuUrl, "");
+                String url = mDataBeanList.get(pos).getUrl();
+                if (url.startsWith("http")) {
+                    WebViewActivity.loadUrl(getActivity(), url);
+                } else {
+                    WebViewActivity.loadUrl(getActivity(), "http://" + url);
+                }
+
             }
         });
 
-        //下拉刷新，上拉加载监听
-        mRecyclerView.setLoadingListener(this);
-
     }
 
-    /**
-     * 初始化数据
-     */
-    private void initData() {
 
-        listData = new ArrayList<String>();
-        for (int i = 0; i < 15; i++) {
-            listData.add("item" + i);
-        }
+    @Override
+    public void getNewsSuccess(MessageBean messageBean) {
+
+        mDataBeanList.clear();
+        mDataBeanList.addAll(messageBean.getData());
+        mRecyclerView.refreshComplete();
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getNewsFail(String error) {
+
     }
 
     /**
@@ -119,18 +139,12 @@ public class InformationFragment extends MVPBaseFragment<InformationContract.Vie
      */
     @Override
     public void onRefresh() {//refresh data here
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                listData.clear();
-                for (int i = 0; i < 15; i++) {
-                    listData.add("item" + i + "after times of refresh");
-                }
-                mAdapter.notifyDataSetChanged();
-                mRecyclerView.refreshComplete();
-                ToastUtils.showLong("已刷新");
-            }
-
-        }, 1000);
+        if (!NetworkUtils.isConnected()) {
+            mRecyclerView.refreshComplete();
+            CommonUtils.showInfoDialog(getActivity(), "网络不给力，请检查网络设置。", "提示", "知道了", null, null, null);
+            return;
+        }
+        mPresenter.getNews(AppData.getUserId());
     }
 
     /**
@@ -138,15 +152,7 @@ public class InformationFragment extends MVPBaseFragment<InformationContract.Vie
      */
     @Override
     public void onLoadMore() {
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                mRecyclerView.loadMoreComplete();
-                for (int i = 0; i < 15; i++) {
-                    listData.add("item" + (i + listData.size()));
-                }
-                mRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-            }
-        }, 1000);
+        mRecyclerView.loadMoreComplete();
+        mAdapter.notifyDataSetChanged();
     }
 }

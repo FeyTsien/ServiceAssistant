@@ -23,6 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--登录-->
+        <activity android:name=".ui.activity.login.LoginActivity" />
         <!--主页-->
         <activity
             android:name=".ui.activity.main.MainActivity"
@@ -31,8 +33,16 @@
         <activity
             android:name=".ui.activity.mainboss.MainBossActivity"
             android:launchMode="singleTask" />
-        <!--登录-->
-        <activity android:name=".ui.activity.login.LoginActivity" />
+
+        <!--消息列表-->
+        <activity
+            android:name=".ui.activity.messagelist.MessageListAcitivity" />
+        <!--发货明细-->
+        <activity
+            android:name=".ui.activity.shipmentinfo.ShipmentInfoAcitivity" />
+        <!--保险明细-->
+        <activity
+            android:name=".ui.activity.insurance.InsuranceAcitivity" />
 
         <!--webview-->
         <activity
