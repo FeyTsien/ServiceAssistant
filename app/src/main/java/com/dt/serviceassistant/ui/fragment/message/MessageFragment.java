@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.mvp.MVPBaseFragment;
 import com.dt.serviceassistant.ui.adapter.MyAdapter;
+import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
@@ -29,13 +30,13 @@ import me.ft.widget.MultiItemDivider;
  * ==============
  */
 
-public class MessageFragment extends MVPBaseFragment<MessageContract.View, MessagePresenter> implements MessageContract.View {
+public class MessageFragment extends MVPBaseFragment<MessageContract.View, MessagePresenter> implements MessageContract.View , XRecyclerView.LoadingListener {
     private String TAG = getClass().getSimpleName();
 
     private ArrayList<String> listData;
 
     private View mRootView;
-    private MyAdapter mAdapter;
+    private MyBaseAdapter mAdapter;
 
     @BindView(R.id.xrv_message)
     XRecyclerView mRecyclerView;
@@ -71,41 +72,17 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         mRecyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);
         initData();   //初始化数据
-        mAdapter = new MyAdapter(listData);
+        mAdapter = new MyBaseAdapter<String>(listData, R.layout.item_message) {
+            @Override
+            public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
+                holder.setTextView(R.id.tv_message_title, listData.get(position));
+
+            }
+        };
         mRecyclerView.setAdapter(mAdapter);
 
-        mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
 
-                        listData.clear();
-                        for (int i = 0; i < 15; i++) {
-                            listData.add("item" + i + "after times of refresh");
-                        }
-                        mAdapter.notifyDataSetChanged();
-                        mRecyclerView.refreshComplete();
-                        ToastUtils.showLong("已刷新");
-                    }
-
-                }, 1000);            //refresh data here
-            }
-
-            @Override
-            public void onLoadMore() {
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        mRecyclerView.loadMoreComplete();
-                        for (int i = 0; i < 15; i++) {
-                            listData.add("item" + (i + listData.size()));
-                        }
-                        mRecyclerView.loadMoreComplete();
-                        mAdapter.notifyDataSetChanged();
-                    }
-                }, 1000);
-            }
-        });
+        mRecyclerView.setLoadingListener(this);
     }
 
     private void initData() {
@@ -114,5 +91,41 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
         for (int i = 0; i < 15; i++) {
             listData.add("item" + i);
         }
+    }
+
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {//refresh data here
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                listData.clear();
+                for (int i = 0; i < 15; i++) {
+                    listData.add("item" + i + "after times of refresh");
+                }
+                mAdapter.notifyDataSetChanged();
+                mRecyclerView.refreshComplete();
+                ToastUtils.showLong("已刷新");
+            }
+
+        }, 1000);
+    }
+
+    /**
+     * 上拉加载
+     */
+    @Override
+    public void onLoadMore() {
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                mRecyclerView.loadMoreComplete();
+                for (int i = 0; i < 15; i++) {
+                    listData.add("item" + (i + listData.size()));
+                }
+                mRecyclerView.loadMoreComplete();
+                mAdapter.notifyDataSetChanged();
+            }
+        }, 1000);
     }
 }

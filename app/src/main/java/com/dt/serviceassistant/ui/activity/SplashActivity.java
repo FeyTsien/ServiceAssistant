@@ -9,6 +9,7 @@ import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
 import com.dt.serviceassistant.ui.activity.login.LoginActivity;
 import com.dt.serviceassistant.ui.activity.main.MainActivity;
+import com.dt.serviceassistant.ui.activity.mainboss.MainBossActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,7 +57,8 @@ public class SplashActivity extends BaseActivity {
 //            finish();
 //        }else {
         if (AppData.isLogined()) {
-            ActivityUtils.startActivity(this, MainActivity.class);
+//            ActivityUtils.startActivity(this, MainActivity.class);
+            ActivityUtils.startActivity(this, MainBossActivity.class);
         } else {
             ActivityUtils.startActivity(this, LoginActivity.class);
         }

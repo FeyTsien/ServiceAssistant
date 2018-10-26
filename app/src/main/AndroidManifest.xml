@@ -27,6 +27,10 @@
         <activity
             android:name=".ui.activity.main.MainActivity"
             android:launchMode="singleTask" />
+        <!--主页- 老板-->
+        <activity
+            android:name=".ui.activity.mainboss.MainBossActivity"
+            android:launchMode="singleTask" />
         <!--登录-->
         <activity android:name=".ui.activity.login.LoginActivity" />
 

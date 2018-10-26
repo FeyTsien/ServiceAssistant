@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_configuration"
+            android:icon="@drawable/ic_insurance"
+            android:title="业务员分析" />
+        <item
+            android:id="@+id/nav_account"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="客户分析" />
+        <item
+            android:id="@+id/nav_buy"
+            android:icon="@drawable/ic_library_books_black_24dp"
+            android:title="应收账款" />
+        <item
+            android:id="@+id/nav_notice"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="资金分析" />
+    </group>
+
+    <item android:title="其他功能">
+        <menu>
+            <!--<item-->
+                <!--android:id="@+id/nav_share"-->
+                <!--android:icon="@drawable/ic_menu_share"-->
+                <!--android:title="Share" />-->
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_send_black_24dp"
+                android:title="退出" />
+        </menu>
+    </item>
+
+</menu>

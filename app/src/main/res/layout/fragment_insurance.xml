@@ -4,9 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrv_insurance"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="保险" />
+        android:layout_height="match_parent"/>
 </LinearLayout>

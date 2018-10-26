@@ -17,6 +17,7 @@ import com.dt.serviceassistant.mvp.MVPBaseFragment;
 import com.dt.serviceassistant.mywebview.WebTestActivity;
 import com.dt.serviceassistant.mywebview.WebViewActivity;
 import com.dt.serviceassistant.ui.adapter.MyAdapter;
+import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
@@ -33,13 +34,14 @@ import me.ft.widget.MultiItemDivider;
  * ================
  */
 
-public class InformationFragment extends MVPBaseFragment<InformationContract.View, InformationPresenter> implements InformationContract.View {
+public class InformationFragment extends MVPBaseFragment<InformationContract.View, InformationPresenter> implements InformationContract.View, XRecyclerView.LoadingListener {
     private String TAG = getClass().getSimpleName();
 
     private ArrayList<String> listData;
 
     private View mRootView;
-    private MyAdapter mAdapter;
+    //    private MyAdapter mAdapter;
+    private MyBaseAdapter mAdapter;
 
     @BindView(R.id.xrv_information)
     XRecyclerView mRecyclerView;
@@ -47,6 +49,7 @@ public class InformationFragment extends MVPBaseFragment<InformationContract.Vie
     public static InformationFragment newInstance() {
         return new InformationFragment();
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,11 +78,18 @@ public class InformationFragment extends MVPBaseFragment<InformationContract.Vie
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         mRecyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);
         initData();   //初始化数据
-        mAdapter = new MyAdapter(listData);
+
+        mAdapter = new MyBaseAdapter<String>(listData, R.layout.item_information) {
+            @Override
+            public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
+                holder.setTextView(R.id.tv_information_title, listData.get(position));
+
+            }
+        };
         mRecyclerView.setAdapter(mAdapter);
 
-//        item点击事件
-        mAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
+        //item点击事件
+        mAdapter.setOnItemClickListener(new MyBaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int pos) {
 //                ActivityUtils.startActivity(new Intent(InformationFragment.this.getActivity(),WebActivity.class));
@@ -88,45 +98,55 @@ public class InformationFragment extends MVPBaseFragment<InformationContract.Vie
             }
         });
 
-        mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
+        //下拉刷新，上拉加载监听
+        mRecyclerView.setLoadingListener(this);
 
-                        listData.clear();
-                        for (int i = 0; i < 15; i++) {
-                            listData.add("item" + i + "after times of refresh");
-                        }
-                        mAdapter.notifyDataSetChanged();
-                        mRecyclerView.refreshComplete();
-                        ToastUtils.showLong("已刷新");
-                    }
-
-                }, 1000);            //refresh data here
-            }
-
-            @Override
-            public void onLoadMore() {
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        mRecyclerView.loadMoreComplete();
-                        for (int i = 0; i < 15; i++) {
-                            listData.add("item" + (i + listData.size()));
-                        }
-                        mRecyclerView.loadMoreComplete();
-                        mAdapter.notifyDataSetChanged();
-                    }
-                }, 1000);
-            }
-        });
     }
 
+    /**
+     * 初始化数据
+     */
     private void initData() {
 
         listData = new ArrayList<String>();
         for (int i = 0; i < 15; i++) {
             listData.add("item" + i);
         }
+    }
+
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {//refresh data here
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                listData.clear();
+                for (int i = 0; i < 15; i++) {
+                    listData.add("item" + i + "after times of refresh");
+                }
+                mAdapter.notifyDataSetChanged();
+                mRecyclerView.refreshComplete();
+                ToastUtils.showLong("已刷新");
+            }
+
+        }, 1000);
+    }
+
+    /**
+     * 上拉加载
+     */
+    @Override
+    public void onLoadMore() {
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                mRecyclerView.loadMoreComplete();
+                for (int i = 0; i < 15; i++) {
+                    listData.add("item" + (i + listData.size()));
+                }
+                mRecyclerView.loadMoreComplete();
+                mAdapter.notifyDataSetChanged();
+            }
+        }, 1000);
     }
 }

@@ -6,6 +6,11 @@
     <string name="title_insurance">保险</string>
     <string name="title_me">我的</string>
     <string name="login_out">退出</string>
+    <string name="action_settings">设置</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 
     <string name="code_error">验证码错误。</string>
