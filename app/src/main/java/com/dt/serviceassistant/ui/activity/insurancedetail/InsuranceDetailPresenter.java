@@ -1,4 +1,4 @@
-package com.dt.serviceassistant.ui.activity.shipmentinfo;
+package com.dt.serviceassistant.ui.activity.insurancedetail;
 
 import android.app.ProgressDialog;
 import android.text.TextUtils;
@@ -7,7 +7,6 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.dt.serviceassistant.bean.AppBean;
 import com.dt.serviceassistant.manager.HttpManager;
 import com.dt.serviceassistant.mvp.BasePresenterImpl;
-import com.dt.serviceassistant.ui.activity.login.LoginContract;
 import com.dt.serviceassistant.utils.CommonUtils;
 import com.dt.serviceassistant.utils.UrlUtils;
 import com.google.gson.Gson;
@@ -25,7 +24,7 @@ import retrofit2.Response;
  * 邮箱 784787081@qq.com
  */
 
-public class ShipmentInfoPresenter extends BasePresenterImpl<ShipmentInfoContract.View> implements ShipmentInfoContract.Presenter {
+public class InsuranceDetailPresenter extends BasePresenterImpl<InsuranceDetailContract.View> implements InsuranceDetailContract.Presenter {
 
     private static String TAG = "LoginPresenter";
 

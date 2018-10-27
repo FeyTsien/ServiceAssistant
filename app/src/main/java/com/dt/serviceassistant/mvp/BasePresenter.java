@@ -2,7 +2,6 @@ package com.dt.serviceassistant.mvp;
 
 /**
  * MVPPlugin
- *  邮箱 784787081@qq.com
  */
 
 public interface  BasePresenter <V extends BaseView>{

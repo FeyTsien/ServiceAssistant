@@ -8,11 +8,8 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
-import com.dt.serviceassistant.bean.AppBean;
 import com.dt.serviceassistant.bean.MessageBean;
 import com.dt.serviceassistant.mvp.MVPBaseActivity;
-import com.dt.serviceassistant.ui.activity.shipmentinfo.ShipmentInfoContract;
-import com.dt.serviceassistant.ui.activity.shipmentinfo.ShipmentInfoPresenter;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
 import com.dt.serviceassistant.utils.CommonUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
@@ -23,7 +20,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.ft.widget.MultiItemDivider;
 
 public class MessageListAcitivity extends MVPBaseActivity<MessageListContract.View, MessgeListPresenter> implements MessageListContract.View, XRecyclerView.LoadingListener {
 

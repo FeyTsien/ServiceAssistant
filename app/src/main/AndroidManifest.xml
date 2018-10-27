@@ -39,10 +39,10 @@
             android:name=".ui.activity.messagelist.MessageListAcitivity" />
         <!--发货明细-->
         <activity
-            android:name=".ui.activity.shipmentinfo.ShipmentInfoAcitivity" />
+            android:name=".ui.activity.shipmentdetail.ShipmentDetailAcitivity" />
         <!--保险明细-->
         <activity
-            android:name=".ui.activity.insurance.InsuranceAcitivity" />
+            android:name=".ui.activity.insurancedetail.InsuranceDetailAcitivity" />
 
         <!--webview-->
         <activity

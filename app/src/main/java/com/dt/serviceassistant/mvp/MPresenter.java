@@ -1,12 +1,8 @@
-package com.dt.serviceassistant.ui.fragment.insurance;
-
+package com.dt.serviceassistant.mvp;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.dt.serviceassistant.bean.AppBean;
 import com.dt.serviceassistant.bean.MBean;
 import com.dt.serviceassistant.manager.HttpManager;
-import com.dt.serviceassistant.mvp.BasePresenterImpl;
-import com.dt.serviceassistant.utils.UrlUtils;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -17,20 +13,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * MVPPlugin
- *  邮箱 784787081@qq.com
+ * <pre>
+ *     author : Tsien
+ *     e-mail : 974490643@qq.com
+ *     time   : 2018/10/27
+ *     desc   :
+ * </pre>
  */
-
-public class InsurancePresenter extends BasePresenterImpl<InsuranceContract.View> implements InsuranceContract.Presenter{
+public class MPresenter extends BasePresenterImpl<MContract.View> implements MContract.Presenter {
 
     @Override
-    public void getInsuranceList(String userId) {
-        AppBean.DataBean appDataBean = new AppBean.DataBean();
-        appDataBean.setUserid(userId);
-        Gson gson = new Gson();
-        String jsonData = gson.toJson(appDataBean);
-
-        HttpManager.getHttpManager().postJson(UrlUtils.GET_INSURANCE_LIST, jsonData, new Callback<ResponseBody>() {
+    public void request(String url, String jsonData) {
+        HttpManager.getHttpManager().postJson(url, jsonData, new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -40,14 +34,14 @@ public class InsurancePresenter extends BasePresenterImpl<InsuranceContract.View
                     }
                     String jsons = response.body().string();
                     Gson gson = new Gson();
-                    MBean messageBean = gson.fromJson(jsons, MBean.class);
-                    if (messageBean.getCode() == 1) {
+                    MBean mBean = gson.fromJson(jsons, MBean.class);
+                    if (mBean.getCode() == 1) {
                         if (mView != null) {
-                            mView.getInsuranceListSuccess(messageBean);
+                            mView.requestSuccess(mBean);
                         }
                     } else {
                         if (mView != null) {
-                            mView.getInsuranceListFail(messageBean.getMsg());
+                            mView.requestFail(mBean.getMsg());
                         }
                     }
                 } catch (IOException e) {

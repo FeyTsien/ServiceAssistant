@@ -3,27 +3,25 @@ package com.dt.serviceassistant.ui.fragment.insurance;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.dt.serviceassistant.R;
+import com.dt.serviceassistant.app.AppData;
+import com.dt.serviceassistant.bean.MBean;
 import com.dt.serviceassistant.mvp.MVPBaseFragment;
-import com.dt.serviceassistant.mywebview.WebViewActivity;
-import com.dt.serviceassistant.ui.activity.insurance.InsuranceAcitivity;
-import com.dt.serviceassistant.ui.activity.shipmentinfo.ShipmentInfoAcitivity;
+import com.dt.serviceassistant.ui.activity.insurancedetail.InsuranceDetailAcitivity;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
-import com.dt.serviceassistant.ui.fragment.information.InformationFragment;
-import com.dt.serviceassistant.ui.fragment.shipments.ShipmentsFragment;
+import com.dt.serviceassistant.utils.CommonUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,13 +37,13 @@ public class InsuranceFragment extends MVPBaseFragment<InsuranceContract.View, I
 
     private String TAG = getClass().getSimpleName();
 
-    private ArrayList<String> listData;
+    private List<MBean.DataBean> mDataBeanList;
 
     private View mRootView;
     //    private MyAdapter mAdapter;
     private MyBaseAdapter mAdapter;
 
-    @BindView(R.id.xrv_insurance)
+    @BindView(R.id.xrecyclerview)
     XRecyclerView mRecyclerView;
 
     public static InsuranceFragment newInstance() {
@@ -62,8 +60,17 @@ public class InsuranceFragment extends MVPBaseFragment<InsuranceContract.View, I
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_insurance, container, false);
         ButterKnife.bind(this, mRootView);
+        initData();
         initView();
         return mRootView;
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        mDataBeanList = new ArrayList<MBean.DataBean>();
+        mPresenter.getInsuranceList(AppData.getUserId());
     }
 
     private void initView() {
@@ -78,39 +85,43 @@ public class InsuranceFragment extends MVPBaseFragment<InsuranceContract.View, I
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         mRecyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);
-        initData();   //初始化数据
+        //下拉刷新，上拉加载监听
+        mRecyclerView.setLoadingListener(this);
 
-        mAdapter = new MyBaseAdapter<String>(listData, R.layout.item_insurance) {
+        mAdapter = new MyBaseAdapter<MBean.DataBean>(mDataBeanList, R.layout.item_insurance) {
             @Override
             public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
-//                holder.setTextView(R.id.tv_information_title, listData.get(position));
-
+                holder.setTextView(R.id.tv_description, mDataBeanList.get(position).getDescription());
+                holder.setTextView(R.id.tv_rcompany, mDataBeanList.get(position).getRcompany());
+                holder.setTextView(R.id.tv_information_time, mDataBeanList.get(position).getRtime());
+                holder.setTextView(R.id.tv_status, mDataBeanList.get(position).getStatus());
             }
         };
         mRecyclerView.setAdapter(mAdapter);
-
         //item点击事件
         mAdapter.setOnItemClickListener(new MyBaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int pos) {
-                ActivityUtils.startActivity(new Intent(InsuranceFragment.this.getActivity(),InsuranceAcitivity.class));
+                Intent intent = new Intent(InsuranceFragment.this.getActivity(), InsuranceDetailAcitivity.class);
+                intent.putExtra(InsuranceDetailAcitivity.INSURANCE_DATA_ITEM, mDataBeanList.get(pos));
+                startActivity(intent);
             }
         });
 
-        //下拉刷新，上拉加载监听
-        mRecyclerView.setLoadingListener(this);
-
     }
 
-    /**
-     * 初始化数据
-     */
-    private void initData() {
 
-        listData = new ArrayList<String>();
-        for (int i = 0; i < 15; i++) {
-            listData.add("item" + i);
-        }
+    @Override
+    public void getInsuranceListSuccess(MBean mBean) {
+        mDataBeanList.clear();
+        mDataBeanList.addAll(mBean.getData());
+        mRecyclerView.refreshComplete();
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getInsuranceListFail(String msg) {
+
     }
 
     /**
@@ -118,18 +129,12 @@ public class InsuranceFragment extends MVPBaseFragment<InsuranceContract.View, I
      */
     @Override
     public void onRefresh() {//refresh data here
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                listData.clear();
-                for (int i = 0; i < 15; i++) {
-                    listData.add("item" + i + "after times of refresh");
-                }
-                mAdapter.notifyDataSetChanged();
-                mRecyclerView.refreshComplete();
-                ToastUtils.showLong("已刷新");
-            }
-
-        }, 1000);
+        if (!NetworkUtils.isConnected()) {
+            mRecyclerView.refreshComplete();
+            CommonUtils.showInfoDialog(getActivity(), "网络不给力，请检查网络设置。", "提示", "知道了", null, null, null);
+            return;
+        }
+        mPresenter.getInsuranceList(AppData.getUserId());
     }
 
     /**
@@ -137,15 +142,8 @@ public class InsuranceFragment extends MVPBaseFragment<InsuranceContract.View, I
      */
     @Override
     public void onLoadMore() {
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                mRecyclerView.loadMoreComplete();
-                for (int i = 0; i < 15; i++) {
-                    listData.add("item" + (i + listData.size()));
-                }
-                mRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-            }
-        }, 1000);
+        mRecyclerView.loadMoreComplete();
+        mAdapter.notifyDataSetChanged();
     }
+
 }

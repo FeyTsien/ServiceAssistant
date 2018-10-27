@@ -1,4 +1,4 @@
-package com.dt.serviceassistant.ui.activity.shipmentinfo;
+package com.dt.serviceassistant.ui.activity.insurancedetail;
 
 import com.dt.serviceassistant.bean.AppBean;
 import com.dt.serviceassistant.mvp.BasePresenter;
@@ -9,7 +9,7 @@ import com.dt.serviceassistant.mvp.BaseView;
  * 邮箱 784787081@qq.com
  */
 
-public class ShipmentInfoContract {
+public class InsuranceDetailContract {
     public interface View extends BaseView {
 
 //        //检验账号未注册，不可登录，需先注册

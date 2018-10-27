@@ -1,16 +1,10 @@
 package com.dt.serviceassistant.ui.activity.messagelist;
 
-import android.app.ProgressDialog;
-import android.text.TextUtils;
-
-import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.bean.AppBean;
 import com.dt.serviceassistant.bean.MessageBean;
 import com.dt.serviceassistant.manager.HttpManager;
 import com.dt.serviceassistant.mvp.BasePresenterImpl;
-import com.dt.serviceassistant.ui.activity.shipmentinfo.ShipmentInfoContract;
-import com.dt.serviceassistant.utils.CommonUtils;
 import com.dt.serviceassistant.utils.UrlUtils;
 import com.google.gson.Gson;
 

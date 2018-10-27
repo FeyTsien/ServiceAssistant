@@ -3,6 +3,7 @@ package com.dt.serviceassistant.ui.fragment.shipments;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.bean.AppBean;
+import com.dt.serviceassistant.bean.MBean;
 import com.dt.serviceassistant.bean.MessageBean;
 import com.dt.serviceassistant.manager.HttpManager;
 import com.dt.serviceassistant.mvp.BasePresenterImpl;
@@ -30,7 +31,7 @@ public class ShipmentsPresenter extends BasePresenterImpl<ShipmentsContract.View
         Gson gson = new Gson();
         String jsonData = gson.toJson(appDataBean);
 
-        HttpManager.getHttpManager().postJson(UrlUtils.GET_NEWS_LIST, jsonData, new Callback<ResponseBody>() {
+        HttpManager.getHttpManager().postJson(UrlUtils.GET_SHIPMENT_LIST, jsonData, new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -40,7 +41,7 @@ public class ShipmentsPresenter extends BasePresenterImpl<ShipmentsContract.View
                     }
                     String jsons = response.body().string();
                     Gson gson = new Gson();
-                    MessageBean messageBean = gson.fromJson(jsons, MessageBean.class);
+                    MBean messageBean = gson.fromJson(jsons, MBean.class);
                     if (messageBean.getCode() == 1) {
                         if (mView != null) {
                             mView.getShipmentListSuccess(messageBean);
