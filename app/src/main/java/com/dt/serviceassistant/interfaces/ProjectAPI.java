@@ -20,6 +20,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Url;
+
 /**
  * Created by zhiyuan on 17/1/11.
  */
@@ -39,11 +40,16 @@ public interface ProjectAPI {
     //json方式请求
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST
-    Call<ResponseBody> postJson(@Url String url, @Body RequestBody route);
+    Call<ResponseBody> postJsonCall(@Url String url, @Body RequestBody route);
+
+    //    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @Headers({"Content-Type:application/json", "Accept:application/json"})
+    @POST
+    Observable<ResponseBody> postJsonObs(@Url String url, @Body RequestBody route);
 
 
     //带有请求头的post请求方式
-    @Headers({"os:android","version:1"})
+    @Headers({"os:android", "version:1"})
     @FormUrlEncoded
     @POST
     Observable<String> postMethod(@Header("deviceId") String deviceId, @Header("uid") String uid, @Header("sign") String sign, @Url String url, @FieldMap Map<String, String> map);

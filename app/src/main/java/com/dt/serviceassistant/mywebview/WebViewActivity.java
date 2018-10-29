@@ -243,7 +243,7 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
         // 如要点击一张图片在弹出的页面查看所有的图片集合,则获取的值应该是个图片数组
         webView.loadUrl("javascript:(function(){" +
                 "var objs = document.getElementsByTagName(\"img\");" +
-                "for(var i=0;i<objs.length;i++)" +
+                "for(var i=0;i<o bjs.length;i++)" +
                 "{" +
                 //  "objs[i].onclick=function(){alert(this.getAttribute(\"has_link\"));}" +
                 "objs[i].onclick=function(){window.injectedObject.imageClick(this.getAttribute(\"src\"),this.getAttribute(\"has_link\"));}" +

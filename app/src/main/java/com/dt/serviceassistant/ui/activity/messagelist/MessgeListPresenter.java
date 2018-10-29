@@ -10,6 +10,8 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,15 +34,51 @@ public class MessgeListPresenter extends BasePresenterImpl<MessageListContract.V
         Gson gson = new Gson();
         String jsonData = gson.toJson(appDataBean);
 
-        HttpManager.getHttpManager().postJson(UrlUtils.GET_MESSAGE_LIST, jsonData, new Callback<ResponseBody>() {
+//        HttpManager.getHttpManager().postJson(UrlUtils.GET_MESSAGE_LIST, jsonData, new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                try {
+//                    if (response.body() == null) {
+//                        ToastUtils.showLong("没有数据");
+//                        return;
+//                    }
+//                    String jsons = response.body().string();
+//                    Gson gson = new Gson();
+//                    MessageBean messageBean = gson.fromJson(jsons, MessageBean.class);
+//                    if (messageBean.getCode() == 1) {
+//                        if (mView != null) {
+//                            mView.getMessageListSuccess(messageBean);
+//                        }
+//                    } else {
+//                        if (mView != null) {
+//                            mView.getMessageListFail(messageBean.getMsg());
+//                        }
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//
+//            }
+//        });
+
+        HttpManager.getHttpManager().postJson(UrlUtils.GET_MESSAGE_LIST, jsonData, new Observer<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(ResponseBody responseBody) {
                 try {
-                    if (response.body() == null) {
+                    if (responseBody == null) {
                         ToastUtils.showLong("没有数据");
                         return;
                     }
-                    String jsons = response.body().string();
+                    String jsons = responseBody.string();
                     Gson gson = new Gson();
                     MessageBean messageBean = gson.fromJson(jsons, MessageBean.class);
                     if (messageBean.getCode() == 1) {
@@ -58,7 +96,12 @@ public class MessgeListPresenter extends BasePresenterImpl<MessageListContract.V
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
 
             }
         });
