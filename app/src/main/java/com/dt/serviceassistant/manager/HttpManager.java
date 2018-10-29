@@ -39,25 +39,66 @@ public class HttpManager {
         return httpManager;
     }
 
+    /**
+     * TODO:Post方式请求(提交json)
+     * 封装时，传递callback
+     *
+     * @param url
+     */
+    public void postJson(String url,String jsonData, Callback<ResponseBody> callback ) {
+
+        if (!NetworkUtils.isConnected()) {
+            ToastUtils.showLong("网络崩溃了");
+            return;
+        }
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonData);//datas是json字符串
+
+        Call<ResponseBody> call = RetrofitUtil.getInstance().get1(ProjectAPI.class, UrlUtils.BASEURL).postJsonCall(url, body);
+        call.enqueue(callback);
+    }
 
     /**
-     * get方式请求
+     * TODO:Post方式请求(提交json)
+     * 封装时，传递RxJava的Observer
+     *
+     * @param url
+     */
+    public void postJson(String url, String jsonData, Observer<ResponseBody> observer) {
+
+        if (!NetworkUtils.isConnected()) {
+            ToastUtils.showLong("网络崩溃了");
+            return;
+        }
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonData);//datas是json字符串
+        Observable<ResponseBody> observable = RetrofitUtil.getInstance().get1(ProjectAPI.class, UrlUtils.BASEURL).postJsonObs(url, body);
+        //在子线程中执行请求，在主线程观察，将信息设置给观察者
+        observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
+    }
+
+
+    /**
+     * TODO:Post方式请求（提交表单）
      * 封装时，传递observer
      *
      * @param url
      * @param observer
      */
-    public void getMethod(String url, Observer<String> observer) {
-        //获取被观察者
-        Observable<String> observable = RetrofitUtil.getInstance().get(ProjectAPI.class).getMethod(url);
+    public void postForm(String url, Observer<String> observer, Map map) {
+
+        if (!NetworkUtils.isConnected()) {
+            ToastUtils.showLong("网络崩溃了");
+            return;
+        }
+        Observable<String> observable = RetrofitUtil.getInstance().get1(ProjectAPI.class, UrlUtils.BASEURL).postMethod(url, map);
         //在子线程中执行请求，在主线程观察，将信息设置给观察者
         observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
 
     }
 
 
+
     /**
-     * Post方式请求
+     * TODO:Post方式请求（提交表单）
      * 封装时，传递observer
      *
      * @param url
@@ -72,43 +113,22 @@ public class HttpManager {
         Observable<String> observable = RetrofitUtil.getInstance().get(ProjectAPI.class).postMethod(url, map);
         //在子线程中执行请求，在主线程观察，将信息设置给观察者
         observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
-
     }
 
     /**
-     * Post方式请求（表单）
+     * TODO:get方式请求
      * 封装时，传递observer
      *
      * @param url
      * @param observer
      */
-    public void postMethod(String url, Observer<String> observer, Map map) {
-
-        if (!NetworkUtils.isConnected()) {
-            ToastUtils.showLong("网络崩溃了");
-            return;
-        }
-        Observable<String> observable = RetrofitUtil.getInstance().get1(ProjectAPI.class, UrlUtils.BASEURL).postMethod(url, map);
+    public void getMethod(String url, Observer<String> observer) {
+        //获取被观察者
+        Observable<String> observable = RetrofitUtil.getInstance().get(ProjectAPI.class).getMethod(url);
         //在子线程中执行请求，在主线程观察，将信息设置给观察者
         observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
 
     }
 
-    /**
-     * Post方式请求(json)
-     * 封装时，callback
-     *
-     * @param url
-     */
-    public void postJson(String url,String jsonData, Callback<ResponseBody> callback ) {
-
-        if (!NetworkUtils.isConnected()) {
-            ToastUtils.showLong("网络崩溃了");
-            return;
-        }
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonData);//datas是json字符串
-        Call<ResponseBody> call = RetrofitUtil.getInstance().get1(ProjectAPI.class, UrlUtils.BASEURL).postJson(url, body);
-        call.enqueue(callback);
-    }
 
 }
