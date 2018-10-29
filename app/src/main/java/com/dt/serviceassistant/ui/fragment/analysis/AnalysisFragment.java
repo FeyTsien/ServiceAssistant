@@ -16,9 +16,6 @@ import butterknife.ButterKnife;
 
 
 /**
- * ================
- * ===== 资讯 =====
- * ================
  */
 
 public class AnalysisFragment extends MVPBaseFragment<AnalysisContract.View, AnalysisPresenter> implements AnalysisContract.View{
