@@ -11,20 +11,18 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginBottom="3dp"
         android:background="@drawable/side_nav_bar"
-        android:elevation="2dp"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
         app:contentInsetStart="0.0dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <FrameLayout
         android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -37,7 +35,7 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="bottom"
             android:background="@color/ghostwhite"
-            app:menu="@menu/navigation"/>
+            app:menu="@menu/navigation" />
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation_four"
@@ -45,7 +43,7 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="bottom"
             android:background="@color/ghostwhite"
-            app:menu="@menu/navigation_four"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:menu="@menu/navigation_four" />
     </FrameLayout>
 </LinearLayout>

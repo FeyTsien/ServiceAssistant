@@ -31,13 +31,13 @@ public abstract class MyBaseAdapter<T> extends RecyclerView.Adapter<MyBaseAdapte
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.e(TAG, "onCreateViewHolder: ");
+        Log.i(TAG, "onCreateViewHolder: ");
         return MyViewHolder.getHolder(mResId, parent, viewType);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder viewHolder, final int position) {
-        Log.e(TAG, "onBindViewHolder: ");
+        Log.i(TAG, "onBindViewHolder: ");
         bindView(viewHolder, position);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

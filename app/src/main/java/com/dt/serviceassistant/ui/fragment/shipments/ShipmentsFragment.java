@@ -8,17 +8,22 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
 import com.dt.serviceassistant.bean.MBean;
-import com.dt.serviceassistant.bean.MessageBean;
+import com.dt.serviceassistant.mvp.MContract;
+import com.dt.serviceassistant.mvp.MPresenter;
 import com.dt.serviceassistant.mvp.MVPBaseFragment;
 import com.dt.serviceassistant.ui.activity.shipmentdetail.ShipmentDetailAcitivity;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
 import com.dt.serviceassistant.utils.CommonUtils;
+import com.dt.serviceassistant.utils.UrlUtils;
+import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
@@ -27,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.ft.widget.MultiItemDivider;
 
 
@@ -36,18 +42,32 @@ import me.ft.widget.MultiItemDivider;
  * ================
  */
 
-public class ShipmentsFragment extends MVPBaseFragment<ShipmentsContract.View, ShipmentsPresenter> implements ShipmentsContract.View, XRecyclerView.LoadingListener {
+public class ShipmentsFragment extends MVPBaseFragment<MContract.View, MPresenter> implements MContract.View {
 
     private String TAG = getClass().getSimpleName();
 
-    private List<MBean.DataBean> mDataBeanList;
+    private String mUserid;
+    private String mShipmentCompany;
+    private String mReceivingCompany;
+    private String mContact;
+    private String mContactPhone;
+    private String mRtime;
+    private String mDescription;
 
     private View mRootView;
-    //    private MyAdapter mAdapter;
-    private MyBaseAdapter mAdapter;
 
-    @BindView(R.id.xrecyclerview)
-    XRecyclerView mRecyclerView;
+    @BindView(R.id.et_shipment_company)
+    EditText mEtShipmentCompany;
+    @BindView(R.id.et_receiving_company)
+    EditText mEtReceivingCompany;
+    @BindView(R.id.et_shipment_date)
+    EditText mEtShipmentDate;
+    @BindView(R.id.et_contact)
+    EditText mEtContact;
+    @BindView(R.id.et_contact_phone)
+    EditText mEtContactPhone;
+    @BindView(R.id.et_shipment_that)
+    EditText mEtInsuranceThat;
 
 
     public static ShipmentsFragment newInstance() {
@@ -62,91 +82,49 @@ public class ShipmentsFragment extends MVPBaseFragment<ShipmentsContract.View, S
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_shipments, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_shipment, container, false);
         ButterKnife.bind(this, mRootView);
-        initData();
         initView();
         return mRootView;
     }
 
-    /**
-     * 初始化数据
-     */
-    private void initData() {
-        mDataBeanList = new ArrayList<MBean.DataBean>();
-        mPresenter.getShipmentList(AppData.getUserId());
-    }
 
     private void initView() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
-        //添加分割线
-        MultiItemDivider itemDivider = new MultiItemDivider(getActivity(), MultiItemDivider.VERTICAL_LIST, R.drawable.divider_mileage);
-        itemDivider.setDividerMode(MultiItemDivider.INSIDE);//最后一个item下没有分割线
-        // itemDivider.setDividerMode(MultiItemDivider.END);//最后一个item下有分割线
-        mRecyclerView.addItemDecoration(itemDivider);
-        mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
-        mRecyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);
-        //下拉刷新，上拉加载监听
-        mRecyclerView.setLoadingListener(this);
+    }
 
-        mAdapter = new MyBaseAdapter<MBean.DataBean>(mDataBeanList, R.layout.item_shipment) {
-            @Override
-            public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
-                holder.setTextView(R.id.tv_information_time, mDataBeanList.get(position).getRtime());
-                holder.setTextView(R.id.tv_app, mDataBeanList.get(position).getNtitle());
-                holder.setTextView(R.id.tv_information_title, mDataBeanList.get(position).getContent());
-            }
-        };
-        mRecyclerView.setAdapter(mAdapter);
-        //item点击事件
-        mAdapter.setOnItemClickListener(new MyBaseAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int pos) {
-                Intent intent = new Intent(ShipmentsFragment.this.getActivity(), ShipmentDetailAcitivity.class);
-                intent.putExtra(ShipmentDetailAcitivity.SHIPMENT_DATA_ITEM,mDataBeanList.get(pos));
-                startActivity(intent);
-            }
-        });
 
+    @OnClick(R.id.btn_submit)
+    public void submitShipment() {
+
+        mUserid = AppData.getUserId();
+        mShipmentCompany = mEtShipmentCompany.getText().toString();
+        mReceivingCompany = mEtReceivingCompany.getText().toString();
+        mRtime = mEtShipmentDate.getText().toString();
+        mContact = mEtContact.getText().toString();
+        mContactPhone = mEtContactPhone.getText().toString();
+        mDescription = mEtInsuranceThat.getText().toString();
+
+        MBean.DataBean dataBean = new MBean.DataBean();
+        dataBean.setUserid(mUserid);
+        dataBean.setScompany(mShipmentCompany);
+        dataBean.setRcompany(mReceivingCompany);
+        dataBean.setRtime(mRtime);
+        dataBean.setContact(mContact);
+        dataBean.setPhone(mContactPhone);
+        dataBean.setDescription(mDescription);
+        Gson gson = new Gson();
+        String jsonData = gson.toJson(dataBean);
+        mPresenter.request(UrlUtils.ADD_SHIPMENT, jsonData);
     }
 
     @Override
-    public void getShipmentListSuccess(MBean mBean) {
 
-        mDataBeanList.clear();
-        mDataBeanList.addAll(mBean.getData());
-        mRecyclerView.refreshComplete();
-        mAdapter.notifyDataSetChanged();
+    public void requestSuccess(MBean mBean) {
+        CommonUtils.showInfoDialog(getActivity(), "提交成功！", "提示", null, "确认", null, null);
     }
 
     @Override
-    public void getShipmentListFail(String error) {
-
+    public void requestFail(String msg) {
+        ToastUtils.showLong(msg);
     }
-
-    /**
-     * 下拉刷新
-     */
-    @Override
-    public void onRefresh() {//refresh data here
-        if (!NetworkUtils.isConnected()) {
-            mRecyclerView.refreshComplete();
-            CommonUtils.showInfoDialog(getActivity(), "网络不给力，请检查网络设置。", "提示", "知道了", null, null, null);
-            return;
-        }
-        mPresenter.getShipmentList(AppData.getUserId());
-    }
-
-    /**
-     * 上拉加载
-     */
-    @Override
-    public void onLoadMore() {
-        mRecyclerView.loadMoreComplete();
-        mAdapter.notifyDataSetChanged();
-    }
-
 }

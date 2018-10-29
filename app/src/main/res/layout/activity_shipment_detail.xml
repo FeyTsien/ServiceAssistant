@@ -15,17 +15,18 @@
             android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="发货公司*"
+            android:layout_alignBottom="@+id/tv_fahuogongsi"
             android:layout_marginRight="10dp"
-            android:layout_alignBottom="@+id/tv_fahuogongsi"/>
+            android:text="发货公司*" />
 
-        <EditText
-            android:id="@+id/tv_fahuogongsi"
+        <TextView
+            android:id="@+id/tv_shipment_company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_bg"
-            android:layout_toRightOf="@+id/tv1"/>
+            android:layout_toRightOf="@+id/tv1"
+            android:background="@drawable/edit_bg" />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,17 +36,18 @@
             android:id="@+id/tv2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="收货公司*"
+            android:layout_alignBottom="@+id/tv_shouhuogongsi"
             android:layout_marginRight="10dp"
-            android:layout_alignBottom="@+id/tv_shouhuogongsi"/>
+            android:text="收货公司*" />
 
-        <EditText
-            android:id="@+id/tv_shouhuogongsi"
+        <TextView
+            android:id="@+id/tv_receiving_company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_bg"
-            android:layout_toRightOf="@+id/tv2"/>
+            android:layout_toRightOf="@+id/tv2"
+            android:background="@drawable/edit_bg" />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,17 +57,18 @@
             android:id="@+id/tv3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="发货日期*"
+            android:layout_alignBottom="@+id/tv_fahuoriqi"
             android:layout_marginRight="10dp"
-            android:layout_alignBottom="@+id/tv_fahuoriqi"/>
+            android:text="发货日期*" />
 
-        <EditText
-            android:id="@+id/tv_fahuoriqi"
+        <TextView
+            android:id="@+id/tv_shipment_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_bg"
-            android:layout_toRightOf="@+id/tv3"/>
+            android:layout_toRightOf="@+id/tv3"
+            android:background="@drawable/edit_bg" />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,17 +78,18 @@
             android:id="@+id/tv4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="联  系  人*"
+            android:layout_alignBottom="@+id/tv_lianxiren"
             android:layout_marginRight="10dp"
-            android:layout_alignBottom="@+id/tv_lianxiren"/>
+            android:text="联  系  人*" />
 
-        <EditText
-            android:id="@+id/tv_lianxiren"
+        <TextView
+            android:id="@+id/tv_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_bg"
-            android:layout_toRightOf="@+id/tv4"/>
+            android:layout_toRightOf="@+id/tv4"
+            android:background="@drawable/edit_bg" />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,17 +99,18 @@
             android:id="@+id/tv5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="联系电话*"
+            android:layout_alignBottom="@+id/tv_lianxidianhua"
             android:layout_marginRight="10dp"
-            android:layout_alignBottom="@+id/tv_lianxidianhua"/>
+            android:text="联系电话*" />
 
-        <EditText
-            android:id="@+id/tv_lianxidianhua"
+        <TextView
+            android:id="@+id/tv_contact_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_bg"
-            android:layout_toRightOf="@+id/tv5"/>
+            android:layout_toRightOf="@+id/tv5"
+            android:background="@drawable/edit_bg" />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -115,26 +120,17 @@
             android:id="@+id/tv6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="描　　述*"
+            android:layout_alignBottom="@+id/tv_miaoshu"
             android:layout_marginRight="10dp"
-            android:layout_alignBottom="@+id/tv_miaoshu"/>
+            android:text="发货说明*" />
 
-        <EditText
-            android:id="@+id/tv_miaoshu"
+        <TextView
+            android:id="@+id/tv_shipment_that"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv6"
             android:background="@drawable/edit_bg"
-            android:lines="2"
-            android:layout_toRightOf="@+id/tv6"/>
+            android:lines="2" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="提交"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/btn_login"
-        android:textColor="@color/white"/>
 </LinearLayout>

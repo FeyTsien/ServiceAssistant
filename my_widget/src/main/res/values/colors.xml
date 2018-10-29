@@ -28,7 +28,8 @@
     <color name="colorHint">#989898</color>
 
 
-    <color name="gray">#808080</color><!--灰色 -->
+    <color name="gray">#9E9E9E</color><!--灰色 -->
+    <!--<color name="gray">#808080</color>&lt;!&ndash;灰色 &ndash;&gt;-->
     <color name="grey">#808080</color><!--灰色 -->
 
     <!--透明 -->

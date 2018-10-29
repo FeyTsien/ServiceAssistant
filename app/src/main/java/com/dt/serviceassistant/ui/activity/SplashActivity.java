@@ -57,8 +57,8 @@ public class SplashActivity extends BaseActivity {
 //            finish();
 //        }else {
         if (AppData.isLogined()) {
-//            ActivityUtils.startActivity(this, MainActivity.class);
-            ActivityUtils.startActivity(this, MainBossActivity.class);
+            ActivityUtils.startActivity(this, MainActivity.class);
+//            ActivityUtils.startActivity(this, MainBossActivity.class);
         } else {
             ActivityUtils.startActivity(this, LoginActivity.class);
         }
