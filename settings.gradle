@@ -1,1 +1,1 @@
-include ':app', ':my_widget'
+include ':app', ':my_widget', 'loadsir'
