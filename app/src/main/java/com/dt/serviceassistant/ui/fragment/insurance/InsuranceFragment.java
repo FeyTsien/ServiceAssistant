@@ -8,15 +8,22 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
 import com.dt.serviceassistant.bean.MBean;
+import com.dt.serviceassistant.mvp.MContract;
+import com.dt.serviceassistant.mvp.MPresenter;
 import com.dt.serviceassistant.mvp.MVPBaseFragment;
 import com.dt.serviceassistant.ui.activity.insurancedetail.InsuranceDetailAcitivity;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
 import com.dt.serviceassistant.utils.CommonUtils;
+import com.dt.serviceassistant.utils.UrlUtils;
+import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
@@ -25,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.ft.widget.MultiItemDivider;
 
 /**
@@ -33,18 +41,29 @@ import me.ft.widget.MultiItemDivider;
  * ================
  */
 
-public class InsuranceFragment extends MVPBaseFragment<InsuranceContract.View, InsurancePresenter> implements InsuranceContract.View, XRecyclerView.LoadingListener {
+public class InsuranceFragment extends MVPBaseFragment<MContract.View, MPresenter> implements MContract.View {
 
     private String TAG = getClass().getSimpleName();
 
-    private List<MBean.DataBean> mDataBeanList;
+    private String mUserid;
+    private String mReceivingCompany;
+    private String mContact;
+    private String mContactPhone;
+    private String mRtime;
+    private String mDescription;
 
     private View mRootView;
-    //    private MyAdapter mAdapter;
-    private MyBaseAdapter mAdapter;
 
-    @BindView(R.id.xrecyclerview)
-    XRecyclerView mRecyclerView;
+    @BindView(R.id.et_insurance_date)
+    EditText mEtInsuranceDate;
+    @BindView(R.id.et_receiving_company)
+    EditText mEtReceivingCompany;
+    @BindView(R.id.et_contact)
+    EditText mEtContact;
+    @BindView(R.id.et_contact_phone)
+    EditText mEtContactPhone;
+    @BindView(R.id.et_insurance_that)
+    EditText mEtInsuranceThat;
 
     public static InsuranceFragment newInstance() {
         return new InsuranceFragment();
@@ -60,90 +79,42 @@ public class InsuranceFragment extends MVPBaseFragment<InsuranceContract.View, I
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_insurance, container, false);
         ButterKnife.bind(this, mRootView);
-        initData();
         initView();
         return mRootView;
     }
 
-    /**
-     * 初始化数据
-     */
-    private void initData() {
-        mDataBeanList = new ArrayList<MBean.DataBean>();
-        mPresenter.getInsuranceList(AppData.getUserId());
-    }
-
     private void initView() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
-        //添加分割线
-        MultiItemDivider itemDivider = new MultiItemDivider(getActivity(), MultiItemDivider.VERTICAL_LIST, R.drawable.divider_mileage);
-        itemDivider.setDividerMode(MultiItemDivider.INSIDE);//最后一个item下没有分割线
-        // itemDivider.setDividerMode(MultiItemDivider.END);//最后一个item下有分割线
-        mRecyclerView.addItemDecoration(itemDivider);
-        mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
-        mRecyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);
-        //下拉刷新，上拉加载监听
-        mRecyclerView.setLoadingListener(this);
-
-        mAdapter = new MyBaseAdapter<MBean.DataBean>(mDataBeanList, R.layout.item_insurance) {
-            @Override
-            public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
-                holder.setTextView(R.id.tv_description, mDataBeanList.get(position).getDescription());
-                holder.setTextView(R.id.tv_rcompany, mDataBeanList.get(position).getRcompany());
-                holder.setTextView(R.id.tv_information_time, mDataBeanList.get(position).getRtime());
-                holder.setTextView(R.id.tv_status, mDataBeanList.get(position).getStatus());
-            }
-        };
-        mRecyclerView.setAdapter(mAdapter);
-        //item点击事件
-        mAdapter.setOnItemClickListener(new MyBaseAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int pos) {
-                Intent intent = new Intent(InsuranceFragment.this.getActivity(), InsuranceDetailAcitivity.class);
-                intent.putExtra(InsuranceDetailAcitivity.INSURANCE_DATA_ITEM, mDataBeanList.get(pos));
-                startActivity(intent);
-            }
-        });
-
     }
 
+    @OnClick(R.id.btn_submit)
+    public void submitShipment() {
+        mUserid= AppData.getUserId();
+        mRtime = mEtInsuranceDate.getText().toString();
+        mReceivingCompany = mEtReceivingCompany.getText().toString();
+        mContact = mEtContact.getText().toString();
+        mContactPhone = mEtContactPhone.getText().toString();
+        mDescription = mEtInsuranceThat.getText().toString();
 
-    @Override
-    public void getInsuranceListSuccess(MBean mBean) {
-        mDataBeanList.clear();
-        mDataBeanList.addAll(mBean.getData());
-        mRecyclerView.refreshComplete();
-        mAdapter.notifyDataSetChanged();
+        MBean.DataBean dataBean = new MBean.DataBean();
+        dataBean.setUserid(mUserid);
+        dataBean.setRcompany(mReceivingCompany);
+        dataBean.setRtime(mRtime);
+        dataBean.setContact(mContact);
+        dataBean.setPhone(mContactPhone);
+        dataBean.setDescription(mDescription);
+        Gson gson = new Gson();
+        String jsonData = gson.toJson(dataBean);
+        mPresenter.request(UrlUtils.ADD_INSURANCE, jsonData);
     }
 
     @Override
-    public void getInsuranceListFail(String msg) {
-
+    public void requestSuccess(MBean mBean) {
+        CommonUtils.showInfoDialog(getActivity(), "提交成功！", "提示", null, "确认", null, null);
     }
 
-    /**
-     * 下拉刷新
-     */
     @Override
-    public void onRefresh() {//refresh data here
-        if (!NetworkUtils.isConnected()) {
-            mRecyclerView.refreshComplete();
-            CommonUtils.showInfoDialog(getActivity(), "网络不给力，请检查网络设置。", "提示", "知道了", null, null, null);
-            return;
-        }
-        mPresenter.getInsuranceList(AppData.getUserId());
-    }
-
-    /**
-     * 上拉加载
-     */
-    @Override
-    public void onLoadMore() {
-        mRecyclerView.loadMoreComplete();
-        mAdapter.notifyDataSetChanged();
+    public void requestFail(String msg) {
+        ToastUtils.showLong(msg);
     }
 
 }

@@ -35,22 +35,23 @@
             android:launchMode="singleTask" />
 
         <!--消息列表-->
-        <activity
-            android:name=".ui.activity.messagelist.MessageListAcitivity" />
+        <activity android:name=".ui.activity.messagelist.MessageListAcitivity" />
+        <!--发货列表-->
+        <activity android:name=".ui.activity.shipmentlist.ShipmentListAcitivity" />
         <!--发货明细-->
-        <activity
-            android:name=".ui.activity.shipmentdetail.ShipmentDetailAcitivity" />
+        <activity android:name=".ui.activity.shipmentdetail.ShipmentDetailAcitivity" />
+        <!--保险列表-->
+        <activity android:name=".ui.activity.insurancelist.InsuranceListAcitivity" />
         <!--保险明细-->
-        <activity
-            android:name=".ui.activity.insurancedetail.InsuranceDetailAcitivity" />
+        <activity android:name=".ui.activity.insurancedetail.InsuranceDetailAcitivity" />
 
         <!--webview-->
         <activity
             android:name=".mywebview.WebViewActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <!--webview测试界面-->
         <activity

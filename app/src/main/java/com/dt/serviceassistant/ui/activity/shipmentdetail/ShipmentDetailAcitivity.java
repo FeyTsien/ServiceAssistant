@@ -25,14 +25,27 @@ public class ShipmentDetailAcitivity extends MVPBaseActivity<MContract.View, MPr
 
     private MBean.DataBean mDataBean;
     private String mUserid;
-    private String mScompany;
-    private String mRcompany;
+    private String mShipmentcompany;
+    private String mReceivingCompany;
     private String mRtime;
     private String mContact;
-    private String mPhone;
+    private String mContactPhone;
     private String mDescription;
+
     @BindView(R.id.tv_title)
     TextView mTvTitle;
+    @BindView(R.id.tv_shipment_company)
+    TextView mTvShipmentCompany;
+    @BindView(R.id.tv_receiving_company)
+    TextView mTvReceivingCompany;
+    @BindView(R.id.tv_shipment_date)
+    TextView mTvShipmentDate;
+    @BindView(R.id.tv_contact)
+    TextView mTvContact;
+    @BindView(R.id.tv_contact_phone)
+    TextView mTvContactPhone;
+    @BindView(R.id.tv_shipment_that)
+    TextView mTvInsuranceThat;
 
     @Override
     protected int getLayoutId() {
@@ -50,43 +63,30 @@ public class ShipmentDetailAcitivity extends MVPBaseActivity<MContract.View, MPr
     private void initData() {
         mDataBean = (MBean.DataBean) getIntent().getSerializableExtra(SHIPMENT_DATA_ITEM);
         mUserid = mDataBean.getUserid();
-         mScompany = mDataBean.getScompany();
-        mRcompany = mDataBean.getRcompany();
+        mShipmentcompany = mDataBean.getScompany();
+        mReceivingCompany = mDataBean.getRcompany();
         mRtime = mDataBean.getRtime();
         mContact = mDataBean.getContact();
-         mPhone = mDataBean.getPhone();
-         mDescription = mDataBean.getDescription();
+        mContactPhone = mDataBean.getPhone();
+        mDescription = mDataBean.getDescription();
     }
 
     private void initView() {
-        mTvTitle.setText("发货明细");
-    }
-
-    @OnClick(R.id.btn_submit)
-    public void submitShipment() {
-
-        MBean.DataBean dataBean = new MBean.DataBean();
-        dataBean.setUserid(mUserid);
-        dataBean.setScompany(mScompany);
-        dataBean.setRcompany(mRcompany);
-        dataBean.setRtime(mDataBean.getRtime());
-        dataBean.setContact(mDataBean.getContact());
-        dataBean.setPhone(mDataBean.getPhone());
-        dataBean.setDescription(mDataBean.getDescription());
-        Gson gson = new Gson();
-        String jsonData = gson.toJson(dataBean);
-        mPresenter.request(UrlUtils.ADD_SHIPMENT, jsonData);
+        mTvTitle.setText("保险明细");
+        mTvShipmentDate.setText(mRtime);
+        mTvShipmentCompany.setText(mShipmentcompany);
+        mTvReceivingCompany.setText(mReceivingCompany);
+        mTvContact.setText(mContact);
+        mTvContactPhone.setText(mContactPhone);
+        mTvInsuranceThat.setText(mDescription);
     }
 
 
     @Override
     public void requestSuccess(MBean mBean) {
-
-        ToastUtils.showLong(mBean.getMsg());
     }
 
     @Override
     public void requestFail(String msg) {
-        ToastUtils.showLong(msg);
     }
 }
