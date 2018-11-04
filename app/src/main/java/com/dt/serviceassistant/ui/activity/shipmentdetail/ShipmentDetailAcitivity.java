@@ -72,7 +72,7 @@ public class ShipmentDetailAcitivity extends MVPBaseActivity<MContract.View, MPr
     }
 
     private void initView() {
-        mTvTitle.setText("保险明细");
+        mTvTitle.setText("发货详情");
         mTvShipmentDate.setText(mRtime);
         mTvShipmentCompany.setText(mShipmentcompany);
         mTvReceivingCompany.setText(mReceivingCompany);

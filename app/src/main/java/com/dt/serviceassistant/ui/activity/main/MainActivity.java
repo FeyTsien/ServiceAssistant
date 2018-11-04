@@ -81,7 +81,10 @@ public class MainActivity extends AppCompatActivity {
         addFragmentToActivity(getSupportFragmentManager(), mFragmentList.get(0), R.id.fragment);
         mCurrentFragment = mFragmentList.get(0);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+//        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+//        BottomNavigationViewHelper.disableShiftMode(navigation);
+//        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_four);
         BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 

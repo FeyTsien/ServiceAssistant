@@ -123,7 +123,6 @@ public class ShipmentListAcitivity extends MVPBaseActivity<MContract.View, MPres
             CommonUtils.showInfoDialog(this, "网络不给力，请检查网络设置。", "提示", "知道了", null, null, null);
             return;
         }
-        mPresenter.request(UrlUtils.GET_SHIPMENT_LIST, AppData.getUserId());
         request();
     }
 

@@ -35,7 +35,8 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="bottom"
             android:background="@color/ghostwhite"
-            app:menu="@menu/navigation" />
+            app:menu="@menu/navigation"
+            android:visibility="gone"/>
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation_four"
@@ -43,7 +44,6 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="bottom"
             android:background="@color/ghostwhite"
-            android:visibility="gone"
             app:menu="@menu/navigation_four" />
     </FrameLayout>
 </LinearLayout>

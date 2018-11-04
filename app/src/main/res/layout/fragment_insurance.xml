@@ -14,16 +14,20 @@
             android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_fahuogongsi"
+            android:layout_alignBottom="@+id/tv_insurance_date"
             android:layout_marginRight="10dp"
-            android:text="保险日期*" />
+            android:text="保险日期*"
+            android:textColor="@color/text_color333333"
+            android:textSize="16sp" />
 
-        <EditText
-            android:id="@+id/et_insurance_date"
+        <TextView
+            android:id="@+id/tv_insurance_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/tv1"
-            android:background="@drawable/edit_bg" />
+            android:background="@drawable/edit_bg"
+            android:textColor="@color/text_color333333"
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -35,16 +39,20 @@
             android:id="@+id/tv2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_shouhuogongsi"
+            android:layout_alignBottom="@+id/et_receiving_company"
             android:layout_marginRight="10dp"
-            android:text="收货公司*" />
+            android:text="收货公司*"
+            android:textColor="@color/text_color333333"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/et_receiving_company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/tv2"
-            android:background="@drawable/edit_bg" />
+            android:background="@drawable/edit_bg"
+            android:textColor="@color/text_color333333"
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -56,16 +64,20 @@
             android:id="@+id/tv4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_lianxiren"
+            android:layout_alignBottom="@+id/et_contact"
             android:layout_marginRight="10dp"
-            android:text="联  系  人*" />
+            android:text="联  系  人*"
+            android:textColor="@color/text_color333333"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/et_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/tv4"
-            android:background="@drawable/edit_bg" />
+            android:background="@drawable/edit_bg"
+            android:textColor="@color/text_color333333"
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -77,16 +89,20 @@
             android:id="@+id/tv5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_lianxidianhua"
+            android:layout_alignBottom="@+id/et_contact_phone"
             android:layout_marginRight="10dp"
-            android:text="联系电话*" />
+            android:text="联系电话*"
+            android:textColor="@color/text_color333333"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/et_contact_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/tv5"
-            android:background="@drawable/edit_bg" />
+            android:background="@drawable/edit_bg"
+            android:textColor="@color/text_color333333"
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -98,16 +114,19 @@
             android:id="@+id/tv6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_miaoshu"
             android:layout_marginRight="10dp"
-            android:text="保险说明*" />
+            android:text="保险说明*"
+            android:textColor="@color/text_color333333"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/et_insurance_that"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_toRightOf="@+id/tv6"
-            android:background="@drawable/edit_bg" />
+            android:background="@drawable/edit_bg"
+            android:textColor="@color/text_color333333"
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <Button
@@ -118,5 +137,6 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/btn_login"
         android:text="提交"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 </LinearLayout>

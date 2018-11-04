@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +23,14 @@ import com.dt.serviceassistant.mvp.MVPBaseFragment;
 import com.dt.serviceassistant.ui.activity.insurancedetail.InsuranceDetailAcitivity;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
 import com.dt.serviceassistant.utils.CommonUtils;
+import com.dt.serviceassistant.utils.DateUtils;
 import com.dt.serviceassistant.utils.UrlUtils;
 import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,8 +57,8 @@ public class InsuranceFragment extends MVPBaseFragment<MContract.View, MPresente
 
     private View mRootView;
 
-    @BindView(R.id.et_insurance_date)
-    EditText mEtInsuranceDate;
+    @BindView(R.id.tv_insurance_date)
+    TextView mTvInsuranceDate;
     @BindView(R.id.et_receiving_company)
     EditText mEtReceivingCompany;
     @BindView(R.id.et_contact)
@@ -64,6 +67,9 @@ public class InsuranceFragment extends MVPBaseFragment<MContract.View, MPresente
     EditText mEtContactPhone;
     @BindView(R.id.et_insurance_that)
     EditText mEtInsuranceThat;
+
+    private TextView[] editTexts;
+    private String[] hints = {"请选择保险日期", "收货公司不能为空", "联系人不能为空", "联系电话不能为空", "保险说明不能为空"};
 
     public static InsuranceFragment newInstance() {
         return new InsuranceFragment();
@@ -84,12 +90,36 @@ public class InsuranceFragment extends MVPBaseFragment<MContract.View, MPresente
     }
 
     private void initView() {
+        editTexts = new TextView[]{mTvInsuranceDate, mEtReceivingCompany, mEtContact, mEtContactPhone, mEtInsuranceThat};
     }
 
+
+    /**
+     * 点击选择日期
+     */
+    @OnClick(R.id.tv_insurance_date)
+    public void showDate() {
+        Calendar calendar = Calendar.getInstance();
+        DateUtils.showDateAndTimePickerDialog(getActivity(), 0, mTvInsuranceDate, calendar);
+    }
+
+    /**
+     * 点击提交
+     */
     @OnClick(R.id.btn_submit)
     public void submitShipment() {
-        mUserid= AppData.getUserId();
-        mRtime = mEtInsuranceDate.getText().toString();
+        if (editTexts.length == hints.length) {
+
+            for (int i = 0; i < editTexts.length; i++) {
+                if (TextUtils.isEmpty(editTexts[i].getText().toString())) {
+                    CommonUtils.showInfoDialog(getActivity(), hints[i], "提示", null, "确认", null, null);
+                    return;
+                }
+            }
+        }
+
+        mUserid = AppData.getUserId();
+        mRtime = mTvInsuranceDate.getText().toString();
         mReceivingCompany = mEtReceivingCompany.getText().toString();
         mContact = mEtContact.getText().toString();
         mContactPhone = mEtContactPhone.getText().toString();

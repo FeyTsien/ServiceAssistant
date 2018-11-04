@@ -74,7 +74,7 @@ public class MeFragment extends MVPBaseFragment<MeContract.View, MePresenter> im
 
     @OnClick(R.id.btn_login_out)
     public void loginOut() {
-        CommonUtils.showInfoDialog(getActivity(), "网络不给力，请检查网络设置。", "提示", "取消", "退出", null, new DialogInterface.OnClickListener() {
+        CommonUtils.showInfoDialog(getActivity(), "确定要退出登录吗？", "提示", "取消", "退出", null, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 AppData.setLogined(false);

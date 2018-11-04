@@ -70,5 +70,5 @@ public interface ProjectAPI {
     @Headers({"os:android"})
     @Multipart
     @POST
-    Observable<ResponseBody> upLoadImg(@Header("deviceId") String deviceId, @Header("uid") String uid, @Header("sign") String sign, @Url String url, @Part MultipartBody.Part photo);
+    Observable<ResponseBody> upLoadImg(@Url String url, @Part MultipartBody.Part photo);
 }

@@ -50,7 +50,6 @@
             android:name=".mywebview.WebViewActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
         <!--webview测试界面-->
