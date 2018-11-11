@@ -2,21 +2,16 @@ package com.dt.serviceassistant.ui.activity.insurancedetail;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.dt.serviceassistant.R;
-import com.dt.serviceassistant.bean.AppBean;
 import com.dt.serviceassistant.bean.MBean;
 import com.dt.serviceassistant.mvp.MContract;
 import com.dt.serviceassistant.mvp.MPresenter;
 import com.dt.serviceassistant.mvp.MVPBaseActivity;
-import com.dt.serviceassistant.utils.UrlUtils;
-import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class InsuranceDetailAcitivity extends MVPBaseActivity<MContract.View, MPresenter> implements MContract.View {
 

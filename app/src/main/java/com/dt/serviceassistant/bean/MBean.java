@@ -24,15 +24,6 @@ public class MBean extends CodeBean {
     }
 
     public static class DataBean implements Serializable {
-        /**
-         * sex : 1
-         * phone :
-         * nickname : 刘万全
-         * userid : 10004939
-         * password : xMLJRiSkAaA=
-         * headurl :
-         * roletype : 0
-         */
 
         private String sex;
         private String phone;

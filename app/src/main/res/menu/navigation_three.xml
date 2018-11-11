@@ -11,20 +11,6 @@
         android:icon="@drawable/ic_library_books_black_24dp"
         android:title="@string/title_information" />
 
-
-    <!--<item-->
-        <!--android:id="@+id/navigation_center"-->
-        <!--android:icon="@null"-->
-        <!--android:title="" />-->
-    <item
-        android:id="@+id/navigation_shipments"
-        android:icon="@drawable/ic_send_black_24dp"
-        android:title="@string/title_shipments" />
-    <!--<item-->
-        <!--android:id="@+id/navigation_insurance"-->
-        <!--android:icon="@drawable/ic_insurance"-->
-        <!--android:title="@string/title_insurance" />-->
-
     <item
         android:id="@+id/navigation_me"
         android:icon="@drawable/ic_person_black_24dp"

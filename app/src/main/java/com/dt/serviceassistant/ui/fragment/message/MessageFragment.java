@@ -69,6 +69,7 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
         initView();
         return mRootView;
     }
+
     private void initData() {
         mDataBeanList = new ArrayList<MessageBean.DataBean>();
         mPresenter.getTpyeMessages(AppData.getUserId());
@@ -111,7 +112,6 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
     }
 
 
-
     @Override
     public void getTpyeMessagesSuccess(MessageBean messageBean) {
         mDataBeanList.clear();
@@ -122,7 +122,7 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
 
     @Override
     public void getTpyeMessagesFail(String error) {
-
+        mRecyclerView.refreshComplete();
     }
 
     /**

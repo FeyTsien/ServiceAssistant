@@ -1,6 +1,5 @@
 package com.dt.serviceassistant.ui.activity.messagelist;
 
-import com.dt.serviceassistant.bean.AppBean;
 import com.dt.serviceassistant.bean.MessageBean;
 import com.dt.serviceassistant.mvp.BasePresenter;
 import com.dt.serviceassistant.mvp.BaseView;

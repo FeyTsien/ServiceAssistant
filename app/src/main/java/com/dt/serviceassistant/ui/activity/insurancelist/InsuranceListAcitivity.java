@@ -104,18 +104,6 @@ public class InsuranceListAcitivity extends MVPBaseActivity<MContract.View, MPre
 
     }
 
-    @Override
-    public void requestSuccess(MBean mBean) {
-        mDataBeanList.clear();
-        mDataBeanList.addAll(mBean.getData());
-        mRecyclerView.refreshComplete();
-        mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void requestFail(String msg) {
-        ToastUtils.showLong(msg);
-    }
 
     @Override
     public void onRefresh() {
@@ -125,6 +113,10 @@ public class InsuranceListAcitivity extends MVPBaseActivity<MContract.View, MPre
             return;
         }
         request();
+    }
+    @Override
+    public void onLoadMore() {
+
     }
 
     /**
@@ -137,8 +129,18 @@ public class InsuranceListAcitivity extends MVPBaseActivity<MContract.View, MPre
         String jsonData = gson.toJson(appDataBean);
         mPresenter.request(UrlUtils.GET_INSURANCE_LIST, jsonData);
     }
-    @Override
-    public void onLoadMore() {
 
+
+    @Override
+    public void requestSuccess(MBean mBean) {
+        mDataBeanList.clear();
+        mDataBeanList.addAll(mBean.getData());
+        mRecyclerView.refreshComplete();
+        mAdapter.notifyDataSetChanged();
     }
+    @Override
+    public void requestFail(String msg) {
+        ToastUtils.showLong(msg);
+    }
+
 }

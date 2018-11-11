@@ -67,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
         initView();
     }
 
+    private void initData(){
+
+    }
+
     private void initView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -88,13 +92,6 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-//        ImageView imageView = (ImageView) findViewById(R.id.navigation_center_image);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(MainActivity.this, "Center", Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     public void switchFragment(Fragment from, Fragment to, CharSequence title) {

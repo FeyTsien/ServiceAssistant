@@ -56,7 +56,7 @@
             android:id="@+id/tv4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_lianxiren"
+            android:layout_alignBottom="@+id/tv_contact"
             android:layout_marginRight="10dp"
             android:text="联  系  人*" />
 
@@ -76,7 +76,7 @@
             android:id="@+id/tv5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_lianxidianhua"
+            android:layout_alignBottom="@+id/tv_contact_phone"
             android:layout_marginRight="10dp"
             android:text="联系电话*" />
 
@@ -96,7 +96,6 @@
             android:id="@+id/tv6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_miaoshu"
             android:layout_marginRight="10dp"
             android:text="保险说明*" />
 

@@ -1,7 +1,5 @@
 package com.dt.serviceassistant.bean;
 
-import java.io.Serializable;
-
 /**
  * Created by admin on 2018/7/2.
  */
@@ -46,6 +44,12 @@ public class AppBean extends CodeBean {// implements Serializable
         private String roletype;
 
         private int messagetype;
+
+        private String keyword;
+        private String starttime;
+        private String endtime;
+        private int analysistype;
+        private int start;
 
         public String getSex() {
             return sex;
@@ -111,5 +115,45 @@ public class AppBean extends CodeBean {// implements Serializable
             this.messagetype = messagetype;
         }
 
+
+        public String getKeyword() {
+            return keyword;
+        }
+
+        public void setKeyword(String keyword) {
+            this.keyword = keyword;
+        }
+
+        public String getStarttime() {
+            return starttime;
+        }
+
+        public void setStarttime(String starttime) {
+            this.starttime = starttime;
+        }
+
+        public String getEndtime() {
+            return endtime;
+        }
+
+        public void setEndtime(String endtime) {
+            this.endtime = endtime;
+        }
+
+        public int getAnalysistype() {
+            return analysistype;
+        }
+
+        public void setAnalysistype(int analysistype) {
+            this.analysistype = analysistype;
+        }
+
+        public int getStart() {
+            return start;
+        }
+
+        public void setStart(int start) {
+            this.start = start;
+        }
     }
 }

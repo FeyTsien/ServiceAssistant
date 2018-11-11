@@ -2,12 +2,8 @@ package com.dt.serviceassistant.ui.activity.login;
 
 import android.app.ProgressDialog;
 import android.text.TextUtils;
-import android.view.View;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.NetworkUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.bean.AppBean;
 import com.dt.serviceassistant.manager.HttpManager;
 import com.dt.serviceassistant.mvp.BasePresenterImpl;
@@ -16,11 +12,7 @@ import com.dt.serviceassistant.utils.UrlUtils;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;

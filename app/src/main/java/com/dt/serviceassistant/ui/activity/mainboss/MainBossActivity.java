@@ -17,11 +17,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
 import com.dt.serviceassistant.mvp.MVPBaseActivity;
 import com.dt.serviceassistant.ui.fragment.analysis.AnalysisFragment;
+import com.dt.serviceassistant.ui.fragment.analysis.AnalysisSingleFragment;
 import com.dt.serviceassistant.ui.fragmentBackHandler.BackHandlerHelper;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ import butterknife.ButterKnife;
  */
 
 public class MainBossActivity extends MVPBaseActivity<MainBossContract.View, MainBossPresenter> implements MainBossContract.View, NavigationView.OnNavigationItemSelectedListener {
+    public static final String ANALYSIS_TYPE = "analysis_type";
 
     FragmentTransaction fragmentTransaction;
     private List<Fragment> fragmentList = new ArrayList<>();
@@ -56,13 +59,18 @@ public class MainBossActivity extends MVPBaseActivity<MainBossContract.View, Mai
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        initView();
+        if (savedInstanceState != null) {
+            finish();
+            ActivityUtils.startActivity(MainBossActivity.class);
+        } else {
+            initView();
+        }
     }
 
     private void initView() {
         //标题栏
-        toolbar.setLogo(R.drawable.ic_insurance);
-        toolbar.setTitle("  配置");
+//        toolbar.setLogo(R.drawable.ic_insurance);
+        toolbar.setTitle("业务员分析");
         setSupportActionBar(toolbar);
         //主界面内容
         setFragment();
@@ -81,6 +89,9 @@ public class MainBossActivity extends MVPBaseActivity<MainBossContract.View, Mai
      */
     private void setFragment() {
         fragmentList.add(AnalysisFragment.newInstance());
+        fragmentList.add(AnalysisFragment.newInstance());
+        fragmentList.add(AnalysisSingleFragment.newInstance());
+        fragmentList.add(AnalysisSingleFragment.newInstance());
         fragmentList.add(AnalysisFragment.newInstance());
         fragmentList.add(AnalysisFragment.newInstance());
         fragmentList.add(AnalysisFragment.newInstance());
@@ -152,33 +163,38 @@ public class MainBossActivity extends MVPBaseActivity<MainBossContract.View, Mai
     public boolean onNavigationItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.nav_configuration:
-                toolbar.setLogo(R.drawable.ic_insurance);
-                toolbar.setTitle("  配置");
-
+            case R.id.nav_item0:
+//                toolbar.setLogo(R.drawable.ic_insurance);
+                toolbar.setTitle("业务员分析");
                 loadFragment(0);
                 break;
-            case R.id.nav_account:
-                toolbar.setLogo(R.drawable.ic_insurance);
-                toolbar.setTitle("  账户");
+            case R.id.nav_item1:
+                toolbar.setTitle("客户分析");
                 loadFragment(1);
                 break;
-            case R.id.nav_buy:
-                toolbar.setLogo(R.drawable.ic_insurance);
-                toolbar.setTitle("  购买");
+            case R.id.nav_item2:
+                toolbar.setTitle("应收账款");
                 loadFragment(2);
 //                WebViewActivity.loadUrl(this,"https://mangosteen.cloud/webApp?user=" + AppData.getEmail() + "&passwd=" + AppData.getPassword()+ "&isan=true" ,"购买");
                 break;
-            case R.id.nav_notice:
-                toolbar.setLogo(R.drawable.ic_insurance);
-                toolbar.setTitle("  公告");
+            case R.id.nav_item3:
+                toolbar.setTitle("资金分析");
                 loadFragment(3);
                 break;
-//            case R.id.nav_share:
-//                ToastUtil.show(this, "share");
-//                return true;
-            case R.id.nav_send:
-                ToastUtils.showLong( "退出");
+            case R.id.nav_item4:
+                toolbar.setTitle("实时库存;");
+                loadFragment(4);
+                break;
+            case R.id.nav_item5:
+                toolbar.setTitle("船舶分析");
+                loadFragment(5);
+                break;
+            case R.id.nav_item6:
+                toolbar.setTitle("任务信息");
+                loadFragment(6);
+                break;
+            case R.id.nav_logout:
+                ToastUtils.showLong("退出");
                 return true;
         }
         drawer.closeDrawer(GravityCompat.START);
@@ -195,10 +211,11 @@ public class MainBossActivity extends MVPBaseActivity<MainBossContract.View, Mai
         Fragment fragment = fragmentList.get(position);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        //首先判断mFrag 是否为空，如果不为，先隐藏起来，接着判断从List 获取的Fragment是否已经添加到Transaction中，如果未添加，添加后显示，如果已经添加，直接显示
+        //首先判断mFrag 是否为空，如果不为，先隐藏起来，
         if (mFrag != null) {
             fragmentTransaction.hide(mFrag);
         }
+        //接着判断从List 获取的Fragment是否已经添加到Transaction中，如果未添加，添加后显示，如果已经添加，直接显示
         if (!fragment.isAdded()) {
             fragmentTransaction.add(R.id.content, fragment);
 
@@ -208,6 +225,11 @@ public class MainBossActivity extends MVPBaseActivity<MainBossContract.View, Mai
         //将获取的Fragment 赋值给声明的Fragment 中，提交
         mFrag = fragment;
         fragmentTransaction.commit();
+
+        //分析类型，每个模块是不同的分析类型
+        Bundle bundle = new Bundle();
+        bundle.putInt(ANALYSIS_TYPE, position);
+        mFrag.setArguments(bundle);
 
     }
 

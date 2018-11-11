@@ -4,26 +4,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/app_toolbar" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp">
 
         <TextView
-            android:id="@+id/tv1"
+            android:id="@+id/tv_keyword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_fahuogongsi"
+            android:layout_alignBottom="@+id/et_keyword"
             android:layout_marginRight="10dp"
-            android:text="关键字" />
+            android:text="关  键  字" />
 
         <EditText
-            android:id="@+id/tv_fahuogongsi"
+            android:id="@+id/et_keyword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv1"
+            android:layout_toRightOf="@+id/tv_keyword"
             android:background="@drawable/edit_bg" />
     </RelativeLayout>
 
@@ -36,7 +34,7 @@
             android:id="@+id/tv2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_shouhuogongsi"
+            android:layout_alignBottom="@+id/tv_start_time"
             android:layout_marginRight="10dp"
             android:text="开始时间" />
 
@@ -57,7 +55,7 @@
             android:id="@+id/tv3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_fahuoriqi"
+            android:layout_alignBottom="@+id/tv_end_time"
             android:layout_marginRight="10dp"
             android:text="结束时间" />
 
@@ -70,7 +68,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/btn_submit"
+        android:id="@+id/btn_query"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -78,4 +76,9 @@
         android:background="@drawable/btn_login"
         android:text="查询"
         android:textColor="@color/white" />
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

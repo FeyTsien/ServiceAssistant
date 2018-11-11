@@ -3,31 +3,39 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_configuration"
+            android:id="@+id/nav_item0"
             android:icon="@drawable/ic_insurance"
             android:title="业务员分析" />
         <item
-            android:id="@+id/nav_account"
+            android:id="@+id/nav_item1"
             android:icon="@drawable/ic_person_black_24dp"
             android:title="客户分析" />
         <item
-            android:id="@+id/nav_buy"
+            android:id="@+id/nav_item2"
             android:icon="@drawable/ic_library_books_black_24dp"
             android:title="应收账款" />
         <item
-            android:id="@+id/nav_notice"
+            android:id="@+id/nav_item3"
             android:icon="@drawable/ic_home_black_24dp"
             android:title="资金分析" />
+        <item
+            android:id="@+id/nav_item4"
+            android:icon="@drawable/ic_library_books_black_24dp"
+            android:title="实时库存" />
+        <item
+            android:id="@+id/nav_item5"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="船舶分析" />
+        <item
+            android:id="@+id/nav_item6"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="任务信息" />
     </group>
 
     <item android:title="其他功能">
         <menu>
-            <!--<item-->
-                <!--android:id="@+id/nav_share"-->
-                <!--android:icon="@drawable/ic_menu_share"-->
-                <!--android:title="Share" />-->
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_send_black_24dp"
                 android:title="退出" />
         </menu>

@@ -33,7 +33,7 @@ public class MessagePresenter extends BasePresenterImpl<MessageContract.View> im
         Gson gson = new Gson();
         String jsonData = gson.toJson(appDataBean);
 
-        HttpManager.getHttpManager().postJson(UrlUtils.GET_MESSAGE_TYPE, jsonData, new Callback<ResponseBody>() {
+        HttpManager.getHttpManager().postJson(UrlUtils.GET_MESSAGE_TYPES, jsonData, new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {

@@ -20,7 +20,7 @@ public class UrlUtils {
     public static final String DO_CHECK_IN = "api/doCheckIn";
 
     //消息类型
-    public static final String GET_MESSAGE_TYPE = "message/getTypeMessages.do";
+    public static final String GET_MESSAGE_TYPES = "message/getTypeMessages.do";
     //消息列表
     public static final String GET_MESSAGE_LIST = "message/getMessages.do";
     //资讯列表
@@ -33,5 +33,11 @@ public class UrlUtils {
     public static final String GET_INSURANCE_LIST = "insurance/getInsurances.do";
     //添加保险
     public static final String ADD_INSURANCE = "insurance/addInsurance.do";
+
+
+    //老板界面（0:业务员分析;1:客户分析；4实时库存;5:船舶分析 6:任务信息）
+    public static final String BOSS_ANALYSIS_LIST = "boss/bossAnalysisList.do";
+    //老板界面（2：应收账款;3:资金分析; ）
+    public static final String BOSS_ANALYSIS_SINGLE = "boss/bossAnalysisSingle.do";
 
 }
