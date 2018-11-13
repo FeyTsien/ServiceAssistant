@@ -182,7 +182,7 @@ public class MainBossActivity extends MVPBaseActivity<MainBossContract.View, Mai
                 loadFragment(3);
                 break;
             case R.id.nav_item4:
-                toolbar.setTitle("实时库存;");
+                toolbar.setTitle("实时库存");
                 loadFragment(4);
                 break;
             case R.id.nav_item5:

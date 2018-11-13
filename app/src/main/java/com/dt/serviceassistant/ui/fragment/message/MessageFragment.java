@@ -43,7 +43,7 @@ import me.ft.widget.MultiItemDivider;
 public class MessageFragment extends MVPBaseFragment<MessageContract.View, MessagePresenter> implements MessageContract.View, XRecyclerView.LoadingListener {
     private String TAG = getClass().getSimpleName();
 
-    private List<MessageBean.DataBean> mDataBeanList;
+    private List<MessageBean.DataBean.MsgBean> mDataBeanList;
 
     private View mRootView;
     private MyBaseAdapter mAdapter;
@@ -71,7 +71,7 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
     }
 
     private void initData() {
-        mDataBeanList = new ArrayList<MessageBean.DataBean>();
+        mDataBeanList = new ArrayList<MessageBean.DataBean.MsgBean>();
         mPresenter.getTpyeMessages(AppData.getUserId());
     }
 
@@ -89,7 +89,7 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
         mRecyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);//下拉刷新图片
         mRecyclerView.setLoadingListener(this);
 
-        mAdapter = new MyBaseAdapter<MessageBean.DataBean>(mDataBeanList, R.layout.item_message) {
+        mAdapter = new MyBaseAdapter<MessageBean.DataBean.MsgBean>(mDataBeanList, R.layout.item_message) {
             @Override
             public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
                 holder.setTextView(R.id.tv_message_title, mDataBeanList.get(position).getTypename());
@@ -115,7 +115,7 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
     @Override
     public void getTpyeMessagesSuccess(MessageBean messageBean) {
         mDataBeanList.clear();
-        mDataBeanList.addAll(messageBean.getData());
+        mDataBeanList.addAll(messageBean.getData().getMsgX());
         mRecyclerView.refreshComplete();
         mAdapter.notifyDataSetChanged();
     }

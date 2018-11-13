@@ -29,7 +29,7 @@ public class MessageListAcitivity extends MVPBaseActivity<MessageListContract.Vi
     private String mMessageTypeName;
     private int mMessageType;
 
-    private List<MessageBean.DataBean> mDataBeanList;
+    private List<MessageBean.DataBean.MsgBean> mDataBeanList;
 
     private MyBaseAdapter mAdapter;
 
@@ -55,7 +55,7 @@ public class MessageListAcitivity extends MVPBaseActivity<MessageListContract.Vi
         mMessageTypeName = getIntent().getStringExtra(MESSAGE_TYPE_NAME);
         mMessageType = getIntent().getIntExtra(MESSAGE_TYPE, 0);
         mTvTitle.setText(mMessageTypeName);
-        mDataBeanList = new ArrayList<MessageBean.DataBean>();
+        mDataBeanList = new ArrayList<MessageBean.DataBean.MsgBean>();
         mPresenter.getMessageList(AppData.getUserId(), mMessageType);
     }
 
@@ -68,7 +68,7 @@ public class MessageListAcitivity extends MVPBaseActivity<MessageListContract.Vi
         mRecyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);//下拉刷新图片
         mRecyclerView.setLoadingListener(this);
 
-        mAdapter = new MyBaseAdapter<MessageBean.DataBean>(mDataBeanList, R.layout.item_message_l) {
+        mAdapter = new MyBaseAdapter<MessageBean.DataBean.MsgBean>(mDataBeanList, R.layout.item_message_l) {
             @Override
             public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
                 holder.setTextView(R.id.tv_message_time, mDataBeanList.get(position).getRtime());
@@ -89,7 +89,7 @@ public class MessageListAcitivity extends MVPBaseActivity<MessageListContract.Vi
     @Override
     public void getMessageListSuccess(MessageBean messageBean) {
         mDataBeanList.clear();
-        mDataBeanList.addAll(messageBean.getData());
+        mDataBeanList.addAll(messageBean.getData().getMsgX());
         mRecyclerView.refreshComplete();
         mAdapter.notifyDataSetChanged();
     }

@@ -44,7 +44,7 @@ import me.ft.widget.MultiItemDivider;
 public class InformationFragment extends MVPBaseFragment<InformationContract.View, InformationPresenter> implements InformationContract.View, XRecyclerView.LoadingListener {
     private String TAG = getClass().getSimpleName();
 
-    private List<MessageBean.DataBean> mDataBeanList;
+    private List<MessageBean.DataBean.MsgBean> mDataBeanList;
 
     private View mRootView;
     //    private MyAdapter mAdapter;
@@ -74,7 +74,7 @@ public class InformationFragment extends MVPBaseFragment<InformationContract.Vie
     }
 
     private void initData() {
-        mDataBeanList = new ArrayList<MessageBean.DataBean>();
+        mDataBeanList = new ArrayList<MessageBean.DataBean.MsgBean>();
         mPresenter.getNews(AppData.getUserId());
     }
 
@@ -93,7 +93,7 @@ public class InformationFragment extends MVPBaseFragment<InformationContract.Vie
         //下拉刷新，上拉加载监听
         mRecyclerView.setLoadingListener(this);
 
-        mAdapter = new MyBaseAdapter<MessageBean.DataBean>(mDataBeanList, R.layout.item_information) {
+        mAdapter = new MyBaseAdapter<MessageBean.DataBean.MsgBean>(mDataBeanList, R.layout.item_information) {
             @Override
             public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
                 holder.setTextView(R.id.tv_information_time, mDataBeanList.get(position).getRtime());
@@ -124,7 +124,7 @@ public class InformationFragment extends MVPBaseFragment<InformationContract.Vie
     public void getNewsSuccess(MessageBean messageBean) {
 
         mDataBeanList.clear();
-        mDataBeanList.addAll(messageBean.getData());
+        mDataBeanList.addAll(messageBean.getData().getMsgX());
         mRecyclerView.refreshComplete();
         mAdapter.notifyDataSetChanged();
     }

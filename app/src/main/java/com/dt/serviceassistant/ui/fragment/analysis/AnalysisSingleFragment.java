@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
+import com.dt.serviceassistant.bean.AnalysisBean;
 import com.dt.serviceassistant.bean.AppBean;
 import com.dt.serviceassistant.bean.MBean;
 import com.dt.serviceassistant.mvp.MContract;
@@ -38,7 +39,7 @@ import me.ft.widget.MultiItemDivider;
 /**
  */
 
-public class AnalysisSingleFragment extends MVPBaseFragment<MContract.View, MPresenter> implements MContract.View, XRecyclerView.LoadingListener {
+public class AnalysisSingleFragment extends MVPBaseFragment<AnalysisContract.View, AnalysisPresenter> implements AnalysisContract.View, XRecyclerView.LoadingListener {
     private String TAG = getClass().getSimpleName();
 
     private int mAnalysistype;
@@ -61,7 +62,7 @@ public class AnalysisSingleFragment extends MVPBaseFragment<MContract.View, MPre
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_analysis, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_analysis_single, container, false);
         ButterKnife.bind(this, mRootView);
         initData();
         initView();
@@ -94,8 +95,8 @@ public class AnalysisSingleFragment extends MVPBaseFragment<MContract.View, MPre
     }
 
     @Override
-    public void requestSuccess(MBean mBean) {
-        mBean.getMsg();
+    public void requestSuccess(AnalysisBean analysisBean) {
+        mTvContent.setText(analysisBean.getData().getAnalysissingle());
     }
 
     @Override

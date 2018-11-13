@@ -48,6 +48,9 @@ public class MBean extends CodeBean {
         private String contact; //联系人
         private String status;  //状态
         private String description;//描述
+        private int start;//页数
+        private List<String> analysis;
+
 
         public String getSex() {
             return sex;
@@ -231,6 +234,22 @@ public class MBean extends CodeBean {
 
         public void setDescription(String description) {
             this.description = description;
+        }
+
+        public int getStart() {
+            return start;
+        }
+
+        public void setStart(int start) {
+            this.start = start;
+        }
+
+        public List<String> getAnalysis() {
+            return analysis;
+        }
+
+        public void setAnalysis(List<String> analysis) {
+            this.analysis = analysis;
         }
     }
 }

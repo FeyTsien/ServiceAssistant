@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
+import com.dt.serviceassistant.bean.AnalysisBean;
 import com.dt.serviceassistant.bean.AppBean;
 import com.dt.serviceassistant.bean.MBean;
 import com.dt.serviceassistant.mvp.MContract;
@@ -38,16 +39,16 @@ import me.ft.widget.MultiItemDivider;
 /**
  */
 
-public class AnalysisFragment extends MVPBaseFragment<MContract.View, MPresenter> implements MContract.View, XRecyclerView.LoadingListener {
+public class AnalysisFragment extends MVPBaseFragment<AnalysisContract.View, AnalysisPresenter> implements AnalysisContract.View, XRecyclerView.LoadingListener {
     private String TAG = getClass().getSimpleName();
 
-    private List<MBean.DataBean> mDataBeanList;
+    private List<String> mDataBeanList;
 
     private String mKeyword;
     private String mStartTime;
     private String mEndTime;
     private int mAnalysistype;
-    private int mStart;
+    private int mStart = 0;
 
     private View mRootView;
     private MyBaseAdapter mAdapter;
@@ -103,12 +104,10 @@ public class AnalysisFragment extends MVPBaseFragment<MContract.View, MPresenter
         mRecyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);//下拉刷新图片
         mRecyclerView.setLoadingListener(this);
 
-        mAdapter = new MyBaseAdapter<MBean.DataBean>(mDataBeanList, R.layout.item_message) {
+        mAdapter = new MyBaseAdapter<String>(mDataBeanList, R.layout.item_analysis) {
             @Override
             public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
-//                holder.setTextView(R.id.tv_message_title, mDataBeanList.get(position).getTypename());
-//                holder.setTextView(R.id.tv_message_time, mDataBeanList.get(position).getRtime());
-//                holder.setTextView(R.id.tv_content, mDataBeanList.get(position).getContent());
+                holder.setTextView(R.id.tv_analysis, mDataBeanList.get(position));
             }
         };
         mRecyclerView.setAdapter(mAdapter);
@@ -158,10 +157,12 @@ public class AnalysisFragment extends MVPBaseFragment<MContract.View, MPresenter
     }
 
     @Override
-    public void requestSuccess(MBean mBean) {
+    public void requestSuccess(AnalysisBean analysisBean) {
         mRecyclerView.refreshComplete();
-        mDataBeanList.clear();
-        mDataBeanList.addAll(mBean.getData());
+        if (mStart == 0) {
+            mDataBeanList.clear();
+        }
+        mDataBeanList.addAll(analysisBean.getData().getAnalysis());
         mAdapter.notifyDataSetChanged();
     }
 
@@ -173,10 +174,13 @@ public class AnalysisFragment extends MVPBaseFragment<MContract.View, MPresenter
     @Override
     public void onRefresh() {
 
+        mStart = 0;
+        request();
     }
 
     @Override
     public void onLoadMore() {
-
+        mStart = mStart++;
+        request();
     }
 }
