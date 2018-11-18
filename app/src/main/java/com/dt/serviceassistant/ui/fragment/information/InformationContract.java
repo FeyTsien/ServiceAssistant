@@ -13,6 +13,6 @@ public class InformationContract {
     }
 
     interface  Presenter extends BasePresenter<View> {
-        void getNews(String userId);
+        void getNews(String url,String jsonData);
     }
 }

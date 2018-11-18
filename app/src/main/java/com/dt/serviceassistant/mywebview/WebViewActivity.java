@@ -81,8 +81,8 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
         mProgressBar = findViewById(R.id.pb_progress);
         webView = findViewById(R.id.webview_detail);
         videoFullView = findViewById(R.id.video_fullView);
-        mTitleToolBar = findViewById(R.id.title_tool_bar);
-        tvGunTitle = findViewById(R.id.tv_gun_title);
+        mTitleToolBar = findViewById(R.id.toolbar);
+        tvGunTitle = findViewById(R.id.tv_title);
         initToolBar();
     }
 

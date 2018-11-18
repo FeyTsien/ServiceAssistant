@@ -1,7 +1,9 @@
 package com.dt.serviceassistant.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -56,12 +58,19 @@ public class SplashActivity extends BaseActivity {
 //            CommonUtils.startActivity(this, WelcomeGuideActivity.class);
 //            finish();
 //        }else {
+        Intent intent;
         if (AppData.isLogined()) {
-            ActivityUtils.startActivity(this, MainActivity.class);
-//            ActivityUtils.startActivity(this, MainBossActivity.class);
+            if (TextUtils.equals(AppData.getRoleType(), "1") || TextUtils.equals(AppData.getRoleType(), "3")) {
+                intent = new Intent(this, MainActivity.class);
+            } else if (TextUtils.equals(AppData.getRoleType(), "2")) {
+                intent = new Intent(this, MainBossActivity.class);
+            } else {
+                intent = new Intent(this, LoginActivity.class);
+            }
         } else {
-            ActivityUtils.startActivity(this, LoginActivity.class);
+            intent = new Intent(this, LoginActivity.class);
         }
+        startActivity(intent);
         finish();
 //        }
     }

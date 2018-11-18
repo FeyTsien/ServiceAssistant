@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.dt.serviceassistant.app.ACache;
@@ -79,8 +80,49 @@ public abstract class BaseActivity extends AppCompatActivity {
         mAvatarSize = (int) (50 * mDensity);
     }
 
+
     /**
      * 子类可以直接用
+     *
+     * @param title
+     */
+    protected void setToolBar(Toolbar toolbar, TextView textView, CharSequence title) {
+        setToolBar(toolbar, textView, title, true);
+    }
+
+    /**
+     * 子类可以直接用
+     *
+     * @param resid
+     */
+    protected void setToolBar(Toolbar toolbar, TextView textView, int resid) {
+        CharSequence title = getResources().getText(resid);
+        setToolBar(toolbar, textView, title, true);
+    }
+
+    /**
+     * 子类可以直接用
+     *
+     * @param title
+     */
+    protected void setToolBar(Toolbar toolbar, TextView textView, CharSequence title, boolean enable) {
+        textView.setText(title);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(enable);//1.显示toolbar的返回按钮左上角图标
+        getSupportActionBar().setDisplayShowHomeEnabled(enable);//2.显示toolbar的返回按钮12要一起用
+        getSupportActionBar().setDisplayShowTitleEnabled(false);//不显示toolbar的标题
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+    }
+
+    /**
+     */
+    /**
+     * 子类可以直接用（暂时没有使用）
      *
      * @param title
      */
@@ -89,14 +131,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * 子类可以直接用
+     * 子类可以直接用（暂时没有使用）
      *
      * @param title
      */
     protected void setToolBar(Toolbar toolbar, String title, boolean enable) {
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
-        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setTitleTextColor(Color.BLACK);
         getSupportActionBar().setDisplayHomeAsUpEnabled(enable);//1.显示toolbar的返回按钮左上角图标
         getSupportActionBar().setDisplayShowHomeEnabled(enable);//2.显示toolbar的返回按钮12要一起用
         getSupportActionBar().setDisplayShowTitleEnabled(enable);//显示toolbar的标题
@@ -108,72 +150,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         synchronized (mActivities) {
             mActivities.remove(this);
         }
-    }
-
-    public String versionName;
-    public int versioncode;
-
-    /**
-     * 返回当前程序版本名
-     */
-    public void getAppVersionName(Context context) {
-        try {
-            // ---get the package info---
-            PackageManager pm = context.getPackageManager();
-            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
-            versionName = pi.versionName;
-            versioncode = pi.versionCode;
-
-        } catch (Exception e) {
-            LogUtils.e("VersionInfo", "Exception", e);
-        }
-
-    }
-
-    public void killAll() {
-        // 复制了一份mActivities 集合Å
-        List<AppCompatActivity> copy;
-        synchronized (mActivities) {
-            copy = new LinkedList<>(mActivities);
-        }
-        for (AppCompatActivity activity : copy) {
-            activity.finish();
-        }
-        // 杀死当前的进程
-        android.os.Process.killProcess(android.os.Process.myPid());
-    }
-
-    /**
-     * 颜色变化过度
-     *
-     * @param fraction
-     * @param startValue
-     * @param endValue
-     * @return
-     */
-    public Object evaluateColor(float fraction, Object startValue, Object endValue) {
-        int startInt = (Integer) startValue;
-        int startA = (startInt >> 24) & 0xff;
-        int startR = (startInt >> 16) & 0xff;
-        int startG = (startInt >> 8) & 0xff;
-        int startB = startInt & 0xff;
-
-        int endInt = (Integer) endValue;
-        int endA = (endInt >> 24) & 0xff;
-        int endR = (endInt >> 16) & 0xff;
-        int endG = (endInt >> 8) & 0xff;
-        int endB = endInt & 0xff;
-
-        return (startA + (int) (fraction * (endA - startA))) << 24 |
-                (startR + (int) (fraction * (endR - startR))) << 16 |
-                (startG + (int) (fraction * (endG - startG))) << 8 |
-                (startB + (int) (fraction * (endB - startB)));
     }
 
 }

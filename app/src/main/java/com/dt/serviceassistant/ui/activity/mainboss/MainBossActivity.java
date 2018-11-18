@@ -1,5 +1,7 @@
 package com.dt.serviceassistant.ui.activity.mainboss;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -22,15 +24,18 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
 import com.dt.serviceassistant.mvp.MVPBaseActivity;
+import com.dt.serviceassistant.ui.activity.login.LoginActivity;
 import com.dt.serviceassistant.ui.fragment.analysis.AnalysisFragment;
 import com.dt.serviceassistant.ui.fragment.analysis.AnalysisSingleFragment;
 import com.dt.serviceassistant.ui.fragmentBackHandler.BackHandlerHelper;
+import com.dt.serviceassistant.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -175,7 +180,6 @@ public class MainBossActivity extends MVPBaseActivity<MainBossContract.View, Mai
             case R.id.nav_item2:
                 toolbar.setTitle("应收账款");
                 loadFragment(2);
-//                WebViewActivity.loadUrl(this,"https://mangosteen.cloud/webApp?user=" + AppData.getEmail() + "&passwd=" + AppData.getPassword()+ "&isan=true" ,"购买");
                 break;
             case R.id.nav_item3:
                 toolbar.setTitle("资金分析");
@@ -194,12 +198,13 @@ public class MainBossActivity extends MVPBaseActivity<MainBossContract.View, Mai
                 loadFragment(6);
                 break;
             case R.id.nav_logout:
-                ToastUtils.showLong("退出");
+                loginOut();
                 return true;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     /**
      * TODO:加载切换Fragment，防止反复刷新
@@ -232,6 +237,25 @@ public class MainBossActivity extends MVPBaseActivity<MainBossContract.View, Mai
         mFrag.setArguments(bundle);
 
     }
+
+    /**
+     * 退出登录
+     */
+    public void loginOut() {
+        CommonUtils.showInfoDialog(this, "确定要退出登录吗？", "提示", "取消", "退出", null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                AppData.setLogined(false);
+                AppData.setUserId("");
+                AppData.setRoleType("");
+                AppData.setPhoneNumber("");
+                AppData.setPassword("");
+                finish();
+                ActivityUtils.startActivity(LoginActivity.class);
+            }
+        });
+    }
+
 
     private long lastBackPress;
 

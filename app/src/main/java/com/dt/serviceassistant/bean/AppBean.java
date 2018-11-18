@@ -40,16 +40,22 @@ public class AppBean extends CodeBean {// implements Serializable
         private String userid;
         private String password;
         private String headurl;
-
         private String roletype;
-
         private int messagetype;
-
         private String keyword;
         private String starttime;
         private String endtime;
         private int analysistype;
         private int start;
+        private int id;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
 
         public String getSex() {
             return sex;

@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
 import com.dt.serviceassistant.bean.AnalysisBean;
@@ -20,6 +22,7 @@ import com.dt.serviceassistant.mvp.MPresenter;
 import com.dt.serviceassistant.mvp.MVPBaseFragment;
 import com.dt.serviceassistant.ui.activity.mainboss.MainBossActivity;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
+import com.dt.serviceassistant.utils.CommonUtils;
 import com.dt.serviceassistant.utils.DateUtils;
 import com.dt.serviceassistant.utils.UrlUtils;
 import com.google.gson.Gson;
@@ -136,6 +139,25 @@ public class AnalysisFragment extends MVPBaseFragment<AnalysisContract.View, Ana
         }
     }
 
+    @Override
+    public void onRefresh() {
+
+        if (!NetworkUtils.isConnected()) {
+            mRecyclerView.refreshComplete();
+            CommonUtils.showInfoDialog(getActivity(), "网络不给力，请检查网络设置。", "提示", "知道了", null, null, null);
+            return;
+        }
+        mStart = 0;
+        request();
+    }
+
+    @Override
+    public void onLoadMore() {
+        mStart = mStart++;
+        request();
+    }
+
+
     /**
      * 请求
      */
@@ -169,18 +191,7 @@ public class AnalysisFragment extends MVPBaseFragment<AnalysisContract.View, Ana
     @Override
     public void requestFail(String msg) {
         mRecyclerView.refreshComplete();
+        ToastUtils.showLong(msg);
     }
 
-    @Override
-    public void onRefresh() {
-
-        mStart = 0;
-        request();
-    }
-
-    @Override
-    public void onLoadMore() {
-        mStart = mStart++;
-        request();
-    }
 }

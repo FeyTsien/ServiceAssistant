@@ -20,11 +20,7 @@ import retrofit2.Response;
 public class InformationPresenter extends BasePresenterImpl<InformationContract.View> implements InformationContract.Presenter {
 
     @Override
-    public void getNews(String userId) {
-        AppBean.DataBean appDataBean = new AppBean.DataBean();
-        appDataBean.setUserid(userId);
-        Gson gson = new Gson();
-        String jsonData = gson.toJson(appDataBean);
+    public void getNews(String url,String jsonData) {
         HttpManager.getHttpManager().postJson(UrlUtils.GET_NEWS_LIST, jsonData, new Observer<ResponseBody>() {
             @Override
             public void onSubscribe(Disposable d) {

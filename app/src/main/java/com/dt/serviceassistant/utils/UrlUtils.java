@@ -8,8 +8,6 @@ public class UrlUtils {
 
     //app主链接
     public static final String BASEURL = "http://114.215.93.127:9001/dtApi/";
-    //根据域名获取IP地址的链接
-    public static final String GET_IP_URL = "http://ip-api.com/json/";
 
     //=================接口=================
     //登录
@@ -33,6 +31,15 @@ public class UrlUtils {
     public static final String GET_INSURANCE_LIST = "insurance/getInsurances.do";
     //添加保险
     public static final String ADD_INSURANCE = "insurance/addInsurance.do";
+
+    //员工获取任务列表
+    public static final String GET_TASKS_LIST = "user/getTasks.do";
+    //员工处理任务
+    public static final String DO_WITH_TASK = "user/doWithTasks.do";
+    //获取员工发货列表
+    public static final String GET_STAFF_SHIPMENT_LIST = "user/getAllGoods.do";
+    //获取员工保险列表
+    public static final String GET_STAFF_INSURANCE_LIST = "user/getAllInsurances.do";
 
 
     //老板界面（0:业务员分析;1:客户分析；4实时库存;5:船舶分析 6:任务信息）

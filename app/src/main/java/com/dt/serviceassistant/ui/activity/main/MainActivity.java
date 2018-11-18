@@ -9,12 +9,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.dt.serviceassistant.R;
+import com.dt.serviceassistant.app.AppData;
+import com.dt.serviceassistant.ui.activity.login.LoginActivity;
+import com.dt.serviceassistant.ui.activity.mainboss.MainBossActivity;
 import com.dt.serviceassistant.ui.fragment.information.InformationFragment;
 import com.dt.serviceassistant.ui.fragment.insurance.InsuranceFragment;
 import com.dt.serviceassistant.ui.fragment.me.MeFragment;
@@ -64,10 +70,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView();
+        if (savedInstanceState != null) {
+            finish();
+            ActivityUtils.startActivity(MainBossActivity.class);
+        } else {
+            initView();
+        }
     }
 
-    private void initData(){
+    private void initData() {
 
     }
 
@@ -85,12 +96,20 @@ public class MainActivity extends AppCompatActivity {
         addFragmentToActivity(getSupportFragmentManager(), mFragmentList.get(0), R.id.fragment);
         mCurrentFragment = mFragmentList.get(0);
 
-//        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-//        BottomNavigationViewHelper.disableShiftMode(navigation);
-//        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_four);
-        BottomNavigationViewHelper.disableShiftMode(navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        if (TextUtils.equals(AppData.getRoleType(), "1")) {
+            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+            BottomNavigationViewHelper.disableShiftMode(navigation);
+            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+            navigation.setVisibility(View.VISIBLE);
+        } else if (TextUtils.equals(AppData.getRoleType(), "3")) {
+            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_three);
+            BottomNavigationViewHelper.disableShiftMode(navigation);
+            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+            navigation.setVisibility(View.VISIBLE);
+        }else {
+            ActivityUtils.startActivity(LoginActivity.class);
+            finish();
+        }
 
     }
 

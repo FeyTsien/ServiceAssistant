@@ -4,6 +4,7 @@ package com.dt.serviceassistant.ui.activity.login;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import com.dt.serviceassistant.app.AppData;
 import com.dt.serviceassistant.bean.AppBean;
 import com.dt.serviceassistant.mvp.MVPBaseActivity;
 import com.dt.serviceassistant.ui.activity.main.MainActivity;
+import com.dt.serviceassistant.ui.activity.mainboss.MainBossActivity;
 import com.dt.serviceassistant.utils.CommonUtils;
 import com.google.gson.Gson;
 
@@ -33,6 +35,8 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     private String mPhoneNumber;
     private String mCode;
 
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
     @BindView(R.id.et_phone)
@@ -43,14 +47,6 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     TextView mTvErrors;
     @BindView(R.id.btn_code)
     CountDownButton mCdbCode;
-
-    /**
-     * 返回
-     */
-    @OnClick(R.id.iv_back)
-    public void goBack() {
-        finish();
-    }
 
     @Override
     protected int getLayoutId() {
@@ -67,7 +63,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     }
 
     private void initView() {
-        mTvTitle.setText("登录");
+        setToolBar(mToolbar, mTvTitle, "登录");
         mCdbCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,24 +84,32 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     void login() {
         mPhoneNumber = mEtPhone.getText().toString();
         mCode = mEtCode.getText().toString();
-        mPresenter.login(mPhoneNumber,mCode);
+        mPresenter.login(mPhoneNumber, mCode);
     }
 
 
     @Override
     public void loginSuccess(AppBean appBean) {
-        ToastUtils.showShort("登录成功");
-//        //清空之前登录信息
-//        AppData.clearLogin();
-//        //保存最新登录信息
-//        AppData.saveLogin(appBean);
-
         AppData.setLogined(true);
         AppData.setUserId(appBean.getData().getUserid());
+        AppData.setRoleType(appBean.getData().getRoletype());
         AppData.setPhoneNumber(mPhoneNumber);
-//        AppData.setPassword(password);
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent;
+        if (TextUtils.equals(AppData.getRoleType(), "1")) {
+            //客户
+            intent = new Intent(this, MainActivity.class);
+        } else if (TextUtils.equals(AppData.getRoleType(), "2")) {
+            //老板
+            intent = new Intent(this, MainBossActivity.class);
+        } else if (TextUtils.equals(AppData.getRoleType(), "3")) {
+            //员工
+            intent = new Intent(this, MainActivity.class);
+        } else {
+            //RoleType不是1,2,3。不是正常角色。不允许进入APP
+            CommonUtils.showInfoDialog(this, "账号角色异常，请联系管理员。", "提示", "知道了", null, null, null);
+            return;
+        }
         startActivity(intent);
 
         finish();

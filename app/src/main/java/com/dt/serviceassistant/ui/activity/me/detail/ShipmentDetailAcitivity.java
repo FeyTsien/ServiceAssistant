@@ -1,7 +1,8 @@
-package com.dt.serviceassistant.ui.activity.insurancedetail;
+package com.dt.serviceassistant.ui.activity.me.detail;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.dt.serviceassistant.R;
@@ -13,34 +14,39 @@ import com.dt.serviceassistant.mvp.MVPBaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class InsuranceDetailAcitivity extends MVPBaseActivity<MContract.View, MPresenter> implements MContract.View {
+public class ShipmentDetailAcitivity extends MVPBaseActivity<MContract.View, MPresenter> implements MContract.View {
 
-    public static final String INSURANCE_DATA_ITEM = "insurance_data_item";
+    public static final String SHIPMENT_DATA_ITEM = "shipment_data_item";
 
-    private MBean.DataBean mDataBean;
+    private MBean.DataBean.MsgBean mDataBean;
     private String mUserid;
+    private String mShipmentcompany;
     private String mReceivingCompany;
+    private String mRtime;
     private String mContact;
     private String mContactPhone;
-    private String mRtime;
     private String mDescription;
 
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @BindView(R.id.tv_insurance_date)
-    TextView mTvInsuranceDate;
+    @BindView(R.id.tv_shipment_company)
+    TextView mTvShipmentCompany;
     @BindView(R.id.tv_receiving_company)
     TextView mTvReceivingCompany;
+    @BindView(R.id.tv_shipment_date)
+    TextView mTvShipmentDate;
     @BindView(R.id.tv_contact)
     TextView mTvContact;
     @BindView(R.id.tv_contact_phone)
     TextView mTvContactPhone;
-    @BindView(R.id.tv_insurance_that)
+    @BindView(R.id.tv_shipment_that)
     TextView mTvInsuranceThat;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_insurance_detail;
+        return R.layout.activity_shipment_detail;
     }
 
     @Override
@@ -52,9 +58,9 @@ public class InsuranceDetailAcitivity extends MVPBaseActivity<MContract.View, MP
     }
 
     private void initData() {
-
-        mDataBean = (MBean.DataBean) getIntent().getSerializableExtra(INSURANCE_DATA_ITEM);
+        mDataBean = (MBean.DataBean.MsgBean) getIntent().getSerializableExtra(SHIPMENT_DATA_ITEM);
         mUserid = mDataBean.getUserid();
+        mShipmentcompany = mDataBean.getScompany();
         mReceivingCompany = mDataBean.getRcompany();
         mRtime = mDataBean.getRtime();
         mContact = mDataBean.getContact();
@@ -63,21 +69,21 @@ public class InsuranceDetailAcitivity extends MVPBaseActivity<MContract.View, MP
     }
 
     private void initView() {
-        mTvTitle.setText("保险明细");
-        mTvInsuranceDate.setText(mRtime);
+        setToolBar(mToolbar, mTvTitle, "发货详情");
+        mTvShipmentDate.setText(mRtime);
+        mTvShipmentCompany.setText(mShipmentcompany);
         mTvReceivingCompany.setText(mReceivingCompany);
         mTvContact.setText(mContact);
         mTvContactPhone.setText(mContactPhone);
         mTvInsuranceThat.setText(mDescription);
     }
 
+
     @Override
     public void requestSuccess(MBean mBean) {
-
     }
 
     @Override
     public void requestFail(String msg) {
-
     }
 }

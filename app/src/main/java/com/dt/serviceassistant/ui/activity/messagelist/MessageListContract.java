@@ -22,7 +22,7 @@ public class MessageListContract {
 
         //获取消息列表
 
-        void getMessageList(String userId,int messageType);
+        void getMessageList(String url,String JsonData);
 
     }
 }

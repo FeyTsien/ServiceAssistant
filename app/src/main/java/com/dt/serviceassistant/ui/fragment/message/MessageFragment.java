@@ -72,7 +72,7 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
 
     private void initData() {
         mDataBeanList = new ArrayList<MessageBean.DataBean.MsgBean>();
-        mPresenter.getTpyeMessages(AppData.getUserId());
+        onRefresh();
     }
 
     private void initView() {
@@ -112,6 +112,31 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
     }
 
 
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {//refresh data here
+        mPresenter.getTpyeMessages(AppData.getUserId());
+    }
+
+    /**
+     * 上拉加载
+     */
+    @Override
+    public void onLoadMore() {
+        request();
+    }
+
+    private void request() {
+        if (!NetworkUtils.isConnected()) {
+            mRecyclerView.refreshComplete();
+            CommonUtils.showInfoDialog(getActivity(), "网络不给力，请检查网络设置。", "提示", "知道了", null, null, null);
+            return;
+        }
+        mPresenter.getTpyeMessages(AppData.getUserId());
+    }
+
     @Override
     public void getTpyeMessagesSuccess(MessageBean messageBean) {
         mDataBeanList.clear();
@@ -123,35 +148,5 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
     @Override
     public void getTpyeMessagesFail(String error) {
         mRecyclerView.refreshComplete();
-    }
-
-    /**
-     * 下拉刷新
-     */
-    @Override
-    public void onRefresh() {//refresh data here
-        if (!NetworkUtils.isConnected()) {
-            mRecyclerView.refreshComplete();
-            CommonUtils.showInfoDialog(getActivity(), "网络不给力，请检查网络设置。", "提示", "知道了", null, null, null);
-            return;
-        }
-        mPresenter.getTpyeMessages(AppData.getUserId());
-    }
-
-    /**
-     * 上拉加载
-     */
-    @Override
-    public void onLoadMore() {
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                mRecyclerView.loadMoreComplete();
-//                for (int i = 0; i < 15; i++) {
-//                    listData.add("item" + (i + listData.size()));
-//                }
-                mRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-            }
-        }, 1000);
     }
 }

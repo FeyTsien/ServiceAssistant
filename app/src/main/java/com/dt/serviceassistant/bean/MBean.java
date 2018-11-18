@@ -1,5 +1,7 @@
 package com.dt.serviceassistant.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,243 +15,265 @@ import java.util.List;
  */
 public class MBean extends CodeBean {
 
-    private List<DataBean> data;
+    private DataBean data;
 
-    public List<DataBean> getData() {
+    public DataBean getData() {
         return data;
     }
 
-    public void setData(List<DataBean> data) {
+    public void setData(DataBean data) {
         this.data = data;
     }
 
-    public static class DataBean implements Serializable {
+    public static class DataBean {
 
-        private String sex;
-        private String phone;
-        private String nickname;
-        private String userid;
-        private String password;
-        private String headurl;
-        private String roletype;
-        private int messagetype;
-        private int id;
-        private int isclick;
-        private String content;
-        private int messagecount;
-        private String mtimage;
-        private String rtime;
-        private String typename;
-        private String url;
-        private String ntitle;
-        private String mimage;
-        private String scompany;    //发货公司
-        private String rcompany; //收货公司
-        private String contact; //联系人
-        private String status;  //状态
-        private String description;//描述
-        private int start;//页数
-        private List<String> analysis;
+        @SerializedName("msg")
+        private List<MsgBean> msgX;
 
-
-        public String getSex() {
-            return sex;
+        public List<MsgBean> getMsgX() {
+            return msgX;
         }
 
-        public void setSex(String sex) {
-            this.sex = sex;
+        public void setMsgX(List<MsgBean> msgX) {
+            this.msgX = msgX;
         }
 
-        public String getPhone() {
-            return phone;
-        }
+        public static class MsgBean implements Serializable {
 
-        public void setPhone(String phone) {
-            this.phone = phone;
-        }
+            private String sex;
+            private String phone;
+            private String nickname;
+            private String userid;
+            private String password;
+            private String headurl;
+            private String roletype;
+            private int messagetype;
+            private int id;
+            private int isclick;
+            private String content;
+            private int messagecount;
+            private String mtimage;
+            private String rtime;
+            private String typename;
+            private String url;
+            private String ntitle;
+            private String mimage;
+            private String scompany;    //发货公司
+            private String rcompany; //收货公司
+            private String contact; //联系人
+            private String status;  //状态
+            private String description;//描述
+            private int start;//页数
+            private List<String> analysis;
+            private String createtime;
 
-        public String getNickname() {
-            return nickname;
-        }
+            public String getCreatetime() {
+                return createtime;
+            }
 
-        public void setNickname(String nickname) {
-            this.nickname = nickname;
-        }
+            public void setCreatetime(String createtime) {
+                this.createtime = createtime;
+            }
 
-        public String getUserid() {
-            return userid;
-        }
+            public String getSex() {
+                return sex;
+            }
 
-        public void setUserid(String userid) {
-            this.userid = userid;
-        }
+            public void setSex(String sex) {
+                this.sex = sex;
+            }
 
-        public String getPassword() {
-            return password;
-        }
+            public String getPhone() {
+                return phone;
+            }
 
-        public void setPassword(String password) {
-            this.password = password;
-        }
+            public void setPhone(String phone) {
+                this.phone = phone;
+            }
 
-        public String getHeadurl() {
-            return headurl;
-        }
+            public String getNickname() {
+                return nickname;
+            }
 
-        public void setHeadurl(String headurl) {
-            this.headurl = headurl;
-        }
+            public void setNickname(String nickname) {
+                this.nickname = nickname;
+            }
 
-        public String getRoletype() {
-            return roletype;
-        }
+            public String getUserid() {
+                return userid;
+            }
 
-        public void setRoletype(String roletype) {
-            this.roletype = roletype;
-        }
+            public void setUserid(String userid) {
+                this.userid = userid;
+            }
 
-        public int getMessagetype() {
-            return messagetype;
-        }
+            public String getPassword() {
+                return password;
+            }
 
-        public void setMessagetype(int messagetype) {
-            this.messagetype = messagetype;
-        }
+            public void setPassword(String password) {
+                this.password = password;
+            }
 
-        public int getId() {
-            return id;
-        }
+            public String getHeadurl() {
+                return headurl;
+            }
 
-        public void setId(int id) {
-            this.id = id;
-        }
+            public void setHeadurl(String headurl) {
+                this.headurl = headurl;
+            }
 
-        public int getIsclick() {
-            return isclick;
-        }
+            public String getRoletype() {
+                return roletype;
+            }
 
-        public void setIsclick(int isclick) {
-            this.isclick = isclick;
-        }
+            public void setRoletype(String roletype) {
+                this.roletype = roletype;
+            }
 
-        public String getContent() {
-            return content;
-        }
+            public int getMessagetype() {
+                return messagetype;
+            }
 
-        public void setContent(String content) {
-            this.content = content;
-        }
+            public void setMessagetype(int messagetype) {
+                this.messagetype = messagetype;
+            }
 
-        public int getMessagecount() {
-            return messagecount;
-        }
+            public int getId() {
+                return id;
+            }
 
-        public void setMessagecount(int messagecount) {
-            this.messagecount = messagecount;
-        }
+            public void setId(int id) {
+                this.id = id;
+            }
 
-        public String getMtimage() {
-            return mtimage;
-        }
+            public int getIsclick() {
+                return isclick;
+            }
 
-        public void setMtimage(String mtimage) {
-            this.mtimage = mtimage;
-        }
+            public void setIsclick(int isclick) {
+                this.isclick = isclick;
+            }
 
-        public String getRtime() {
-            return rtime;
-        }
+            public String getContent() {
+                return content;
+            }
 
-        public void setRtime(String rtime) {
-            this.rtime = rtime;
-        }
+            public void setContent(String content) {
+                this.content = content;
+            }
 
-        public String getTypename() {
-            return typename;
-        }
+            public int getMessagecount() {
+                return messagecount;
+            }
 
-        public void setTypename(String typename) {
-            this.typename = typename;
-        }
+            public void setMessagecount(int messagecount) {
+                this.messagecount = messagecount;
+            }
 
-        public String getUrl() {
-            return url;
-        }
+            public String getMtimage() {
+                return mtimage;
+            }
 
-        public void setUrl(String url) {
-            this.url = url;
-        }
+            public void setMtimage(String mtimage) {
+                this.mtimage = mtimage;
+            }
 
-        public String getNtitle() {
-            return ntitle;
-        }
+            public String getRtime() {
+                return rtime;
+            }
 
-        public void setNtitle(String ntitle) {
-            this.ntitle = ntitle;
-        }
+            public void setRtime(String rtime) {
+                this.rtime = rtime;
+            }
 
-        public String getMimage() {
-            return mimage;
-        }
+            public String getTypename() {
+                return typename;
+            }
 
-        public void setMimage(String mimage) {
-            this.mimage = mimage;
-        }
+            public void setTypename(String typename) {
+                this.typename = typename;
+            }
 
-        public String getScompany() {
-            return scompany;
-        }
+            public String getUrl() {
+                return url;
+            }
 
-        public void setScompany(String scompany) {
-            this.scompany = scompany;
-        }
+            public void setUrl(String url) {
+                this.url = url;
+            }
 
-        public String getRcompany() {
-            return rcompany;
-        }
+            public String getNtitle() {
+                return ntitle;
+            }
 
-        public void setRcompany(String rcompany) {
-            this.rcompany = rcompany;
-        }
+            public void setNtitle(String ntitle) {
+                this.ntitle = ntitle;
+            }
 
-        public String getContact() {
-            return contact;
-        }
+            public String getMimage() {
+                return mimage;
+            }
 
-        public void setContact(String contact) {
-            this.contact = contact;
-        }
+            public void setMimage(String mimage) {
+                this.mimage = mimage;
+            }
 
-        public String getStatus() {
-            return status;
-        }
+            public String getScompany() {
+                return scompany;
+            }
 
-        public void setStatus(String status) {
-            this.status = status;
-        }
+            public void setScompany(String scompany) {
+                this.scompany = scompany;
+            }
 
-        public String getDescription() {
-            return description;
-        }
+            public String getRcompany() {
+                return rcompany;
+            }
 
-        public void setDescription(String description) {
-            this.description = description;
-        }
+            public void setRcompany(String rcompany) {
+                this.rcompany = rcompany;
+            }
 
-        public int getStart() {
-            return start;
-        }
+            public String getContact() {
+                return contact;
+            }
 
-        public void setStart(int start) {
-            this.start = start;
-        }
+            public void setContact(String contact) {
+                this.contact = contact;
+            }
 
-        public List<String> getAnalysis() {
-            return analysis;
-        }
+            public String getStatus() {
+                return status;
+            }
 
-        public void setAnalysis(List<String> analysis) {
-            this.analysis = analysis;
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getDescription() {
+                return description;
+            }
+
+            public void setDescription(String description) {
+                this.description = description;
+            }
+
+            public int getStart() {
+                return start;
+            }
+
+            public void setStart(int start) {
+                this.start = start;
+            }
+
+            public List<String> getAnalysis() {
+                return analysis;
+            }
+
+            public void setAnalysis(List<String> analysis) {
+                this.analysis = analysis;
+            }
         }
     }
 }

@@ -30,7 +30,7 @@ public class DateUtils {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
                         // 此处得到选择的时间，可以进行你想要的操作
-                        tv.setText(year + "-" + monthOfYear
+                        tv.setText(year + "-" + (monthOfYear+1)
                                 + "-" + dayOfMonth + " ");
                         showTimePickerDialog(activity, themeResId, tv, calendar);
                     }
@@ -52,7 +52,7 @@ public class DateUtils {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
                         // 此处得到选择的时间，可以进行你想要的操作
-                        tv.setText(year + "-" + monthOfYear
+                        tv.setText(year + "-" + (monthOfYear+1)
                                 + "-" + dayOfMonth + " ");
                     }
                 }

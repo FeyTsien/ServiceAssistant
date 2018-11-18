@@ -26,6 +26,8 @@ public class AppData {
     private static final String KEY_PHONE_NUMBER = "phone_number";
     //密码
     private static final String KEY_PASSWORD = "password";
+    //角色类型
+    private static final String KEY_ROLE_TYPE = "role_type";
     //Android设备Id
     private static final String KEY_ANDROID_ID = "android_id";
 
@@ -98,6 +100,7 @@ public class AppData {
     public static String getUserId() {
         return SPUtils.getInstance().getString(KEY_USER_ID);
     }
+
     /**
      * 保存手机号
      */
@@ -127,6 +130,21 @@ public class AppData {
         return SPUtils.getInstance().getString(KEY_PASSWORD);
     }
 
+
+    /**
+     * 保存角色类型
+     */
+    public static void setRoleType(String roleType) {
+        SPUtils.getInstance().put(KEY_ROLE_TYPE, roleType);
+    }
+
+    /**
+     * 获取角色类型
+     */
+    public static String getRoleType() {
+        return SPUtils.getInstance().getString(KEY_ROLE_TYPE);
+    }
+
     /**
      * 保存手机设备ID
      */
@@ -153,6 +171,7 @@ public class AppData {
 
     /**
      * 保存登录信息
+     *
      * @param appBean
      */
     public static void saveLogin(AppBean appBean) {

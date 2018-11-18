@@ -37,13 +37,15 @@
         <!--消息列表-->
         <activity android:name=".ui.activity.messagelist.MessageListAcitivity" />
         <!--发货列表-->
-        <activity android:name=".ui.activity.shipmentlist.ShipmentListAcitivity" />
+        <activity android:name=".ui.activity.me.ShipmentListAcitivity" />
         <!--发货明细-->
-        <activity android:name=".ui.activity.shipmentdetail.ShipmentDetailAcitivity" />
+        <activity android:name=".ui.activity.me.detail.ShipmentDetailAcitivity" />
         <!--保险列表-->
-        <activity android:name=".ui.activity.insurancelist.InsuranceListAcitivity" />
+        <activity android:name=".ui.activity.me.InsuranceListAcitivity" />
         <!--保险明细-->
-        <activity android:name=".ui.activity.insurancedetail.InsuranceDetailAcitivity" />
+        <activity android:name=".ui.activity.me.detail.InsuranceDetailAcitivity" />
+        <!--任务列表-->
+        <activity android:name=".ui.activity.me.TaskListAcitivity" />
 
         <!--webview-->
         <activity

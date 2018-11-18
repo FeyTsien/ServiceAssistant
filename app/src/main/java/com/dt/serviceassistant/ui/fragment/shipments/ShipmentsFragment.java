@@ -1,24 +1,15 @@
 package com.dt.serviceassistant.ui.fragment.shipments;
 
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
-import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
@@ -26,23 +17,16 @@ import com.dt.serviceassistant.bean.MBean;
 import com.dt.serviceassistant.mvp.MContract;
 import com.dt.serviceassistant.mvp.MPresenter;
 import com.dt.serviceassistant.mvp.MVPBaseFragment;
-import com.dt.serviceassistant.ui.activity.shipmentdetail.ShipmentDetailAcitivity;
-import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
 import com.dt.serviceassistant.utils.CommonUtils;
 import com.dt.serviceassistant.utils.DateUtils;
 import com.dt.serviceassistant.utils.UrlUtils;
 import com.google.gson.Gson;
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.ft.widget.MultiItemDivider;
 
 
 /**
@@ -138,7 +122,7 @@ public class ShipmentsFragment extends MVPBaseFragment<MContract.View, MPresente
         mContactPhone = mEtContactPhone.getText().toString();
         mDescription = mEtInsuranceThat.getText().toString();
 
-        MBean.DataBean dataBean = new MBean.DataBean();
+        MBean.DataBean.MsgBean dataBean = new MBean.DataBean.MsgBean();
         dataBean.setUserid(mUserid);
         dataBean.setScompany(mShipmentCompany);
         dataBean.setRcompany(mReceivingCompany);
