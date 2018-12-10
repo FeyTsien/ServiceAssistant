@@ -3,26 +3,23 @@ package com.dt.serviceassistant.ui.fragment.me;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
-import com.dt.serviceassistant.mvp.MVPBaseFragment;
-import com.dt.serviceassistant.ui.activity.login.LoginActivity;
+import com.dt.serviceassistant.mvp.MVPContract;
+import com.dt.serviceassistant.mvp.MVPFragment;
+import com.dt.serviceassistant.mvp.MVPPresenter;
+import com.dt.serviceassistant.ui.activity.login.LoginPwdActivity;
 import com.dt.serviceassistant.ui.activity.me.InsuranceListAcitivity;
 import com.dt.serviceassistant.ui.activity.me.ShipmentListAcitivity;
 import com.dt.serviceassistant.ui.activity.me.TaskListAcitivity;
 import com.dt.serviceassistant.utils.CommonUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -32,7 +29,7 @@ import butterknife.OnClick;
  * ================
  */
 
-public class MeFragment extends MVPBaseFragment<MeContract.View, MePresenter> implements MeContract.View {
+public class MeFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View {
 
     private String TAG = getClass().getSimpleName();
 
@@ -49,20 +46,18 @@ public class MeFragment extends MVPBaseFragment<MeContract.View, MePresenter> im
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int getLayoutId() {
+        return R.layout.fragment_me;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_me, container, false);
-        ButterKnife.bind(this, mRootView);
-        initView();
-        return mRootView;
+    protected void initData() {
+
     }
 
-    private void initView() {
+
+    @Override
+    protected void initView() {
         mTvUsername.setText(AppData.getPhoneNumber());
 
         if (TextUtils.equals(AppData.getRoleType(), "1")) {
@@ -107,7 +102,7 @@ public class MeFragment extends MVPBaseFragment<MeContract.View, MePresenter> im
                 AppData.setPhoneNumber("");
                 AppData.setPassword("");
                 getActivity().finish();
-                ActivityUtils.startActivity( LoginActivity.class);
+                ActivityUtils.startActivity( LoginPwdActivity.class);
             }
         });
     }

@@ -25,6 +25,8 @@
         </activity>
         <!--登录-->
         <activity android:name=".ui.activity.login.LoginActivity" />
+        <!--密码登录-->
+        <activity android:name=".ui.activity.login.LoginPwdActivity" />
         <!--主页-->
         <activity
             android:name=".ui.activity.main.MainActivity"

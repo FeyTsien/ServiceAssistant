@@ -3,13 +3,13 @@ package com.dt.serviceassistant.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
-import com.dt.serviceassistant.ui.activity.login.LoginActivity;
+import com.dt.serviceassistant.ui.activity.login.LoginPwdActivity;
 import com.dt.serviceassistant.ui.activity.main.MainActivity;
 import com.dt.serviceassistant.ui.activity.mainboss.MainBossActivity;
 
@@ -18,21 +18,18 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends AppCompatActivity {
 
     //ButterKnife是一个专注于Android系统的View注入框架,可以减少大量的findViewById以及setOnClickListener代码，可视化一键生成。
     @BindView(R.id.iv_pic)
     ImageView ivPic;
     private Unbinder bind;
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_splash;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
 //        //取消状态栏(已在style文件中设置了)
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -65,10 +62,10 @@ public class SplashActivity extends BaseActivity {
             } else if (TextUtils.equals(AppData.getRoleType(), "2")) {
                 intent = new Intent(this, MainBossActivity.class);
             } else {
-                intent = new Intent(this, LoginActivity.class);
+                intent = new Intent(this, LoginPwdActivity.class);
             }
         } else {
-            intent = new Intent(this, LoginActivity.class);
+            intent = new Intent(this, LoginPwdActivity.class);
         }
         startActivity(intent);
         finish();

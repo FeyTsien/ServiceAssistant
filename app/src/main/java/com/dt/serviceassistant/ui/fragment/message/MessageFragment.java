@@ -3,35 +3,35 @@ package com.dt.serviceassistant.ui.fragment.message;//package com.dt.serviceassi
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.NetworkUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
+import com.dt.serviceassistant.bean.AppBean;
 import com.dt.serviceassistant.bean.MessageBean;
-import com.dt.serviceassistant.mvp.MVPBaseFragment;
-import com.dt.serviceassistant.mywebview.WebViewActivity;
+import com.dt.serviceassistant.mvp.MVPContract;
+import com.dt.serviceassistant.mvp.MVPFragment;
+import com.dt.serviceassistant.mvp.MVPPresenter;
 import com.dt.serviceassistant.ui.activity.messagelist.MessageListAcitivity;
-import com.dt.serviceassistant.ui.adapter.MyAdapter;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
-import com.dt.serviceassistant.ui.fragment.information.InformationFragment;
 import com.dt.serviceassistant.utils.CommonUtils;
+import com.dt.serviceassistant.utils.UrlUtils;
+import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tsienlibrary.bean.CommonBean;
+import com.tsienlibrary.ui.widget.MultiItemDivider;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.ft.widget.MultiItemDivider;
 
 
 /**
@@ -40,10 +40,10 @@ import me.ft.widget.MultiItemDivider;
  * ==============
  */
 
-public class MessageFragment extends MVPBaseFragment<MessageContract.View, MessagePresenter> implements MessageContract.View, XRecyclerView.LoadingListener {
+public class MessageFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View, XRecyclerView.LoadingListener {
     private String TAG = getClass().getSimpleName();
 
-    private List<MessageBean.DataBean.MsgBean> mDataBeanList;
+    private List<MessageBean.MsgBean> mDataBeanList;
 
     private View mRootView;
     private MyBaseAdapter mAdapter;
@@ -56,26 +56,18 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int getLayoutId() {
+        return R.layout.fragment_message;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_message, container, false);
-        ButterKnife.bind(this, mRootView);
-        initData();
-        initView();
-        return mRootView;
-    }
-
-    private void initData() {
-        mDataBeanList = new ArrayList<MessageBean.DataBean.MsgBean>();
+    protected void initData() {
+        mDataBeanList = new ArrayList<MessageBean.MsgBean>();
         onRefresh();
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -89,12 +81,33 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
         mRecyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);//下拉刷新图片
         mRecyclerView.setLoadingListener(this);
 
-        mAdapter = new MyBaseAdapter<MessageBean.DataBean.MsgBean>(mDataBeanList, R.layout.item_message) {
+        mAdapter = new MyBaseAdapter<MessageBean.MsgBean>(mDataBeanList, R.layout.item_message) {
             @Override
             public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
                 holder.setTextView(R.id.tv_message_title, mDataBeanList.get(position).getTypename());
                 holder.setTextView(R.id.tv_message_time, mDataBeanList.get(position).getRtime());
                 holder.setTextView(R.id.tv_content, mDataBeanList.get(position).getContent());
+                switch (mDataBeanList.get(position).getMessagetype() ){
+                    case 0:
+                        holder.setImageView(R.id.iv_mesage_pic, R.mipmap.icon_jigang );
+                        break;
+                    case 1:
+                        holder.setImageView(R.id.iv_mesage_pic, R.mipmap.icon_qiyun);
+                        break;
+                    case 2:
+                        holder.setImageView(R.id.iv_mesage_pic, R.mipmap.icon_chuanxun );
+                        break;
+                    case 3:
+                        holder.setImageView(R.id.iv_mesage_pic, R.mipmap.icon_kaogang);
+                        break;
+                    case 4:
+                        holder.setImageView(R.id.iv_mesage_pic, R.mipmap.icon_duizhang);
+                        break;
+                    case 5:
+                        holder.setImageView(R.id.iv_mesage_pic, R.mipmap.icon_dingtian );
+                        break;
+                }
+
             }
         };
         mRecyclerView.setAdapter(mAdapter);
@@ -117,7 +130,7 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
      */
     @Override
     public void onRefresh() {//refresh data here
-        mPresenter.getTpyeMessages(AppData.getUserId());
+        request();
     }
 
     /**
@@ -134,19 +147,25 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
             CommonUtils.showInfoDialog(getActivity(), "网络不给力，请检查网络设置。", "提示", "知道了", null, null, null);
             return;
         }
-        mPresenter.getTpyeMessages(AppData.getUserId());
+
+        AppBean.DataBean appDataBean = new AppBean.DataBean();
+        appDataBean.setUserid(AppData.getUserId());
+        Gson gson = new Gson();
+        String jsonData = gson.toJson(appDataBean);
+        mPresenter.request(UrlUtils.GET_MESSAGE_TYPES, jsonData, MessageBean.class);
     }
 
     @Override
-    public void getTpyeMessagesSuccess(MessageBean messageBean) {
+    public void requestSuccess(String requestUrl, CommonBean commonBean) {
+        MessageBean messageBean = (MessageBean) commonBean.getData();
         mDataBeanList.clear();
-        mDataBeanList.addAll(messageBean.getData().getMsgX());
+        mDataBeanList.addAll(messageBean.getMsgX());
         mRecyclerView.refreshComplete();
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void getTpyeMessagesFail(String error) {
+    public void requestFail(String requestUrl, String msg) {
         mRecyclerView.refreshComplete();
     }
 }

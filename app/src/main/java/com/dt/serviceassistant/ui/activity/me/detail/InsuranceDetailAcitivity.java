@@ -7,18 +7,19 @@ import android.widget.TextView;
 
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.bean.MBean;
-import com.dt.serviceassistant.mvp.MContract;
-import com.dt.serviceassistant.mvp.MPresenter;
-import com.dt.serviceassistant.mvp.MVPBaseActivity;
+import com.dt.serviceassistant.mvp.MVPActivity;
+import com.dt.serviceassistant.mvp.MVPContract;
+import com.dt.serviceassistant.mvp.MVPPresenter;
+import com.tsienlibrary.bean.CommonBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class InsuranceDetailAcitivity extends MVPBaseActivity<MContract.View, MPresenter> implements MContract.View {
+public class InsuranceDetailAcitivity extends MVPActivity<MVPContract.View, MVPPresenter> implements MVPContract.View {
 
     public static final String INSURANCE_DATA_ITEM = "insurance_data_item";
 
-    private MBean.DataBean.MsgBean mDataBean;
+    private MBean.MsgBean mDataBean;
     private String mUserid;
     private String mReceivingCompany;
     private String mContact;
@@ -46,17 +47,11 @@ public class InsuranceDetailAcitivity extends MVPBaseActivity<MContract.View, MP
         return R.layout.activity_insurance_detail;
     }
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
-        initData();
-        initView();
-    }
+    protected void initData() {
 
-    private void initData() {
-
-        mDataBean = (MBean.DataBean.MsgBean) getIntent().getSerializableExtra(INSURANCE_DATA_ITEM);
+        mDataBean = (MBean.MsgBean) getIntent().getSerializableExtra(INSURANCE_DATA_ITEM);
         mUserid = mDataBean.getUserid();
         mReceivingCompany = mDataBean.getRcompany();
         mRtime = mDataBean.getRtime();
@@ -65,7 +60,8 @@ public class InsuranceDetailAcitivity extends MVPBaseActivity<MContract.View, MP
         mDescription = mDataBean.getDescription();
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
 
         setToolBar(mToolbar, mTvTitle, "保险明细");
         mTvTitle.setText("保险明细");
@@ -77,12 +73,12 @@ public class InsuranceDetailAcitivity extends MVPBaseActivity<MContract.View, MP
     }
 
     @Override
-    public void requestSuccess(MBean mBean) {
-
+    public void requestSuccess(String requestUrl, CommonBean commonBean) {
+        super.requestSuccess(requestUrl, commonBean);
     }
 
     @Override
-    public void requestFail(String msg) {
-
+    public void requestFail(String requestUrl, String msg) {
+        super.requestFail(requestUrl, msg);
     }
 }

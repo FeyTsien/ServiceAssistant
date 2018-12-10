@@ -49,7 +49,6 @@ public class MyWebViewClient extends WebViewClient {
             }
             return false;
         }
-
         handleOtherwise(mActivity, url);
         return true;
     }

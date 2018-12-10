@@ -36,7 +36,8 @@
                 android:hint="请输入手机号"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/black"
-                android:textColorHint="@color/colorHint"
+                android:textColorHint="@color/colorTextHint"
+                android:text="13911310425"
                 android:textSize="14sp" />
 
         </RelativeLayout>
@@ -53,20 +54,20 @@
                 android:layout_weight="3"
                 android:background="@drawable/edit_bg"
                 android:drawablePadding="10dp"
-                android:hint="请输入密码"
+                android:hint="请输入验证码"
                 android:inputType="textPassword"
                 android:textColor="@color/black"
-                android:textColorHint="@color/colorHint"
+                android:textColorHint="@color/colorTextHint"
+                android:text="123456"
                 android:textSize="14sp" />
 
-            <me.ft.widget.CountDownButton
+            <com.tsienlibrary.ui.widget.CountDownButton
                 android:id="@+id/btn_code"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:visibility="gone"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/btn_login"
+                android:background="@drawable/button_bg"
                 android:text="获取验证码"
                 android:textColor="@color/white"/>
         </LinearLayout>
@@ -82,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/btn_login"
+            android:background="@drawable/button_bg"
             android:text="确认"
             android:textColor="@color/white"
             android:textSize="18sp" />

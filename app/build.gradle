@@ -22,6 +22,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
     //Add the following configuration
     lintOptions {
         checkReleaseBuilds false
@@ -36,27 +40,30 @@ dependencies {
     implementation rootProject.ext.support["design"]
     testImplementation rootProject.ext.support["junit"]
     implementation rootProject.ext.support["constraint-layout"]
-    implementation 'com.android.support:support-vector-drawable:27.1.1'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    //==================================以下为个人增配======================================
+    //===============================================================================================
+    //自己的工具类
+    implementation project(':tsienlibrary')
+
     //    配置方法数超过 64K 的应用
     implementation 'com.android.support:multidex:1.0.0'
-    api rootProject.ext.dependencies["gson"]
-    api rootProject.ext.dependencies["rxjava"]
-    api rootProject.ext.dependencies["rxandroid"]
-    api rootProject.ext.dependencies["retrofit"]
-    //    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    api rootProject.ext.dependencies["adapter-rxjava"]
-    api 'com.squareup.retrofit2:converter-scalars:2.0.2'
-    api rootProject.ext.dependencies["okhttp"]
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    //Android超强util库  -- 算不上超强,跟apache-commons相比差太远
-    api 'com.blankj:utilcode:latest.release'
+
     //一个 Android 系统的 View 注入框架，能够通过『注解』的方式来绑定 View 的属性或方法
-    api 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    //    implementation rootProject.ext.dependencies["butterknife"]
+    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
+
+    //新加glide
+    implementation rootProject.ext.dependencies["glide"]
+    annotationProcessor rootProject.ext.dependencies["glide-compiler"]
+
+    //    https://github.com/scwang90/SmartRefreshLayout(下拉刷新控件)
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+
+    //没有使用特殊Header，可以不加这行
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
+
     //https://github.com/XRecyclerView/XRecyclerView（一个retriclerview，实现了pullrefresh和加载更多特性。你可以像标准的recycling view一样使用它）
     implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
-    implementation project(':my_widget')
 }

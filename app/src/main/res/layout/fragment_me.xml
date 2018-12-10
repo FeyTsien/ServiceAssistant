@@ -2,86 +2,96 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/pageBG">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_165"
         android:background="@drawable/side_nav_bar">
 
         <ImageView
             android:id="@+id/iv_head"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/dp_85"
+            android:layout_height="@dimen/dp_85"
+            android:layout_centerHorizontal="true"
             android:layout_margin="20dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/icon_portrait" />
 
         <TextView
             android:id="@+id/tv_username"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/iv_head"
-            android:layout_toRightOf="@+id/iv_head"
-            android:textSize="18sp"
-            android:textColor="@color/white" />
+            android:layout_below="@+id/iv_head"
+            android:layout_centerHorizontal="true"
+            android:text="dsdsdsdsdd"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_19"
+        android:paddingRight="@dimen/dp_19">
 
         <TextView
             android:id="@+id/tv_task_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_marginBottom="@dimen/dp_19"
+            android:layout_marginTop="@dimen/dp_19"
             android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
             android:text="任务列表"
-            android:textSize="16sp"
-            android:textColor="@color/darkGray"/>
+            android:textColor="@color/darkGray"
+            android:textSize="16sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginLeft="15dp"
-            android:background="@color/gray" />
+            android:background="@color/colorDivider" />
 
         <TextView
             android:id="@+id/tv_shipment_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_marginBottom="@dimen/dp_19"
+            android:layout_marginTop="@dimen/dp_19"
             android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
             android:text="发货列表"
-            android:textSize="16sp"
-            android:textColor="@color/darkGray"/>
+            android:textColor="@color/darkGray"
+            android:textSize="16sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginLeft="15dp"
-            android:background="@color/gray" />
+            android:background="@color/colorDivider" />
 
         <TextView
             android:id="@+id/tv_insurance_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_marginBottom="@dimen/dp_19"
+            android:layout_marginTop="@dimen/dp_19"
             android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
             android:text="保险列表"
             android:textColor="@color/darkGray"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorDivider" />
+
+        <Button
+            android:id="@+id/btn_login_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_105"
+            android:background="@drawable/button_bg"
+            android:text="@string/login_out"
+            android:textColor="@color/white" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_login_out"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/btn_login"
-        android:text="@string/login_out"
-        android:textColor="@color/white" />
 </LinearLayout>
