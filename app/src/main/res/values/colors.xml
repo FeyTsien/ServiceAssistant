@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/colorTheme</color>
+    <color name="colorPrimaryDark">@color/bottle_green</color>
+    <color name="colorAccent">@color/colorTheme</color>
+
+    <!--主题颜色-->
+    <color name="colorTheme">#1D78F5</color>
+    <!--辅助颜色-->
+    <color name="colorSub1">#2446f2</color>
+    <color name="colorSub2">#458FF5</color>
+    <color name="colorSub3">#55B3FF</color>
+
+    <!--每页底色-->
+    <color name="pageBG">#F2F2F2</color>
+    <!--字体颜色-->
+    <color name="colorTextTitle">#333333</color>
+    <color name="colorTextButton">#3D79FD</color>
+    <!--浅色字体-->
+    <color name="colorTextTint">#999999</color>
+    <color name="colorTextTint1">#666666</color>
+    <!--Hint字体颜色-->
+    <color name="colorTextHint">#ADADAD</color>
+    <!--按钮颜色——浅色按钮-->
+    <color name="colorButtonLight">#EAF0FF</color>
+    <!--按钮颜色——不可选按钮-->
+    <color name="colorButtonfocused">#dddddd</color>
+    <!--下划线颜色-->
+    <color name="colorDivider">#E1E5E6</color>
+
+
+
+    <!--水波纹或5.0以下选择器颜色（activity_web_view.xml）-->
+    <color name="tabBackground">#777D7D7D</color>
+
+    <!--页面字体颜色-->
+    <color name="text_color656565">#656565</color>
+    <color name="text_color282828">#282828</color>
+    <color name="text_color333333">#333333</color>
+    <color name="text_color4c4c4c">#4c4c4c</color>
+    <color name="text_color424242">#424242</color>
+    <color name="text_colorf66809">#f66809</color>
+    <color name="text_user_name">#fd6191</color>
+    <color name="colortimerclose">#13b7f6</color>
+
+
+</resources>

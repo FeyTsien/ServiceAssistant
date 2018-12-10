@@ -3,16 +3,24 @@ ext {
     android = [
             compileSdkVersion: 27,
             buildToolsVersion: "27.0.3",
-            applicationId    : "com.dt.serviceassistant",
-            minSdkVersion    : 15,
+            applicationId    : "com.dt.serviceassistant",//好像直接改名字就变成新项目了
+            minSdkVersion    : 21,
             targetSdkVersion : 27,
             versionCode      : 1,
-            versionName      : "1.0",
+            versionName      : "V1.0.1",
     ]
     //version配置
     versions = [
+
             "support-version": "27.+",
             "junit-version"  : "4.12",
+            "rxlifecycle"    : "2.2.1",
+            "okhttp3"        : "3.10.0",
+            "retrofit2"      : "2.4.0",
+            "gson"           : "2.8.5",
+            "glide"          : "4.8.0",
+            "butterknife"    : "8.8.1",
+            "eventbus"       : "3.1.1",
     ]
     //support配置
     support = [
@@ -29,37 +37,47 @@ ext {
     //依赖第三方配置
     dependencies = [
             //rxjava
-            "rxjava"                               : "io.reactivex.rxjava2:rxjava:2.1.12",
-            "rxandroid"                            : "io.reactivex.rxjava2:rxandroid:2.0.2",
-            //rx管理View的生命周期
-            "rxlifecycle"                          : "com.trello.rxlifecycle2:rxlifecycle:2.2.1",
-            "rxlifecycle-components"               : "com.trello.rxlifecycle2:rxlifecycle-components:2.2.1",
+            "rxjava"                : "io.reactivex.rxjava2:rxjava:2.0.2",
+            "rxandroid"             : "io.reactivex.rxjava2:rxandroid:2.0.2",
+            //rx管理View的生命周期，解决RxJava内存泄漏
+            "rxlifecycle"           : "com.trello.rxlifecycle2:rxlifecycle:${versions["rxlifecycle"]}",
+            "rxlifecycle-components": "com.trello.rxlifecycle2:rxlifecycle-components:${versions["rxlifecycle"]}",
             //rxbinding
-            "rxbinding"                            : "com.jakewharton.rxbinding2:rxbinding:2.1.1",
-            //rx 6.0权限请求
-            "rxpermissions"                        : "com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar",
+            "rxbinding"             : "com.jakewharton.rxbinding2:rxbinding:2.1.1",
+            //6.0权限请求（https://github.com/tbruyelle/RxPermissions）
+            "rxpermissions"         : "com.github.tbruyelle:rxpermissions:0.10.2",
+
             //network
-            "okhttp"                               : "com.squareup.okhttp3:okhttp:3.10.0",
-            "retrofit"                             : "com.squareup.retrofit2:retrofit:2.4.0",
-            "converter-gson"                       : "com.squareup.retrofit2:converter-gson:2.4.0",
-            "adapter-rxjava"                       : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
-            //glide图片加载
-            "glide"                                : "com.github.bumptech.glide:glide:4.6.1",
-            "glide-compiler"                       : "com.github.bumptech.glide:compiler:4.6.1",
+            "okhttp3"               : "com.squareup.okhttp3:okhttp:${versions["okhttp3"]}",
+            "logging-interceptor"   : "com.squareup.okhttp3:logging-interceptor:${versions["okhttp3"]}",
+            "retrofit"              : "com.squareup.retrofit2:retrofit:${versions["retrofit2"]}",
+            "converter-gson"        : "com.squareup.retrofit2:converter-gson:${versions["retrofit2"]}",
+            "converter-scalars"        : "com.squareup.retrofit2:converter-scalars:${versions["retrofit2"]}",
+            "adapter-rxjava"        : "com.squareup.retrofit2:adapter-rxjava2:${versions["retrofit2"]}",
+
             //json解析
-            "gson"                                 : "com.google.code.gson:gson:2.8.2",
-            //material-dialogs
-            "material-dialogs-core"                : "com.afollestad.material-dialogs:core:0.9.4.5",
-            "material-dialogs-commons"             : "com.afollestad.material-dialogs:commons:0.9.4.5",
-            //recyclerview的databinding套装
-            "bindingcollectionadapter"             : "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:2.2.0",
-            "bindingcollectionadapter-recyclerview": "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0",
-            //Google AAC
-            "lifecycle-extensions"                 : "android.arch.lifecycle:extensions:1.1.1",
-            "lifecycle-compiler"                 : "android.arch.lifecycle:compiler:1.1.1",
-            //MVVMHabit
-            "MVVMHabit"                            : "com.github.goldze:MVVMHabit:3.0.3",
-            
+            "gson"                  : "com.google.code.gson:gson:${versions["gson"]}",
+
+            //glide图片加载
+            "glide"                 : "com.github.bumptech.glide:glide:${versions["glide"]}",
+            "glide-compiler"        : "com.github.bumptech.glide:compiler:${versions["glide"]}",
+            //eventbus(https://github.com/greenrobot/EventBus)
+            "eventbus"              : "org.greenrobot:eventbus:${versions["eventbus"]}",
+
+            "butterknife"           : "com.jakewharton:butterknife:${versions["butterknife"]}",
+            "butterknife-compiler"  : "com.jakewharton:butterknife-compiler:${versions["butterknife"]}",
+
+            //新增StatusBarCompat是一个用于设置系统状态栏颜色的兼容库，兼容Android 4.4.2(API 19)以上，使用简单，仅需要一行代码的调用。https://github.com/msdx/status-bar-compat
+            //"status-bar-compat"                    : "com.githang:status-bar-compat:0.7",
+            //新增recyclerview侧滑显示删除、编辑等按钮
+            "recyclerview-swipe"    : "com.yanzhenjie:recyclerview-swipe:1.1.4",
+
+            //一个动画库，适应Android，iOS，React Native。( http://airbnb.io/lottie/android/android.html )
+            "lottie"                : "com.airbnb.android:lottie:2.7.0",
+
+            //扫描 （https://github.com/yipianfengye/android-zxingLibrary）
+            "zxing-library"         : "cn.yipianfengye.android:zxing-library:2.2"
+
     ]
 }
 

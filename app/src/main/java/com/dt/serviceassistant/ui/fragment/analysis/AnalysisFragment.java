@@ -16,10 +16,9 @@ import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
 import com.dt.serviceassistant.bean.AnalysisBean;
 import com.dt.serviceassistant.bean.AppBean;
-import com.dt.serviceassistant.bean.MBean;
-import com.dt.serviceassistant.mvp.MContract;
-import com.dt.serviceassistant.mvp.MPresenter;
-import com.dt.serviceassistant.mvp.MVPBaseFragment;
+import com.dt.serviceassistant.mvp.MVPContract;
+import com.dt.serviceassistant.mvp.MVPFragment;
+import com.dt.serviceassistant.mvp.MVPPresenter;
 import com.dt.serviceassistant.ui.activity.mainboss.MainBossActivity;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
 import com.dt.serviceassistant.utils.CommonUtils;
@@ -28,6 +27,8 @@ import com.dt.serviceassistant.utils.UrlUtils;
 import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tsienlibrary.bean.CommonBean;
+import com.tsienlibrary.ui.widget.MultiItemDivider;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,13 +37,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.ft.widget.MultiItemDivider;
 
 
 /**
  */
 
-public class AnalysisFragment extends MVPBaseFragment<AnalysisContract.View, AnalysisPresenter> implements AnalysisContract.View, XRecyclerView.LoadingListener {
+public class AnalysisFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View, XRecyclerView.LoadingListener {
     private String TAG = getClass().getSimpleName();
 
     private List<String> mDataBeanList;
@@ -85,15 +85,23 @@ public class AnalysisFragment extends MVPBaseFragment<AnalysisContract.View, Ana
         return mRootView;
     }
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_analysis;
+    }
+
     /**
      * 初始化数据
      */
-    private void initData() {
+    @Override
+    protected void initData() {
         mDataBeanList = new ArrayList<>();
         mAnalysistype = getArguments().getInt(MainBossActivity.ANALYSIS_TYPE, 0);
     }
 
-    private void initView() {
+
+    @Override
+    protected void initView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -175,21 +183,22 @@ public class AnalysisFragment extends MVPBaseFragment<AnalysisContract.View, Ana
         appDataBean.setStart(mStart);
         Gson gson = new Gson();
         String jsonData = gson.toJson(appDataBean);
-        mPresenter.request(UrlUtils.BOSS_ANALYSIS_LIST, jsonData);
+        mPresenter.request(UrlUtils.BOSS_ANALYSIS_LIST, jsonData, AnalysisBean.class);
     }
 
     @Override
-    public void requestSuccess(AnalysisBean analysisBean) {
+    public void requestSuccess(String requestUrl, CommonBean commonBean) {
+        AnalysisBean analysisBean = (AnalysisBean) commonBean.getData();
         mRecyclerView.refreshComplete();
         if (mStart == 0) {
             mDataBeanList.clear();
         }
-        mDataBeanList.addAll(analysisBean.getData().getAnalysis());
+        mDataBeanList.addAll(analysisBean.getAnalysis());
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void requestFail(String msg) {
+    public void requestFail(String requestUrl, String msg) {
         mRecyclerView.refreshComplete();
         ToastUtils.showLong(msg);
     }

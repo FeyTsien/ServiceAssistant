@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:elevation="3dp"
+    android:elevation="@dimen/dp_2"
     android:fitsSystemWindows="true"
     app:contentInsetStart="0dp"
     app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textColor="@color/black"
-        android:textSize="16sp" />
+        android:textSize="@dimen/sp_18" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:textColor="@color/colorTheme"
-            android:textSize="18sp"
+            android:textSize="@dimen/sp_16"
             android:visibility="gone" />
 
         <ImageView

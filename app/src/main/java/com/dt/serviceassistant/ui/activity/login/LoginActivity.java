@@ -11,26 +11,27 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.NetworkUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
 import com.dt.serviceassistant.bean.AppBean;
-import com.dt.serviceassistant.mvp.MVPBaseActivity;
+import com.dt.serviceassistant.mvp.MVPActivity;
+import com.dt.serviceassistant.mvp.MVPContract;
+import com.dt.serviceassistant.mvp.MVPPresenter;
+import com.dt.serviceassistant.mvp.model.bean.UserBean;
 import com.dt.serviceassistant.ui.activity.main.MainActivity;
 import com.dt.serviceassistant.ui.activity.mainboss.MainBossActivity;
 import com.dt.serviceassistant.utils.CommonUtils;
+import com.dt.serviceassistant.utils.UrlUtils;
 import com.google.gson.Gson;
+import com.tsienlibrary.bean.CommonBean;
+import com.tsienlibrary.ui.widget.CountDownButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.ft.widget.CountDownButton;
 
-public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPresenter> implements LoginContract.View {
+public class LoginActivity extends MVPActivity<MVPContract.View, MVPPresenter> implements MVPContract.View {
 
-
-    public static LoginActivity instance;
     private static String TAG = "LoginActivity";
     private String mPhoneNumber;
     private String mCode;
@@ -54,15 +55,12 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        instance = this;
-        ButterKnife.bind(this);
-        //找控件
-        initView();
+    protected void initData() {
+
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         setToolBar(mToolbar, mTvTitle, "登录");
         mCdbCode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,17 +80,35 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
      */
     @OnClick(R.id.btn_login)
     void login() {
-        mPhoneNumber = mEtPhone.getText().toString();
-        mCode = mEtCode.getText().toString();
-        mPresenter.login(mPhoneNumber, mCode);
+        request();
     }
 
+    ProgressDialog loginDialog;
+
+    private void request() {
+        loginDialog = CommonUtils.showProgressDialog(this, "正在登录");
+        mPhoneNumber = mEtPhone.getText().toString();
+        mCode = mEtCode.getText().toString();
+        if (!TextUtils.isEmpty(mPhoneNumber) && !TextUtils.isEmpty(mCode)) {
+            AppBean.DataBean appDataBean = new AppBean.DataBean();
+            appDataBean.setPhone(mPhoneNumber);
+            appDataBean.setPassword(mCode);
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(appDataBean);
+            mPresenter.request(UrlUtils.LOGIN, jsonData, UserBean.class);
+        } else {
+            requestFail(UrlUtils.LOGIN, "账号密码不正确");
+        }
+    }
 
     @Override
-    public void loginSuccess(AppBean appBean) {
+    public void requestSuccess(String requestUrl, CommonBean commonBean) {
+
+        loginDialog.dismiss();
+        UserBean userBean = (UserBean) commonBean.getData();
         AppData.setLogined(true);
-        AppData.setUserId(appBean.getData().getUserid());
-        AppData.setRoleType(appBean.getData().getRoletype());
+        AppData.setUserId(userBean.getUserid());
+        AppData.setRoleType(userBean.getRoletype());
         AppData.setPhoneNumber(mPhoneNumber);
 
         Intent intent;
@@ -116,10 +132,11 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     }
 
     @Override
-    public void loginError(String error) {
+    public void requestFail(String requestUrl, String msg) {
+        loginDialog.dismiss();
         mTvErrors.setVisibility(View.VISIBLE);
-        mTvErrors.setText(error);
-        LogUtils.i(TAG, error);
+        mTvErrors.setText(msg);
+        LogUtils.i(TAG, msg);
     }
 
 }

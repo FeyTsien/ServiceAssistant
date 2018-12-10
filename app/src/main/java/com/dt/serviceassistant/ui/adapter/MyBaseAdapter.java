@@ -1,6 +1,5 @@
 package com.dt.serviceassistant.ui.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseArray;

@@ -14,9 +14,9 @@ import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
 import com.dt.serviceassistant.bean.AppBean;
 import com.dt.serviceassistant.bean.MBean;
-import com.dt.serviceassistant.mvp.MContract;
-import com.dt.serviceassistant.mvp.MPresenter;
-import com.dt.serviceassistant.mvp.MVPBaseActivity;
+import com.dt.serviceassistant.mvp.MVPActivity;
+import com.dt.serviceassistant.mvp.MVPContract;
+import com.dt.serviceassistant.mvp.MVPPresenter;
 import com.dt.serviceassistant.ui.activity.me.detail.ShipmentDetailAcitivity;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
 import com.dt.serviceassistant.utils.CommonUtils;
@@ -24,20 +24,21 @@ import com.dt.serviceassistant.utils.UrlUtils;
 import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tsienlibrary.bean.CommonBean;
+import com.tsienlibrary.ui.widget.MultiItemDivider;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.ft.widget.MultiItemDivider;
 
 /**
  * 发货列表
  */
-public class ShipmentListAcitivity extends MVPBaseActivity<MeContract.View, MePresenter> implements MeContract.View, XRecyclerView.LoadingListener {
+public class ShipmentListAcitivity extends MVPActivity<MVPContract.View, MVPPresenter> implements MVPContract.View, XRecyclerView.LoadingListener {
 
-    private List<MBean.DataBean.MsgBean> mDataBeanList;
+    private List<MBean.MsgBean> mDataBeanList;
     private int mStart = 0;
 
     private MyBaseAdapter mAdapter;
@@ -65,12 +66,14 @@ public class ShipmentListAcitivity extends MVPBaseActivity<MeContract.View, MePr
     /**
      * 初始化数据
      */
-    private void initData() {
-        mDataBeanList = new ArrayList<MBean.DataBean.MsgBean>();
+    @Override
+    protected  void initData() {
+        mDataBeanList = new ArrayList<MBean.MsgBean>();
         onRefresh();
     }
 
-    private void initView() {
+    @Override
+    protected  void initView() {
         setToolBar(mToolbar, mTvTitle, "发货列表");
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -86,7 +89,7 @@ public class ShipmentListAcitivity extends MVPBaseActivity<MeContract.View, MePr
         //下拉刷新，上拉加载监听
         mRecyclerView.setLoadingListener(this);
 
-        mAdapter = new MyBaseAdapter<MBean.DataBean.MsgBean>(mDataBeanList, R.layout.item_shipment) {
+        mAdapter = new MyBaseAdapter<MBean.MsgBean>(mDataBeanList, R.layout.item_shipment) {
             @Override
             public void bindView(MyViewHolder holder, int position) {
                 holder.setTextView(R.id.tv_information_time, mDataBeanList.get(position).getRtime());
@@ -135,27 +138,28 @@ public class ShipmentListAcitivity extends MVPBaseActivity<MeContract.View, MePr
         String jsonData = gson.toJson(appDataBean);
 
         if (TextUtils.equals(AppData.getRoleType(), "1")) {
-            mPresenter.request(UrlUtils.GET_SHIPMENT_LIST, jsonData);
+            mPresenter.request(UrlUtils.GET_SHIPMENT_LIST, jsonData,MBean.class);
         } else {
-            mPresenter.request(UrlUtils.GET_STAFF_SHIPMENT_LIST, jsonData);
+            mPresenter.request(UrlUtils.GET_STAFF_SHIPMENT_LIST, jsonData,MBean.class);
         }
     }
 
     @Override
-    public void requestSuccess(MBean mBean,String requestUrl) {
-
+    public void requestSuccess(String requestUrl, CommonBean commonBean) {
+        MBean mBean = (MBean) commonBean.getData();
         mRecyclerView.refreshComplete();
         if (mStart == 0) {
             mDataBeanList.clear();
         }
-        mDataBeanList.addAll(mBean.getData().getMsgX());
+        mDataBeanList.addAll(mBean.getMsgX());
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void requestFail(String msg) {
+    public void requestFail(String requestUrl, String msg) {
         mRecyclerView.refreshComplete();
         ToastUtils.showLong(msg);
+
     }
 
 }

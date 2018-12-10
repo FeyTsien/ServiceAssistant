@@ -1,44 +1,31 @@
 package com.dt.serviceassistant.ui.fragment.information;
 
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.NetworkUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
 import com.dt.serviceassistant.bean.AppBean;
-import com.dt.serviceassistant.bean.MBean;
 import com.dt.serviceassistant.bean.MessageBean;
-import com.dt.serviceassistant.mvp.MContract;
-import com.dt.serviceassistant.mvp.MPresenter;
-import com.dt.serviceassistant.mvp.MVPBaseFragment;
-import com.dt.serviceassistant.mywebview.WebTestActivity;
+import com.dt.serviceassistant.mvp.MVPContract;
+import com.dt.serviceassistant.mvp.MVPFragment;
+import com.dt.serviceassistant.mvp.MVPPresenter;
 import com.dt.serviceassistant.mywebview.WebViewActivity;
-import com.dt.serviceassistant.ui.activity.messagelist.MessageListAcitivity;
-import com.dt.serviceassistant.ui.adapter.MyAdapter;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
-import com.dt.serviceassistant.ui.fragment.message.MessageFragment;
 import com.dt.serviceassistant.utils.CommonUtils;
 import com.dt.serviceassistant.utils.UrlUtils;
 import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tsienlibrary.bean.CommonBean;
+import com.tsienlibrary.ui.widget.MultiItemDivider;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import me.ft.widget.MultiItemDivider;
 
 
 /**
@@ -47,10 +34,10 @@ import me.ft.widget.MultiItemDivider;
  * ================
  */
 
-public class InformationFragment extends MVPBaseFragment<InformationContract.View, InformationPresenter> implements InformationContract.View, XRecyclerView.LoadingListener {
+public class InformationFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View, XRecyclerView.LoadingListener {
     private String TAG = getClass().getSimpleName();
 
-    private List<MessageBean.DataBean.MsgBean> mDataBeanList;
+    private List<MessageBean.MsgBean> mDataBeanList;
     private int mStart = 0;
 
     private View mRootView;
@@ -64,28 +51,21 @@ public class InformationFragment extends MVPBaseFragment<InformationContract.Vie
         return new InformationFragment();
     }
 
-
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int getLayoutId() {
+        return R.layout.fragment_information;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_information, container, false);
-        ButterKnife.bind(this, mRootView);
-        initData();
-        initView();
-        return mRootView;
-    }
 
-    private void initData() {
-        mDataBeanList = new ArrayList<MessageBean.DataBean.MsgBean>();
+    @Override
+    protected void initData() {
+        mDataBeanList = new ArrayList<MessageBean.MsgBean>();
         onRefresh();
     }
 
-    private void initView() {
+
+    @Override
+    protected void initView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -100,7 +80,7 @@ public class InformationFragment extends MVPBaseFragment<InformationContract.Vie
         //下拉刷新，上拉加载监听
         mRecyclerView.setLoadingListener(this);
 
-        mAdapter = new MyBaseAdapter<MessageBean.DataBean.MsgBean>(mDataBeanList, R.layout.item_information) {
+        mAdapter = new MyBaseAdapter<MessageBean.MsgBean>(mDataBeanList, R.layout.item_information) {
             @Override
             public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
                 holder.setTextView(R.id.tv_information_time, mDataBeanList.get(position).getRtime());
@@ -159,22 +139,22 @@ public class InformationFragment extends MVPBaseFragment<InformationContract.Vie
         appDataBean.setStart(mStart);
         Gson gson = new Gson();
         String jsonData = gson.toJson(appDataBean);
-        mPresenter.getNews(UrlUtils.GET_NEWS_LIST, jsonData);
+        mPresenter.request(UrlUtils.GET_NEWS_LIST, jsonData,MessageBean.class);
     }
 
     @Override
-    public void getNewsSuccess(MessageBean messageBean) {
-
-        mRecyclerView.refreshComplete();
+    public void requestSuccess(String requestUrl, CommonBean commonBean) {
+        MessageBean messageBean = (MessageBean) commonBean.getData();
         if (mStart == 0) {
             mDataBeanList.clear();
         }
-        mDataBeanList.addAll(messageBean.getData().getMsgX());
+        mDataBeanList.addAll(messageBean.getMsgX());
+        mRecyclerView.refreshComplete();
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void getNewsFail(String error) {
-
+    public void requestFail(String requestUrl, String msg) {
+        mRecyclerView.refreshComplete();
     }
 }

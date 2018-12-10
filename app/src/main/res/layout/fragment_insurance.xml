@@ -135,7 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/btn_login"
+        android:background="@drawable/button_bg"
         android:text="提交"
         android:textColor="@color/white"
         android:textSize="16sp" />

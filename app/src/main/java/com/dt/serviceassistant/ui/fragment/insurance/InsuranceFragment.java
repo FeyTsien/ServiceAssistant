@@ -1,12 +1,8 @@
 package com.dt.serviceassistant.ui.fragment.insurance;
 
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -14,18 +10,18 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
 import com.dt.serviceassistant.bean.MBean;
-import com.dt.serviceassistant.mvp.MContract;
-import com.dt.serviceassistant.mvp.MPresenter;
-import com.dt.serviceassistant.mvp.MVPBaseFragment;
+import com.dt.serviceassistant.mvp.MVPContract;
+import com.dt.serviceassistant.mvp.MVPFragment;
+import com.dt.serviceassistant.mvp.MVPPresenter;
 import com.dt.serviceassistant.utils.CommonUtils;
 import com.dt.serviceassistant.utils.DateUtils;
 import com.dt.serviceassistant.utils.UrlUtils;
 import com.google.gson.Gson;
+import com.tsienlibrary.bean.CommonBean;
 
 import java.util.Calendar;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -34,7 +30,7 @@ import butterknife.OnClick;
  * ================
  */
 
-public class InsuranceFragment extends MVPBaseFragment<MContract.View, MPresenter> implements MContract.View {
+public class InsuranceFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View {
 
     private String TAG = getClass().getSimpleName();
 
@@ -66,20 +62,17 @@ public class InsuranceFragment extends MVPBaseFragment<MContract.View, MPresente
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int getLayoutId() {
+        return R.layout.fragment_insurance;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_insurance, container, false);
-        ButterKnife.bind(this, mRootView);
-        initView();
-        return mRootView;
+    protected void initData() {
+
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         editTexts = new TextView[]{mTvInsuranceDate, mEtReceivingCompany, mEtContact, mEtContactPhone, mEtInsuranceThat};
     }
 
@@ -115,7 +108,7 @@ public class InsuranceFragment extends MVPBaseFragment<MContract.View, MPresente
         mContactPhone = mEtContactPhone.getText().toString();
         mDescription = mEtInsuranceThat.getText().toString();
 
-        MBean.DataBean.MsgBean dataBean = new MBean.DataBean.MsgBean();
+        MBean.MsgBean dataBean = new MBean.MsgBean();
         dataBean.setUserid(mUserid);
         dataBean.setRcompany(mReceivingCompany);
         dataBean.setRtime(mRtime);
@@ -124,17 +117,17 @@ public class InsuranceFragment extends MVPBaseFragment<MContract.View, MPresente
         dataBean.setDescription(mDescription);
         Gson gson = new Gson();
         String jsonData = gson.toJson(dataBean);
-        mPresenter.request(UrlUtils.ADD_INSURANCE, jsonData);
+        mPresenter.request(UrlUtils.ADD_INSURANCE, jsonData, MBean.class);
     }
 
     @Override
-    public void requestSuccess(MBean mBean) {
+    public void requestSuccess(String requestUrl, CommonBean commonBean) {
         CommonUtils.showInfoDialog(getActivity(), "提交成功！", "提示", null, "确认", null, null);
+
     }
 
     @Override
-    public void requestFail(String msg) {
+    public void requestFail(String requestUrl, String msg) {
         ToastUtils.showLong(msg);
     }
-
 }

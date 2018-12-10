@@ -1,7 +1,6 @@
 package com.dt.serviceassistant.ui.activity.mainboss;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -23,19 +22,20 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
-import com.dt.serviceassistant.mvp.MVPBaseActivity;
-import com.dt.serviceassistant.ui.activity.login.LoginActivity;
+import com.dt.serviceassistant.mvp.MVPActivity;
+import com.dt.serviceassistant.mvp.MVPContract;
+import com.dt.serviceassistant.mvp.MVPPresenter;
+import com.dt.serviceassistant.ui.activity.login.LoginPwdActivity;
 import com.dt.serviceassistant.ui.fragment.analysis.AnalysisFragment;
 import com.dt.serviceassistant.ui.fragment.analysis.AnalysisSingleFragment;
-import com.dt.serviceassistant.ui.fragmentBackHandler.BackHandlerHelper;
 import com.dt.serviceassistant.utils.CommonUtils;
+import com.tsienlibrary.ui.fragment.fragmentBackHandler.BackHandlerHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 /**
@@ -43,7 +43,7 @@ import butterknife.OnClick;
  * 邮箱 784787081@qq.com
  */
 
-public class MainBossActivity extends MVPBaseActivity<MainBossContract.View, MainBossPresenter> implements MainBossContract.View, NavigationView.OnNavigationItemSelectedListener {
+public class MainBossActivity extends MVPActivity<MVPContract.View, MVPPresenter> implements MVPContract.View, NavigationView.OnNavigationItemSelectedListener {
     public static final String ANALYSIS_TYPE = "analysis_type";
 
     FragmentTransaction fragmentTransaction;
@@ -60,19 +60,24 @@ public class MainBossActivity extends MVPBaseActivity<MainBossContract.View, Mai
         return R.layout.activity_main_boss;
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
         if (savedInstanceState != null) {
             finish();
             ActivityUtils.startActivity(MainBossActivity.class);
-        } else {
-            initView();
+            return;
         }
     }
 
-    private void initView() {
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void initView() {
         //标题栏
 //        toolbar.setLogo(R.drawable.ic_insurance);
         toolbar.setTitle("业务员分析");
@@ -251,7 +256,7 @@ public class MainBossActivity extends MVPBaseActivity<MainBossContract.View, Mai
                 AppData.setPhoneNumber("");
                 AppData.setPassword("");
                 finish();
-                ActivityUtils.startActivity(LoginActivity.class);
+                ActivityUtils.startActivity(LoginPwdActivity.class);
             }
         });
     }

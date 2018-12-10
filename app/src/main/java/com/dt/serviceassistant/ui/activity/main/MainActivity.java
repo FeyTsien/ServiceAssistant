@@ -1,32 +1,35 @@
 package com.dt.serviceassistant.ui.activity.main;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
-import com.dt.serviceassistant.ui.activity.login.LoginActivity;
-import com.dt.serviceassistant.ui.activity.mainboss.MainBossActivity;
+import com.dt.serviceassistant.ui.activity.login.LoginPwdActivity;
 import com.dt.serviceassistant.ui.fragment.information.InformationFragment;
 import com.dt.serviceassistant.ui.fragment.insurance.InsuranceFragment;
 import com.dt.serviceassistant.ui.fragment.me.MeFragment;
 import com.dt.serviceassistant.ui.fragment.message.MessageFragment;
 import com.dt.serviceassistant.ui.fragment.shipments.ShipmentsFragment;
+import com.tsienlibrary.utils.OpenFileUtils;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
             navigation.setVisibility(View.VISIBLE);
         }else {
-            ActivityUtils.startActivity(LoginActivity.class);
+            ActivityUtils.startActivity(LoginPwdActivity.class);
             finish();
         }
 
@@ -135,4 +138,58 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+    /**
+     * 下载完成返回
+     *
+     * @param messageEvent
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void isInstallEvent(MessageEvent messageEvent) {
+        ToastUtils.showLong(messageEvent.getMessage());
+        showInstallDialog();
+    }
+
+    /**
+     * 下载完成弹出安装提示框
+     */
+    private void showInstallDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setTitle("下载完成");
+        builder.setMessage("是否安装");
+        builder.setCancelable(false);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                File file = new File(OpenFileUtils.getApkPath(MainActivity.this), "INanMing.apk");
+//                File file = new File(getApkPath(), "abc.jpg");
+                OpenFileUtils.installApk(MainActivity.this, file);
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.create().show();
+    }
+
+
+    public static class MessageEvent {
+        private String message;
+
+        public MessageEvent(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+    }
 }

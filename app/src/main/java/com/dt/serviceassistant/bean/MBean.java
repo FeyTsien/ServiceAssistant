@@ -13,19 +13,8 @@ import java.util.List;
  *     desc   :
  * </pre>
  */
-public class MBean extends CodeBean {
+public class MBean{
 
-    private DataBean data;
-
-    public DataBean getData() {
-        return data;
-    }
-
-    public void setData(DataBean data) {
-        this.data = data;
-    }
-
-    public static class DataBean {
 
         @SerializedName("msg")
         private List<MsgBean> msgX;
@@ -275,5 +264,4 @@ public class MBean extends CodeBean {
                 this.analysis = analysis;
             }
         }
-    }
 }
