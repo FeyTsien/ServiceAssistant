@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState != null) {
             finish();
-            ActivityUtils.startActivity(MainBossActivity.class);
+            ActivityUtils.startActivity(MainActivity.class);
         } else {
             initView();
         }
