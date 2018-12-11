@@ -83,7 +83,7 @@ public class InsuranceFragment extends MVPFragment<MVPContract.View, MVPPresente
     @OnClick(R.id.tv_insurance_date)
     public void showDate() {
         Calendar calendar = Calendar.getInstance();
-        DateUtils.showDateAndTimePickerDialog(getActivity(), 0, mTvInsuranceDate, calendar);
+        DateUtils.showDatePickerDialog(getActivity(), 0, mTvInsuranceDate, calendar);
     }
 
     /**

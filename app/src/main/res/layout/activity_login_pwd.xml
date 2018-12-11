@@ -33,12 +33,13 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="@dimen/dp_52"
+            android:background="@drawable/item_bg">
 
             <EditText
                 android:id="@+id/et_phone"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_52"
+                android:layout_height="match_parent"
                 android:background="@drawable/edit_bg"
                 android:hint="请输入账号"
                 android:text="13911310425"
@@ -51,13 +52,14 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_52"
+            android:background="@drawable/item_bg"
             android:layout_marginTop="15dp">
 
             <EditText
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_52"
+                android:layout_height="match_parent"
                 android:background="@drawable/edit_bg"
                 android:hint="请输入密码"
                 android:text="123456"

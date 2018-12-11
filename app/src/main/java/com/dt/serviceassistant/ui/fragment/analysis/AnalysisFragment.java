@@ -4,12 +4,14 @@ package com.dt.serviceassistant.ui.fragment.analysis;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
@@ -42,7 +44,7 @@ import butterknife.OnClick;
 /**
  */
 
-public class AnalysisFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View, XRecyclerView.LoadingListener {
+public class AnalysisFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View {
     private String TAG = getClass().getSimpleName();
 
     private List<String> mDataBeanList;
@@ -63,7 +65,7 @@ public class AnalysisFragment extends MVPFragment<MVPContract.View, MVPPresenter
     @BindView(R.id.tv_end_time)
     TextView mTvEndTime;
     @BindView(R.id.recycler_view)
-    XRecyclerView mRecyclerView;
+    RecyclerView mRecyclerView;
 
     public static AnalysisFragment newInstance() {
         return new AnalysisFragment();
@@ -105,19 +107,15 @@ public class AnalysisFragment extends MVPFragment<MVPContract.View, MVPPresenter
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
-        //添加分割线
-        MultiItemDivider itemDivider = new MultiItemDivider(getActivity(), MultiItemDivider.VERTICAL_LIST, R.drawable.divider_mileage);
-        itemDivider.setDividerMode(MultiItemDivider.INSIDE);//最后一个item下没有分割线
-        // itemDivider.setDividerMode(MultiItemDivider.END);//最后一个item下有分割线
-        mRecyclerView.addItemDecoration(itemDivider);
-        mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
-        mRecyclerView.setArrowImageView(R.mipmap.iconfont_downgrey);//下拉刷新图片
-        mRecyclerView.setLoadingListener(this);
 
         mAdapter = new MyBaseAdapter<String>(mDataBeanList, R.layout.item_analysis) {
             @Override
             public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
+                if (position == 0) {
+                    holder.getView(R.id.v_line1).setVisibility(View.INVISIBLE);
+                } else if (position == (mDataBeanList.size() - 1)) {
+                    holder.getView(R.id.v_line2).setVisibility(View.INVISIBLE);
+                }
                 holder.setTextView(R.id.tv_analysis, mDataBeanList.get(position));
             }
         };
@@ -143,28 +141,10 @@ public class AnalysisFragment extends MVPFragment<MVPContract.View, MVPPresenter
                 break;
             case R.id.btn_query:
                 request();
+                KeyboardUtils.hideSoftInput(getActivity());
                 break;
         }
     }
-
-    @Override
-    public void onRefresh() {
-
-        if (!NetworkUtils.isConnected()) {
-            mRecyclerView.refreshComplete();
-            CommonUtils.showInfoDialog(getActivity(), "网络不给力，请检查网络设置。", "提示", "知道了", null, null, null);
-            return;
-        }
-        mStart = 0;
-        request();
-    }
-
-    @Override
-    public void onLoadMore() {
-        mStart = mStart++;
-        request();
-    }
-
 
     /**
      * 请求
@@ -189,7 +169,6 @@ public class AnalysisFragment extends MVPFragment<MVPContract.View, MVPPresenter
     @Override
     public void requestSuccess(String requestUrl, CommonBean commonBean) {
         AnalysisBean analysisBean = (AnalysisBean) commonBean.getData();
-        mRecyclerView.refreshComplete();
         if (mStart == 0) {
             mDataBeanList.clear();
         }
@@ -199,7 +178,6 @@ public class AnalysisFragment extends MVPFragment<MVPContract.View, MVPPresenter
 
     @Override
     public void requestFail(String requestUrl, String msg) {
-        mRecyclerView.refreshComplete();
         ToastUtils.showLong(msg);
     }
 

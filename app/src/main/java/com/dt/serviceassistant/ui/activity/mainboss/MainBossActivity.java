@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
@@ -55,11 +56,6 @@ public class MainBossActivity extends MVPActivity<MVPContract.View, MVPPresenter
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main_boss;
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +68,16 @@ public class MainBossActivity extends MVPActivity<MVPContract.View, MVPPresenter
     }
 
     @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main_boss;
+    }
+
+    @Override
+    protected void setStstus(boolean isfitsSystemWindows,boolean isWhite) {
+        super.setStstus(false,true);
+    }
+
+    @Override
     protected void initData() {
 
     }
@@ -81,13 +87,11 @@ public class MainBossActivity extends MVPActivity<MVPContract.View, MVPPresenter
         //标题栏
 //        toolbar.setLogo(R.drawable.ic_insurance);
         toolbar.setTitle("业务员分析");
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);//放开此代码显示右上角的三个点
         //主界面内容
         setFragment();
         //侧滑菜单
         setNavigationView();
-        //浮动按钮
-        setFloatingActionButton();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -118,8 +122,8 @@ public class MainBossActivity extends MVPActivity<MVPContract.View, MVPPresenter
         navigationView.setNavigationItemSelectedListener(this);
         //侧滑菜单头部控件初始化
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
-        ImageView head = headerLayout.findViewById(R.id.civ_avatar);
-        head.setImageResource(R.mipmap.ic_launcher);
+        ImageView head = headerLayout.findViewById(R.id.civ_portrait);
+        head.setImageResource(R.mipmap.icon_logo);
         TextView myName = headerLayout.findViewById(R.id.tv_1);
         myName.setText(AppData.getPhoneNumber());
 
@@ -129,21 +133,6 @@ public class MainBossActivity extends MVPActivity<MVPContract.View, MVPPresenter
 
         //设置默认显示第一页（配置）
         navigationView.getMenu().getItem(0).setChecked(true);
-    }
-
-    /**
-     * 浮动按钮
-     */
-    private void setFloatingActionButton() {
-        //浮动按钮
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     /**
@@ -202,11 +191,12 @@ public class MainBossActivity extends MVPActivity<MVPContract.View, MVPPresenter
                 toolbar.setTitle("任务信息");
                 loadFragment(6);
                 break;
-            case R.id.nav_logout:
-                loginOut();
-                return true;
+//            case R.id.nav_logout:
+//                loginOut();
+//                return true;
         }
         drawer.closeDrawer(GravityCompat.START);
+        KeyboardUtils.hideSoftInput(this);
         return true;
     }
 
@@ -246,7 +236,7 @@ public class MainBossActivity extends MVPActivity<MVPContract.View, MVPPresenter
     /**
      * 退出登录
      */
-    public void loginOut() {
+    public void loginOut(View view) {
         CommonUtils.showInfoDialog(this, "确定要退出登录吗？", "提示", "取消", "退出", null, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

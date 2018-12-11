@@ -1,19 +1,32 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item> <!--所有本APP内的控件颜色-->
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/black</item>
     </style>
 
-    <!-- Base application theme. -->
-    <!--<style name="BaseAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-    <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-    <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-    <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-    <!--<item name="colorAccent">@color/colorAccent</item>-->
-    <!--</style>-->
+
+    <!--启动页style-->
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 是否填充慢屏幕，引用android:windowNoTitle 的值 ?android:windowNoTitle，取决于android:windowNoTitle的值-->
+        <item name="android:windowFullscreen">?android:windowNoTitle</item>
+
+    </style>
+
+    <!--全屏显示，无透明状态栏-->
+    <style name="TranslucentTheme" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+        <!--<item name="android:windowBackground">@drawable/logo_splash</item>-->
+        <!--<item name="colorPrimaryDark">@android:color/transparent</item>-->
+    </style>
+    <!--全屏显示，有透明状态栏-->
+    <style name="statusBarTheme" parent="AppTheme"></style>
+
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -23,14 +36,6 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <!--启动页style-->
-    <style name="SplashTheme" parent="BaseAppTheme">
-        <item name="android:windowIsTranslucent">true</item>
-        <!-- 是否填充慢屏幕，引用android:windowNoTitle 的值 ?android:windowNoTitle，取决于android:windowNoTitle的值-->
-        <item name="android:windowFullscreen">?android:windowNoTitle</item>
-
-    </style>
 
 </resources>
 

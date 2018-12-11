@@ -42,7 +42,7 @@ public class MBean{
             private String content;
             private int messagecount;
             private String mtimage;
-            private String rtime;
+            private String itime;
             private String typename;
             private String url;
             private String ntitle;
@@ -169,11 +169,11 @@ public class MBean{
             }
 
             public String getRtime() {
-                return rtime;
+                return itime;
             }
 
             public void setRtime(String rtime) {
-                this.rtime = rtime;
+                this.itime = rtime;
             }
 
             public String getTypename() {

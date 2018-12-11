@@ -73,7 +73,7 @@ public abstract class MyBaseAdapter<T> extends RecyclerView.Adapter<MyBaseAdapte
         }
 
 
-        private <T extends View> T getView(int id) {
+        public <T extends View> T getView(int id) {
             T t = (T) views.get(id);
             if (t == null) {
                 t = this.itemView.findViewById(id);

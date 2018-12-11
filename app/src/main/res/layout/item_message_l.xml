@@ -11,14 +11,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.tsienlibrary.ui.widget.CircleImageView
+        <View
             android:layout_width="@dimen/dp_6"
             android:layout_height="@dimen/dp_6"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/dp_8"
-            android:src="@mipmap/ic_launcher"
-            app:civ_border_color="#1283f8"
-            app:civ_border_width="@dimen/dp_3" />
+            android:background="@drawable/dot" />
 
         <TextView
             android:id="@+id/tv_message_time"

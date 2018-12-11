@@ -7,7 +7,7 @@
     <!--主题颜色-->
     <color name="colorTheme">#1D78F5</color>
     <!--辅助颜色-->
-    <color name="colorSub1">#2446f2</color>
+    <color name="colorSub1">#4659b7</color>
     <color name="colorSub2">#458FF5</color>
     <color name="colorSub3">#55B3FF</color>
 
@@ -37,6 +37,8 @@
     <color name="text_color656565">#656565</color>
     <color name="text_color282828">#282828</color>
     <color name="text_color333333">#333333</color>
+    <color name="text_color666666">#666666</color>
+    <color name="text_color999999">#999999</color>
     <color name="text_color4c4c4c">#4c4c4c</color>
     <color name="text_color424242">#424242</color>
     <color name="text_colorf66809">#f66809</color>

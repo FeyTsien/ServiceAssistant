@@ -24,6 +24,7 @@ import com.dt.serviceassistant.ui.fragment.insurance.InsuranceFragment;
 import com.dt.serviceassistant.ui.fragment.me.MeFragment;
 import com.dt.serviceassistant.ui.fragment.message.MessageFragment;
 import com.dt.serviceassistant.ui.fragment.shipments.ShipmentsFragment;
+import com.tsienlibrary.ui.activity.BaseActivity;
 import com.tsienlibrary.utils.OpenFileUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -33,7 +34,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private List<Fragment> mFragmentList;
     private Fragment mCurrentFragment;
@@ -72,20 +73,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         if (savedInstanceState != null) {
             finish();
             ActivityUtils.startActivity(MainActivity.class);
-        } else {
-            initView();
+            return;
         }
     }
 
-    private void initData() {
+    @Override
+    protected void setStstus(boolean isfitsSystemWindows,boolean isWhite) {
+        super.setStstus(false,true);
+    }
+
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initData() {
 
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setTitle(R.string.title_message);

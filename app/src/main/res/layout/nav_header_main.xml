@@ -2,48 +2,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="@dimen/nav_header_height">
+    android:layout_height="@dimen/dp_150">
 
     <ImageView
         android:id="@+id/iv_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@mipmap/head_bg" />
+        android:src="@mipmap/bg_login_top" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/nav_header_main"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/nav_header_height"
-        android:gravity="bottom"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_height="match_parent"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <com.tsienlibrary.ui.widget.CircleImageView
-            android:id="@+id/civ_avatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginBottom="5dp"
-            android:src="@mipmap/ic_launcher"
+            android:id="@+id/civ_portrait"
+            android:layout_width="@dimen/dp_72"
+            android:layout_height="@dimen/dp_72"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_25"
+            android:src="@mipmap/icon_portrait"
             app:civ_border_color="@color/white"
             app:civ_border_width="1dp" />
 
         <TextView
             android:id="@+id/tv_1"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/civ_portrait"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_centerHorizontal="true"
             android:text="Tsien"
             android:textColor="@color/white" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
