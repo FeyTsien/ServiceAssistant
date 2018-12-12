@@ -46,7 +46,7 @@ public class DownLoadService extends MVPBaseService<DownloadContract.View, Downl
     //下载apk操作
     public void downFile(final String url) {
         //初始化通知栏
-        notificationUtils = new NotificationUtil(this, NOTIFY_ID, R.mipmap.ic_launcher, "title", "content......");
+        notificationUtils = new NotificationUtil(this, NOTIFY_ID, R.mipmap.icon_logo, "title", "content......");
         notificationUtils.notifyProgress((int) max, 0, "正在下载", 0 + "/" + max);
         File file = new File(OpenFileUtils.getApkPath(this), "INanMing.apk"); //获取文件路径
         mPresenter.downloadFile(url, file);

@@ -57,25 +57,7 @@
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait" />
 
-        <!--webview测试界面-->
-        <activity
-            android:name=".mywebview.WebTestActivity"
-            android:launchMode="singleTop" />
 
-        <!--用于DeepLink，html跳到此页面  scheme_Adr: 'will://link/testid',-->
-        <activity android:name=".mywebview.DeepLinkActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="link"
-                    android:scheme="will" />
-            </intent-filter>
-
-        </activity>
     </application>
 
 </manifest>
