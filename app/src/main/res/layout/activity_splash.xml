@@ -2,14 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_transition"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/iv_pic"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/dp_250"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/tielu"/>
+        android:layout_centerInParent="true"
+        android:src="@mipmap/app_logo"/>
 
     <TextView
         android:id="@+id/tv_jump"
