@@ -118,7 +118,7 @@ public class MainBossActivity extends MVPActivity<MVPContract.View, MVPPresenter
     public void setNavigationView() {
         //侧滑菜单
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setItemIconTintList(null);
+//        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
         //侧滑菜单头部控件初始化
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
