@@ -6,7 +6,9 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.support.multidex.MultiDex;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
+
 /**
  * @author :   FeyTsien
  * @date :   2017/8/15
@@ -30,9 +32,9 @@ public class MyApplication extends Application {
         System.out.println("获取context：etApplicationContext()");
 
         Utils.init(this);
-//        LogUtils.getConfig()
-//                .setLogSwitch(false)
-//                .setConsoleSwitch(false);
+        LogUtils.getConfig()
+                .setLogSwitch(false)
+                .setConsoleSwitch(false);
 
         mContext = getApplicationContext();
     }
