@@ -67,13 +67,13 @@ public class ShipmentListAcitivity extends MVPActivity<MVPContract.View, MVPPres
      * 初始化数据
      */
     @Override
-    protected  void initData() {
+    protected void initData() {
         mDataBeanList = new ArrayList<MBean.MsgBean>();
         onRefresh();
     }
 
     @Override
-    protected  void initView() {
+    protected void initView() {
         setToolBar(mToolbar, mTvTitle, "发货列表");
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -92,9 +92,9 @@ public class ShipmentListAcitivity extends MVPActivity<MVPContract.View, MVPPres
         mAdapter = new MyBaseAdapter<MBean.MsgBean>(mDataBeanList, R.layout.item_shipment) {
             @Override
             public void bindView(MyViewHolder holder, int position) {
-                holder.setTextView(R.id.tv_information_time, mDataBeanList.get(position).getRtime());
-                holder.setTextView(R.id.tv_app, mDataBeanList.get(position).getNtitle());
-                holder.setTextView(R.id.tv_information_title, mDataBeanList.get(position).getContent());
+                holder.setTextView(R.id.tv_rtime, mDataBeanList.get(position).getRtime());
+                holder.setTextView(R.id.tv_rcompany, mDataBeanList.get(position).getRcompany());
+                holder.setTextView(R.id.tv_scompany, mDataBeanList.get(position).getScompany());
             }
         };
         mRecyclerView.setAdapter(mAdapter);
@@ -138,9 +138,9 @@ public class ShipmentListAcitivity extends MVPActivity<MVPContract.View, MVPPres
         String jsonData = gson.toJson(appDataBean);
 
         if (TextUtils.equals(AppData.getRoleType(), "1")) {
-            mPresenter.request(UrlUtils.GET_SHIPMENT_LIST, jsonData,MBean.class);
+            mPresenter.request(UrlUtils.GET_SHIPMENT_LIST, jsonData, MBean.class);
         } else {
-            mPresenter.request(UrlUtils.GET_STAFF_SHIPMENT_LIST, jsonData,MBean.class);
+            mPresenter.request(UrlUtils.GET_STAFF_SHIPMENT_LIST, jsonData, MBean.class);
         }
     }
 
@@ -151,7 +151,7 @@ public class ShipmentListAcitivity extends MVPActivity<MVPContract.View, MVPPres
         if (mStart == 0) {
             mDataBeanList.clear();
         }
-        mDataBeanList.addAll(mBean.getMsgX());
+        mDataBeanList.addAll(mBean.getBiz());
         mAdapter.notifyDataSetChanged();
     }
 

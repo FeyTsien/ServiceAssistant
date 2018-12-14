@@ -38,7 +38,7 @@ public class InsuranceFragment extends MVPFragment<MVPContract.View, MVPPresente
     private String mReceivingCompany;
     private String mContact;
     private String mContactPhone;
-    private String mRtime;
+    private String mItime;
     private String mDescription;
 
     private View mRootView;
@@ -102,7 +102,7 @@ public class InsuranceFragment extends MVPFragment<MVPContract.View, MVPPresente
         }
 
         mUserid = AppData.getUserId();
-        mRtime = mTvInsuranceDate.getText().toString();
+        mItime = mTvInsuranceDate.getText().toString();
         mReceivingCompany = mEtReceivingCompany.getText().toString();
         mContact = mEtContact.getText().toString();
         mContactPhone = mEtContactPhone.getText().toString();
@@ -111,7 +111,7 @@ public class InsuranceFragment extends MVPFragment<MVPContract.View, MVPPresente
         MBean.MsgBean dataBean = new MBean.MsgBean();
         dataBean.setUserid(mUserid);
         dataBean.setRcompany(mReceivingCompany);
-        dataBean.setRtime(mRtime);
+        dataBean.setItime(mItime);
         dataBean.setContact(mContact);
         dataBean.setPhone(mContactPhone);
         dataBean.setDescription(mDescription);
@@ -123,7 +123,11 @@ public class InsuranceFragment extends MVPFragment<MVPContract.View, MVPPresente
     @Override
     public void requestSuccess(String requestUrl, CommonBean commonBean) {
         CommonUtils.showInfoDialog(getActivity(), "提交成功！", "提示", null, "确认", null, null);
-
+        mTvInsuranceDate.setText("");
+        mEtReceivingCompany.setText("");
+        mEtContact.setText("");
+        mEtContactPhone.setText("");
+        mEtInsuranceThat.setText("");
     }
 
     @Override

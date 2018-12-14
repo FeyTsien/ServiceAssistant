@@ -148,7 +148,7 @@ public class InformationFragment extends MVPFragment<MVPContract.View, MVPPresen
         if (mStart == 0) {
             mDataBeanList.clear();
         }
-        mDataBeanList.addAll(messageBean.getMsgX());
+        mDataBeanList.addAll(messageBean.getBiz());
         mRecyclerView.refreshComplete();
         mAdapter.notifyDataSetChanged();
     }

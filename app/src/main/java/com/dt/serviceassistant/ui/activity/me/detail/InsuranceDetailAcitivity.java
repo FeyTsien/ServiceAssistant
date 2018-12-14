@@ -24,7 +24,7 @@ public class InsuranceDetailAcitivity extends MVPActivity<MVPContract.View, MVPP
     private String mReceivingCompany;
     private String mContact;
     private String mContactPhone;
-    private String mRtime;
+    private String mItime;
     private String mDescription;
 
     @BindView(R.id.toolbar)
@@ -54,7 +54,7 @@ public class InsuranceDetailAcitivity extends MVPActivity<MVPContract.View, MVPP
         mDataBean = (MBean.MsgBean) getIntent().getSerializableExtra(INSURANCE_DATA_ITEM);
         mUserid = mDataBean.getUserid();
         mReceivingCompany = mDataBean.getRcompany();
-        mRtime = mDataBean.getRtime();
+        mItime = mDataBean.getItime();
         mContact = mDataBean.getContact();
         mContactPhone = mDataBean.getPhone();
         mDescription = mDataBean.getDescription();
@@ -64,8 +64,7 @@ public class InsuranceDetailAcitivity extends MVPActivity<MVPContract.View, MVPP
     protected void initView() {
 
         setToolBar(mToolbar, mTvTitle, "保险明细");
-        mTvTitle.setText("保险明细");
-        mTvInsuranceDate.setText(mRtime);
+        mTvInsuranceDate.setText(mItime);
         mTvReceivingCompany.setText(mReceivingCompany);
         mTvContact.setText(mContact);
         mTvContactPhone.setText(mContactPhone);

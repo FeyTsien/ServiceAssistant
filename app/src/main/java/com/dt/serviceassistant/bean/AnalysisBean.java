@@ -10,6 +10,13 @@ public class AnalysisBean {
     private int start;
     private List<String> analysis;
     private String analysissingle;
+    private String updatetime;
+    private String amount;
+    private String totalshipment;
+    private String paid;
+    private String unpaid;
+    private List<RankingBean> ranking;
+
 
     public int getStart() {
         return start;
@@ -35,4 +42,78 @@ public class AnalysisBean {
         this.analysissingle = analysissingle;
     }
 
+    public String getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(String updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public String getTotalshipment() {
+        return totalshipment;
+    }
+
+    public void setTotalshipment(String totalshipment) {
+        this.totalshipment = totalshipment;
+    }
+
+    public String getPaid() {
+        return paid;
+    }
+
+    public void setPaid(String paid) {
+        this.paid = paid;
+    }
+
+    public String getUnpaid() {
+        return unpaid;
+    }
+
+    public void setUnpaid(String unpaid) {
+        this.unpaid = unpaid;
+    }
+
+    public List<RankingBean> getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(List<RankingBean> ranking) {
+        this.ranking = ranking;
+    }
+
+    public static class RankingBean {
+        /**
+         * client : 客户1
+         * money : 5000万
+         */
+
+        private String client;
+        private String money;
+
+        public String getClient() {
+            return client;
+        }
+
+        public void setClient(String client) {
+            this.client = client;
+        }
+
+        public String getMoney() {
+            return money;
+        }
+
+        public void setMoney(String money) {
+            this.money = money;
+        }
+
+    }
 }

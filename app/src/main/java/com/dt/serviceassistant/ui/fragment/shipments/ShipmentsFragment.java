@@ -127,12 +127,18 @@ public class ShipmentsFragment extends MVPFragment<MVPContract.View, MVPPresente
         dataBean.setDescription(mDescription);
         Gson gson = new Gson();
         String jsonData = gson.toJson(dataBean);
-        mPresenter.request(UrlUtils.ADD_SHIPMENT, jsonData,MBean.class);
+        mPresenter.request(UrlUtils.ADD_SHIPMENT, jsonData, MBean.class);
     }
 
     @Override
     public void requestSuccess(String requestUrl, CommonBean commonBean) {
         CommonUtils.showInfoDialog(getActivity(), "提交成功！", "提示", null, "确认", null, null);
+        mEtShipmentCompany.setText("");
+        mEtReceivingCompany.setText("");
+        mTvShipmentDate.setText("");
+        mEtContact.setText("");
+        mEtContactPhone.setText("");
+        mEtInsuranceThat.setText("");
 
     }
 

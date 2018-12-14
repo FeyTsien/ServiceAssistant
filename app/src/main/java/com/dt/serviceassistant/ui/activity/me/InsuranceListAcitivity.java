@@ -84,10 +84,8 @@ public class InsuranceListAcitivity extends MVPActivity<MVPContract.View, MVPPre
         mAdapter = new MyBaseAdapter<MBean.MsgBean>(mDataBeanList, R.layout.item_insurance) {
             @Override
             public void bindView(MyViewHolder holder, int position) {
-                holder.setTextView(R.id.tv_description, mDataBeanList.get(position).getDescription());
+                holder.setTextView(R.id.tv_rtime, mDataBeanList.get(position).getItime());
                 holder.setTextView(R.id.tv_rcompany, mDataBeanList.get(position).getRcompany());
-                holder.setTextView(R.id.tv_information_time, mDataBeanList.get(position).getRtime());
-                holder.setTextView(R.id.tv_status, mDataBeanList.get(position).getStatus());
             }
         };
         mRecyclerView.setAdapter(mAdapter);
@@ -144,7 +142,7 @@ public class InsuranceListAcitivity extends MVPActivity<MVPContract.View, MVPPre
         if (mStart == 0) {
             mDataBeanList.clear();
         }
-        mDataBeanList.addAll(mBean.getMsgX());
+        mDataBeanList.addAll(mBean.getBiz());
         mAdapter.notifyDataSetChanged();
     }
 

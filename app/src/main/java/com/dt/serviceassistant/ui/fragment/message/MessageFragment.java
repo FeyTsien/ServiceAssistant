@@ -2,12 +2,8 @@ package com.dt.serviceassistant.ui.fragment.message;//package com.dt.serviceassi
 
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.dt.serviceassistant.R;
@@ -31,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 /**
@@ -159,7 +154,7 @@ public class MessageFragment extends MVPFragment<MVPContract.View, MVPPresenter>
     public void requestSuccess(String requestUrl, CommonBean commonBean) {
         MessageBean messageBean = (MessageBean) commonBean.getData();
         mDataBeanList.clear();
-        mDataBeanList.addAll(messageBean.getMsgX());
+        mDataBeanList.addAll(messageBean.getBiz());
         mRecyclerView.refreshComplete();
         mAdapter.notifyDataSetChanged();
     }

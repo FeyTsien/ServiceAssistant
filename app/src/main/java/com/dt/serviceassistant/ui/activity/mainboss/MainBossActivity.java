@@ -27,6 +27,7 @@ import com.dt.serviceassistant.mvp.MVPActivity;
 import com.dt.serviceassistant.mvp.MVPContract;
 import com.dt.serviceassistant.mvp.MVPPresenter;
 import com.dt.serviceassistant.ui.activity.login.LoginPwdActivity;
+import com.dt.serviceassistant.ui.fragment.analysis.AccountsReceivableFragment;
 import com.dt.serviceassistant.ui.fragment.analysis.AnalysisFragment;
 import com.dt.serviceassistant.ui.fragment.analysis.AnalysisSingleFragment;
 import com.dt.serviceassistant.utils.CommonUtils;
@@ -104,7 +105,7 @@ public class MainBossActivity extends MVPActivity<MVPContract.View, MVPPresenter
     private void setFragment() {
         fragmentList.add(AnalysisFragment.newInstance());
         fragmentList.add(AnalysisFragment.newInstance());
-        fragmentList.add(AnalysisSingleFragment.newInstance());
+        fragmentList.add(AccountsReceivableFragment.newInstance());
         fragmentList.add(AnalysisSingleFragment.newInstance());
         fragmentList.add(AnalysisFragment.newInstance());
         fragmentList.add(AnalysisFragment.newInstance());

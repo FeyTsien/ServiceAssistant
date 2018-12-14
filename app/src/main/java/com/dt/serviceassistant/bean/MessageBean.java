@@ -6,15 +6,14 @@ import java.util.List;
 
 public class MessageBean {
 
-    @SerializedName("msg")
-    private List<MsgBean> msgX;
+    private List<MsgBean> biz;
 
-    public List<MsgBean> getMsgX() {
-        return msgX;
+    public List<MsgBean> getBiz() {
+        return biz;
     }
 
-    public void setMsgX(List<MsgBean> msgX) {
-        this.msgX = msgX;
+    public void setBiz(List<MsgBean> biz) {
+        this.biz = biz;
     }
 
     public static class MsgBean {

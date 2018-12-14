@@ -77,12 +77,11 @@ public class TaskListAcitivity extends MVPActivity<MVPContract.View, MVPPresente
         //下拉刷新，上拉加载监听
         mRecyclerView.setLoadingListener(this);
 
-        mAdapter = new MyBaseAdapter<MBean.MsgBean>(mDataBeanList, R.layout.item_shipment) {
+        mAdapter = new MyBaseAdapter<MBean.MsgBean>(mDataBeanList, R.layout.item_task) {
             @Override
             public void bindView(MyViewHolder holder, int position) {
-                holder.setTextView(R.id.tv_information_time, mDataBeanList.get(position).getRtime());
-                holder.setTextView(R.id.tv_app, mDataBeanList.get(position).getNtitle());
-                holder.setTextView(R.id.tv_information_title, mDataBeanList.get(position).getContent());
+                holder.setTextView(R.id.tv_create_time, mDataBeanList.get(position).getCreatetime());
+                holder.setTextView(R.id.tv_content, mDataBeanList.get(position).getContent());
             }
         };
         mRecyclerView.setAdapter(mAdapter);
@@ -156,7 +155,7 @@ public class TaskListAcitivity extends MVPActivity<MVPContract.View, MVPPresente
             if (mStart == 0) {
                 mDataBeanList.clear();
             }
-            mDataBeanList.addAll(mBean.getMsgX());
+            mDataBeanList.addAll(mBean.getBiz());
             mAdapter.notifyDataSetChanged();
         } else if (TextUtils.equals(requestUrl, UrlUtils.DO_WITH_TASK)) {
             onRefresh();

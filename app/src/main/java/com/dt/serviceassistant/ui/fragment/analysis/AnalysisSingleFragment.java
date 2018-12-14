@@ -28,10 +28,10 @@ public class AnalysisSingleFragment extends MVPFragment<MVPContract.View,MVPPres
 
     private int mAnalysistype;
 
-    private View mRootView;
-
-    @BindView(R.id.tv_content)
-    TextView mTvContent;
+    @BindView(R.id.tv_update_time)
+    TextView mTvUpdateTime;
+    @BindView(R.id.tv_amount)
+    TextView mTvAmount;
 
     public static AnalysisSingleFragment newInstance() {
         return new AnalysisSingleFragment();
@@ -71,7 +71,8 @@ public class AnalysisSingleFragment extends MVPFragment<MVPContract.View,MVPPres
     @Override
     public void requestSuccess(String requestUrl, CommonBean commonBean) {
         AnalysisBean analysisBean = (AnalysisBean) commonBean.getData();
-        mTvContent.setText(analysisBean.getAnalysissingle());
+        mTvUpdateTime.setText(analysisBean.getUpdatetime());
+        mTvAmount.setText(analysisBean.getAmount());
     }
 
     @Override

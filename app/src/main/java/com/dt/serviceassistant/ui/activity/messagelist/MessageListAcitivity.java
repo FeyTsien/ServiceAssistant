@@ -88,7 +88,7 @@ public class MessageListAcitivity extends MVPActivity<MVPContract.View, MVPPrese
     public void requestSuccess(String requestUrl, CommonBean commonBean) {
         MessageBean msgBean = (MessageBean) commonBean.getData();
         mDataBeanList.clear();
-        mDataBeanList.addAll(msgBean.getMsgX());
+        mDataBeanList.addAll(msgBean.getBiz());
         mRecyclerView.refreshComplete();
         mAdapter.notifyDataSetChanged();
     }
