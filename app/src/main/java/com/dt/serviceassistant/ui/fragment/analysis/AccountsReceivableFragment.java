@@ -20,6 +20,9 @@ import com.dt.serviceassistant.utils.UrlUtils;
 import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tsienlibrary.bean.CommonBean;
 import com.tsienlibrary.ui.widget.MultiItemDivider;
 
@@ -32,13 +35,15 @@ import butterknife.BindView;
 /**
  */
 
-public class AccountsReceivableFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View, XRecyclerView.LoadingListener {
+public class AccountsReceivableFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View {
     private String TAG = getClass().getSimpleName();
     private int mAnalysistype;
     private List<AnalysisBean.RankingBean> mDataBeanList;
 
     private MyBaseAdapter mAdapter;
 
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.tv_update_time)
     TextView mTvUpdateTime;
     @BindView(R.id.tv_amount)
@@ -96,6 +101,13 @@ public class AccountsReceivableFragment extends MVPFragment<MVPContract.View, MV
             }
         };
         mRecyclerView.setAdapter(mAdapter);
+        //刷新
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                request();
+            }
+        });
     }
 
     /**
@@ -113,6 +125,8 @@ public class AccountsReceivableFragment extends MVPFragment<MVPContract.View, MV
 
     @Override
     public void requestSuccess(String requestUrl, CommonBean commonBean) {
+        //关闭下拉
+        smartRefreshLayout.finishRefresh();
         AnalysisBean analysisBean = (AnalysisBean) commonBean.getData();
         mTvUpdateTime.setText(analysisBean.getUpdatetime());
         mTvAmount.setText(analysisBean.getAmount());
@@ -129,13 +143,4 @@ public class AccountsReceivableFragment extends MVPFragment<MVPContract.View, MV
         super.requestFail(requestUrl, msg);
     }
 
-    @Override
-    public void onRefresh() {
-
-    }
-
-    @Override
-    public void onLoadMore() {
-
-    }
 }
