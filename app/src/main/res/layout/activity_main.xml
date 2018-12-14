@@ -35,8 +35,10 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="bottom"
             android:background="@color/ghostwhite"
-            app:menu="@menu/navigation"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:itemIconTint="@color/nav_item_selector"
+            app:itemTextColor="@color/nav_item_selector"
+            app:menu="@menu/navigation" />
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation_three"
@@ -44,7 +46,9 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="bottom"
             android:background="@color/ghostwhite"
-            app:menu="@menu/navigation_three"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:itemIconTint="@color/nav_item_selector"
+            app:itemTextColor="@color/nav_item_selector"
+            app:menu="@menu/navigation_three" />
     </FrameLayout>
 </LinearLayout>
