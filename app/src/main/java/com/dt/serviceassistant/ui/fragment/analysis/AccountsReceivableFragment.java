@@ -141,6 +141,8 @@ public class AccountsReceivableFragment extends MVPFragment<MVPContract.View, MV
     @Override
     public void requestFail(String requestUrl, String msg) {
         super.requestFail(requestUrl, msg);
+        //关闭下拉
+        smartRefreshLayout.finishRefresh();
     }
 
 }

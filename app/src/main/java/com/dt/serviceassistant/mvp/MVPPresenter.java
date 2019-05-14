@@ -38,7 +38,7 @@ public class MVPPresenter extends BasePresenterImpl<MVPContract.View> implements
                 try {
                     String jsons = responseBody.string();
                     CommonBean commonBean = CommonBean.fromJson(jsons, clazz);
-                    if (commonBean.getCode() == 1) {
+                    if (commonBean.getCode() == 200) {
                         if (mView != null) {
                             mView.requestSuccess(requestUrl, commonBean);
                         }

@@ -7,7 +7,8 @@ package com.dt.serviceassistant.utils;
 public class UrlUtils {
 
     //app主链接
-    public static final String BASEURL = "http://114.215.93.127:9001/dtApi/";
+//    public static final String BASEURL = "http://114.215.93.127:9001/dtApi/";
+    public static final String BASEURL = "https://easydoc.xyz/mock/";
 
     //=================接口=================
     //登录

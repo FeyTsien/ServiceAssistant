@@ -30,6 +30,7 @@ import com.dt.serviceassistant.ui.activity.login.LoginPwdActivity;
 import com.dt.serviceassistant.ui.fragment.analysis.AccountsReceivableFragment;
 import com.dt.serviceassistant.ui.fragment.analysis.AnalysisFragment;
 import com.dt.serviceassistant.ui.fragment.analysis.AnalysisSingleFragment;
+import com.dt.serviceassistant.ui.fragment.analysis.StaffAnalysisFragment;
 import com.dt.serviceassistant.utils.CommonUtils;
 import com.tsienlibrary.ui.fragment.fragmentBackHandler.BackHandlerHelper;
 
@@ -103,7 +104,7 @@ public class MainBossActivity extends MVPActivity<MVPContract.View, MVPPresenter
      * 主页内容（默认第一页配置页）
      */
     private void setFragment() {
-        fragmentList.add(AnalysisFragment.newInstance());
+        fragmentList.add(StaffAnalysisFragment.newInstance());
         fragmentList.add(AnalysisFragment.newInstance());
         fragmentList.add(AccountsReceivableFragment.newInstance());
         fragmentList.add(AnalysisSingleFragment.newInstance());

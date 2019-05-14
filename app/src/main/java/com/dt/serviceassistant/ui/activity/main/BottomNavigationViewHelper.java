@@ -10,26 +10,24 @@ import android.view.View;
 import java.lang.reflect.Field;
 
 public class BottomNavigationViewHelper {
+    /**
+     * @param view
+     * @param goneOptions 是需要隐藏的Item的下标数组
+     */
     @SuppressLint("RestrictedApi")
-    public static void disableShiftMode(BottomNavigationView view) {
+    public static void disableShiftMode(BottomNavigationView view, int... goneOptions) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
-        try {
-            Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
-            shiftingMode.setAccessible(true);
-            shiftingMode.setBoolean(menuView, false);
-            shiftingMode.setAccessible(false);
-            for (int i = 0; i < menuView.getChildCount(); i++) {
-                BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
-                //noinspection RestrictedApi
-                item.setShiftingMode(false);//true,未选择中得不显示文字；false,未选中得显示文字
-                // set once again checked value, so view will be updated
-                //noinspection RestrictedApi
-                item.setChecked(item.getItemData().isChecked());
-            }
-        } catch (NoSuchFieldException e) {
-            Log.e("BNVHelper", "Unable to get shift mode field", e);
-        } catch (IllegalAccessException e) {
-            Log.e("BNVHelper", "Unable to change value of shift mode", e);
+
+
+        for (int opt : goneOptions) {
+            menuView.removeViewAt(opt);//去掉不需要展示的menu
         }
+
+        for (int i = 0; i < menuView.getChildCount(); i++) {
+
+            BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
+            item.setChecked(item.getItemData().isChecked());
+        }
+
     }
 }
