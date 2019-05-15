@@ -11,14 +11,14 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/dp_15"
-            android:background="@color/white">
+            android:paddingBottom="@dimen/dp_15">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_annual_cumulative"
+                        android:id="@+id/tv_total_inventory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -47,7 +47,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="年度累计（吨）"
+                        android:text="总库存（吨）"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
@@ -66,7 +66,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_month_cumulative"
+                        android:id="@+id/tv_newly_increased"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -79,7 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="当月累计（吨）"
+                        android:text="新增待确认（吨）"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
@@ -89,7 +89,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_20"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -97,20 +97,20 @@
                 <View
                     android:layout_width="@dimen/dp_8"
                     android:layout_height="@dimen/dp_8"
-                    android:layout_marginRight="@dimen/dp_5"
+                    android:layout_marginEnd="@dimen/dp_5"
                     android:background="@color/colorTheme" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="年度排名"
+                    android:text="流向分析"
                     android:textColor="@color/colorTextTitle"
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_annual"
+                android:id="@+id/recycler_view_flow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_15"
@@ -121,7 +121,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_15"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -129,20 +129,20 @@
                 <View
                     android:layout_width="@dimen/dp_8"
                     android:layout_height="@dimen/dp_8"
-                    android:layout_marginRight="@dimen/dp_5"
+                    android:layout_marginEnd="@dimen/dp_5"
                     android:background="@color/colorTheme" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="当月排名"
+                    android:text="按客户库存分析"
                     android:textColor="@color/colorTextTitle"
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_month"
+                android:id="@+id/recycler_view_inventory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_15"
@@ -150,36 +150,6 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginBottom="@dimen/dp_5"/>
 
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_15"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="@dimen/dp_8"
-                    android:layout_height="@dimen/dp_8"
-                    android:layout_marginRight="@dimen/dp_5"
-                    android:background="@color/colorTheme" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="分月统计"
-                    android:textColor="@color/colorTextTitle"
-                    android:textSize="@dimen/sp_16"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/chart1"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginTop="@dimen/dp_15"
-                android:layout_marginBottom="@dimen/dp_15"/>
         </LinearLayout>
 
 

@@ -78,16 +78,6 @@ public class AnalysisFragment extends MVPFragment<MVPContract.View, MVPPresenter
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_analysis, container, false);
-        ButterKnife.bind(this, mRootView);
-        initData();
-        initView();
-        return mRootView;
-    }
-
-    @Override
     protected int getLayoutId() {
         return R.layout.fragment_analysis;
     }

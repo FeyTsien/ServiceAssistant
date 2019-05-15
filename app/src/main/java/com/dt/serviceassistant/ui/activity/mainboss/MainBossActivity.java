@@ -30,7 +30,9 @@ import com.dt.serviceassistant.ui.activity.login.LoginPwdActivity;
 import com.dt.serviceassistant.ui.fragment.analysis.AccountsReceivableFragment;
 import com.dt.serviceassistant.ui.fragment.analysis.AnalysisFragment;
 import com.dt.serviceassistant.ui.fragment.analysis.AnalysisSingleFragment;
+import com.dt.serviceassistant.ui.fragment.analysis.ShipAnalysisFragment;
 import com.dt.serviceassistant.ui.fragment.analysis.StaffAnalysisFragment;
+import com.dt.serviceassistant.ui.fragment.analysis.TimelyInventoryFragment;
 import com.dt.serviceassistant.utils.CommonUtils;
 import com.tsienlibrary.ui.fragment.fragmentBackHandler.BackHandlerHelper;
 
@@ -108,8 +110,8 @@ public class MainBossActivity extends MVPActivity<MVPContract.View, MVPPresenter
         fragmentList.add(AnalysisFragment.newInstance());
         fragmentList.add(AccountsReceivableFragment.newInstance());
         fragmentList.add(AnalysisSingleFragment.newInstance());
-        fragmentList.add(AnalysisFragment.newInstance());
-        fragmentList.add(AnalysisFragment.newInstance());
+        fragmentList.add(TimelyInventoryFragment.newInstance());
+        fragmentList.add(ShipAnalysisFragment.newInstance());
         fragmentList.add(AnalysisFragment.newInstance());
         loadFragment(0);
     }

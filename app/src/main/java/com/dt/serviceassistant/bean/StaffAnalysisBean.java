@@ -118,6 +118,7 @@ public class StaffAnalysisBean {
          */
 
         private String staff_name;
+        private String color;
         private List<workloadBean> workload;
 
         public String getStaff_name() {
@@ -126,6 +127,14 @@ public class StaffAnalysisBean {
 
         public void setStaff_name(String staff_name) {
             this.staff_name = staff_name;
+        }
+
+        public String getColor() {
+            return color;
+        }
+
+        public void setColor(String color) {
+            this.color = color;
         }
 
         public List<workloadBean> getWorkload() {
