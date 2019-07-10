@@ -2,38 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginBottom="@dimen/dp_30">
+    android:layout_marginBottom="@dimen/dp_30"
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/tv_rank"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:gravity="center_vertical"
-        android:layout_marginLeft="@dimen/dp_20"
+        android:text="NO.1"
+        android:layout_marginRight="@dimen/dp_10"
         android:textColor="@color/text_color999999"
-        android:textSize="@dimen/sp_14"
-        android:text="NO.1" />
+        android:textSize="@dimen/sp_14" />
 
     <TextView
         android:id="@+id/tv_client"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textColor="@color/text_color333333"
-        android:textSize="@dimen/sp_14"
+        android:layout_weight="2"
         android:gravity="center"
-        android:text="NO.1" />
+        android:layout_marginRight="@dimen/dp_10"
+        android:text="NO.1"
+        android:textColor="@color/text_color333333"
+        android:textSize="@dimen/sp_14" />
 
     <TextView
         android:id="@+id/tv_money"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginRight="@dimen/dp_20"
-        android:textSize="@dimen/sp_14"
+        android:layout_weight="2"
+        android:layout_marginRight="@dimen/dp_10"
+        android:gravity="left"
+        android:text="NO.1"
         android:textColor="@color/text_color333333"
+        android:textSize="@dimen/sp_14" />
+
+    <TextView
+        android:id="@+id/tv_days"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:gravity="center_vertical|right"
-        android:text="NO.1" />
+        android:text="NO.1"
+        android:textColor="@color/text_color333333"
+        android:textSize="@dimen/sp_14" />
 </LinearLayout>

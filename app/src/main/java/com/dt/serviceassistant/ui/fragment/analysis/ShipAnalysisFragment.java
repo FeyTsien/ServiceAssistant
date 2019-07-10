@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.dt.serviceassistant.mvp.MVPContract;
 import com.dt.serviceassistant.mvp.MVPFragment;
 import com.dt.serviceassistant.mvp.MVPPresenter;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
+import com.dt.serviceassistant.utils.UrlUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -47,6 +49,13 @@ public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPrese
 
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.layout1)
+    LinearLayout layout1;
+    @BindView(R.id.layout2)
+    LinearLayout layout2;
+    @BindView(R.id.layout3)
+    LinearLayout layout3;
+
     @BindView(R.id.recycler_view_ship_set)
     RecyclerView mRecyclerViewShipSet;
     @BindView(R.id.recycler_view_configuration)
@@ -105,10 +114,10 @@ public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPrese
 
                 tvName.setText(mShipSetInfoList.get(position).getName());
                 tvLocation.setText(mShipSetInfoList.get(position).getLocation());
-                tv1.setText("合同签订："+mShipSetInfoList.get(position).getSign_date());
-                tv2.setText("预计到港："+mShipSetInfoList.get(position).getArrival_date());
-                tv3.setText("核定载重："+mShipSetInfoList.get(position).getWeight());
-                tv4.setText("合同单价："+mShipSetInfoList.get(position).getUnit_price());
+                tv1.setText("合同签订：" + mShipSetInfoList.get(position).getSign_date());
+                tv2.setText("预计到港：" + mShipSetInfoList.get(position).getArrival_date());
+                tv3.setText("核定载重：" + mShipSetInfoList.get(position).getWeight());
+                tv4.setText("合同单价：" + mShipSetInfoList.get(position).getUnit_price());
             }
         };
         mAdapter2 = new MyBaseAdapter<ShipAnalysisBean.ConfigurationInfoBean>(mConfigurationInfoList, R.layout.item_ship_analysis) {
@@ -124,10 +133,10 @@ public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPrese
 
                 tvName.setText(mConfigurationInfoList.get(position).getName());
                 tvLocation.setText(mConfigurationInfoList.get(position).getLocation());
-                tv1.setText("合同签订："+mConfigurationInfoList.get(position).getSign_date());
-                tv2.setText("陪在日期："+mConfigurationInfoList.get(position).getStowage_date());
-                tv3.setText("核定载重："+mConfigurationInfoList.get(position).getWeight());
-                tv4.setText("配置吨位："+mConfigurationInfoList.get(position).getConfiguration_tonnage());
+                tv1.setText("合同签订：" + mConfigurationInfoList.get(position).getSign_date());
+                tv2.setText("配载日期：" + mConfigurationInfoList.get(position).getStowage_date());
+                tv3.setText("核定载重：" + mConfigurationInfoList.get(position).getWeight());
+                tv4.setText("配载吨位：" + mConfigurationInfoList.get(position).getConfiguration_tonnage());
             }
         };
         mAdapter3 = new MyBaseAdapter<ShipAnalysisBean.ShippingInfoBean>(mShippingInfoList, R.layout.item_ship_analysis) {
@@ -143,10 +152,10 @@ public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPrese
 
                 tvName.setText(mShippingInfoList.get(position).getName());
                 tvLocation.setText(mShippingInfoList.get(position).getLocation());
-                tv1.setText("合同签订："+mShippingInfoList.get(position).getSign_date());
-                tv2.setText("起运日期："+mShippingInfoList.get(position).getShipping_date());
-                tv3.setText("核定载重："+mShippingInfoList.get(position).getWeight());
-                tv4.setText("配置吨位："+mShippingInfoList.get(position).getConfiguration_tonnage());
+                tv1.setText("合同签订：" + mShippingInfoList.get(position).getSign_date());
+                tv2.setText("起运日期：" + mShippingInfoList.get(position).getShipping_date());
+                tv3.setText("核定载重：" + mShippingInfoList.get(position).getWeight());
+                tv4.setText("配载吨位：" + mShippingInfoList.get(position).getConfiguration_tonnage());
             }
         };
 
@@ -154,6 +163,8 @@ public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPrese
         mRecyclerViewConfiguration.setAdapter(mAdapter2);
         mRecyclerViewShipping.setAdapter(mAdapter3);
 
+        //触动下拉刷新
+        smartRefreshLayout.autoRefresh();
         //刷新
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -161,7 +172,6 @@ public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPrese
                 request();
             }
         });
-        request();
     }
 
     /**
@@ -178,7 +188,7 @@ public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPrese
 //        Gson gson = new Gson();
 //        String jsonData = gson.toJson(appDataBean);
 //        mPresenter.request(UrlUtils.BOSS_ANALYSIS_LIST, jsonData, AnalysisBean.class);
-        mPresenter.request("5cuWIJl6", "", ShipAnalysisBean.class);
+        mPresenter.request(UrlUtils.BOSS_SHIP_ANALYSIS, "", ShipAnalysisBean.class);
     }
 
     @Override
@@ -188,12 +198,27 @@ public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPrese
 
         ShipAnalysisBean shipAnalysisBean = (ShipAnalysisBean) commonBean.getData();
 
-        mShipSetInfoList.clear();
-        mShipSetInfoList.addAll(shipAnalysisBean.getShip_set_info());
-        mConfigurationInfoList.clear();
-        mConfigurationInfoList.addAll(shipAnalysisBean.getConfiguration_info());
-        mShippingInfoList.clear();
-        mShippingInfoList.addAll(shipAnalysisBean.getShipping_info());
+        if (shipAnalysisBean.getShip_set_info() == null || shipAnalysisBean.getShip_set_info().size() == 0) {
+            layout1.setVisibility(View.GONE);
+        } else {
+            layout1.setVisibility(View.VISIBLE);
+            mShipSetInfoList.clear();
+            mShipSetInfoList.addAll(shipAnalysisBean.getShip_set_info());
+        }
+        if (shipAnalysisBean.getConfiguration_info() == null || shipAnalysisBean.getConfiguration_info().size() == 0) {
+            layout2.setVisibility(View.GONE);
+        } else {
+            layout2.setVisibility(View.VISIBLE);
+            mConfigurationInfoList.clear();
+            mConfigurationInfoList.addAll(shipAnalysisBean.getConfiguration_info());
+        }
+        if (shipAnalysisBean.getShipping_info() == null || shipAnalysisBean.getShipping_info().size() == 0) {
+            layout3.setVisibility(View.GONE);
+        } else {
+            layout3.setVisibility(View.VISIBLE);
+            mShippingInfoList.clear();
+            mShippingInfoList.addAll(shipAnalysisBean.getShipping_info());
+        }
 
         mAdapter1.notifyDataSetChanged();
         mAdapter2.notifyDataSetChanged();

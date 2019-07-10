@@ -73,7 +73,6 @@ public class AccountsReceivableFragment extends MVPFragment<MVPContract.View, MV
     protected void initData() {
         mAnalysistype = getArguments().getInt(MainBossActivity.ANALYSIS_TYPE, 0);
         mDataBeanList = new ArrayList<>();
-        request();
     }
 
     @Override
@@ -93,14 +92,20 @@ public class AccountsReceivableFragment extends MVPFragment<MVPContract.View, MV
                     tvRank.setTextColor(0xFFF5691D);
                 } else if (position == 2) {
                     tvRank.setTextColor(0xFFF5CF1D);
+                }else {
+                    tvRank.setTextColor(getResources().getColor(R.color.text_color999999));
                 }
                 tvRank.setText("NO." + (position + 1));
 
                 holder.setTextView(R.id.tv_client, mDataBeanList.get(position).getClient());
-                holder.setTextView(R.id.tv_money, mDataBeanList.get(position).getMoney());
+                holder.setTextView(R.id.tv_money, "￥"+mDataBeanList.get(position).getMoney());
+                holder.setTextView(R.id.tv_days, mDataBeanList.get(position).getDays()+"天");
             }
         };
         mRecyclerView.setAdapter(mAdapter);
+
+        //触动下拉刷新
+        smartRefreshLayout.autoRefresh();
         //刷新
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override

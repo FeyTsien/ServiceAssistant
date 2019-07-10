@@ -17,6 +17,7 @@ import com.dt.serviceassistant.mvp.MVPContract;
 import com.dt.serviceassistant.mvp.MVPFragment;
 import com.dt.serviceassistant.mvp.MVPPresenter;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
+import com.dt.serviceassistant.utils.UrlUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -132,6 +133,8 @@ public class TimelyInventoryFragment extends MVPFragment<MVPContract.View, MVPPr
         mRecyclerViewFlow.setAdapter(mAdapterFlow);
         mRecyclerViewInventory.setAdapter(mAdapterInventory);
 
+        //触动下拉刷新
+        smartRefreshLayout.autoRefresh();
         //刷新
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -139,7 +142,6 @@ public class TimelyInventoryFragment extends MVPFragment<MVPContract.View, MVPPr
                 request();
             }
         });
-        request();
     }
 
     /**
@@ -156,7 +158,7 @@ public class TimelyInventoryFragment extends MVPFragment<MVPContract.View, MVPPr
 //        Gson gson = new Gson();
 //        String jsonData = gson.toJson(appDataBean);
 //        mPresenter.request(UrlUtils.BOSS_ANALYSIS_LIST, jsonData, AnalysisBean.class);
-        mPresenter.request("HYFDjiKf", "", TimelyInventoryBean.class);
+        mPresenter.request(UrlUtils.BOSS_TIMELY_INVENTORY, "", TimelyInventoryBean.class);
     }
 
     @Override

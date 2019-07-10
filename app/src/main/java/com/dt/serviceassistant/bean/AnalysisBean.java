@@ -98,6 +98,7 @@ public class AnalysisBean {
 
         private String client;
         private String money;
+        private String days;
 
         public String getClient() {
             return client;
@@ -115,5 +116,12 @@ public class AnalysisBean {
             this.money = money;
         }
 
+        public String getDays() {
+            return days;
+        }
+
+        public void setDays(String days) {
+            this.days = days;
+        }
     }
 }

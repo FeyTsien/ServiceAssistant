@@ -21,6 +21,7 @@ import com.dt.serviceassistant.mvp.MVPFragment;
 import com.dt.serviceassistant.mvp.MVPPresenter;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
 import com.dt.serviceassistant.ui.custom.MyMarkerView;
+import com.dt.serviceassistant.utils.UrlUtils;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.MarkerView;
@@ -166,7 +167,7 @@ public class StaffAnalysisFragment extends MVPFragment<MVPContract.View, MVPPres
                 progressBar.setMax(100);
                 int progressValue = (int) (mMonthRankingList.get(position).getWeight() / mMonthRankingList.get(0).getWeight() * 100);
                 if (progressValue > 100) {
-                    progressValue = progressValue - 100;
+                    progressValue = 100;
                 }
                 progressBar.setProgress(progressValue);
             }
@@ -176,6 +177,8 @@ public class StaffAnalysisFragment extends MVPFragment<MVPContract.View, MVPPres
 
         initLineChart();
 
+        //触动下拉刷新
+        smartRefreshLayout.autoRefresh();
         //刷新
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -183,7 +186,6 @@ public class StaffAnalysisFragment extends MVPFragment<MVPContract.View, MVPPres
                 request();
             }
         });
-        request();
     }
 
     /**
@@ -237,7 +239,7 @@ public class StaffAnalysisFragment extends MVPFragment<MVPContract.View, MVPPres
 //        Gson gson = new Gson();
 //        String jsonData = gson.toJson(appDataBean);
 //        mPresenter.request(UrlUtils.BOSS_ANALYSIS_LIST, jsonData, AnalysisBean.class);
-        mPresenter.request("7Oh6OScO", "", StaffAnalysisBean.class);
+        mPresenter.request(UrlUtils.BOSS_STAFF_ANALYSIS, "", StaffAnalysisBean.class);
     }
 
     @Override

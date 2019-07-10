@@ -7,8 +7,8 @@ package com.dt.serviceassistant.utils;
 public class UrlUtils {
 
     //app主链接
-//    public static final String BASEURL = "http://114.215.93.127:9001/dtApi/";
-    public static final String BASEURL = "https://easydoc.xyz/mock/";
+    public static final String BASEURL = "http://114.215.93.127:9001/dtApi/";
+//    public static final String BASEURL = "https://easydoc.xyz/mock/";
 
     //=================接口=================
     //登录
@@ -47,5 +47,11 @@ public class UrlUtils {
     public static final String BOSS_ANALYSIS_LIST = "boss/bossAnalysisList.do";
     //老板界面（2：应收账款;3:资金分析; ）
     public static final String BOSS_ANALYSIS_SINGLE = "boss/bossAnalysisSingle.do";
+    //业务员分析
+    public static final String BOSS_STAFF_ANALYSIS = "boss/staffAnalysis";
+    //实时库存
+    public static final String BOSS_TIMELY_INVENTORY = "boss/timelyInventory";
+    //实时船运
+    public static final String BOSS_SHIP_ANALYSIS = "boss/shipAnalysis";
 
 }
