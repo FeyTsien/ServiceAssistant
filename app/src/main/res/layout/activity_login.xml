@@ -34,7 +34,7 @@
                 android:layout_height="43dp"
                 android:background="@drawable/edit_bg"
                 android:hint="请输入手机号"
-                android:inputType="textEmailAddress"
+                android:inputType="phone"
                 android:textColor="@color/black"
                 android:textColorHint="@color/colorTextHint"
                 android:textSize="14sp" />
@@ -79,7 +79,7 @@
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/button_bg"
             android:text="确认"

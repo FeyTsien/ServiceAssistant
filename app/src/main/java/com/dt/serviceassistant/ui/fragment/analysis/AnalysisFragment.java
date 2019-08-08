@@ -149,8 +149,8 @@ public class AnalysisFragment extends MVPFragment<MVPContract.View, MVPPresenter
         appDataBean.setKeyword(mKeyword);
         appDataBean.setStarttime(mStartTime);
         appDataBean.setEndtime(mEndTime);
-        appDataBean.setAnalysistype(mAnalysistype);
-        appDataBean.setStart(mStart);
+        appDataBean.setAnalysistype(mAnalysistype+" ");
+        appDataBean.setStart(mStart+"");
         Gson gson = new Gson();
         String jsonData = gson.toJson(appDataBean);
         mPresenter.request(UrlUtils.BOSS_ANALYSIS_LIST, jsonData, AnalysisBean.class);

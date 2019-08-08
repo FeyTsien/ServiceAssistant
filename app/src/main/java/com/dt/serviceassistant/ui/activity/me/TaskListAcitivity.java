@@ -30,7 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * 发货列表
+ * 任务列表
  */
 public class TaskListAcitivity extends MVPActivity<MVPContract.View, MVPPresenter> implements MVPContract.View, XRecyclerView.LoadingListener {
 
@@ -62,7 +62,7 @@ public class TaskListAcitivity extends MVPActivity<MVPContract.View, MVPPresente
 
     @Override
     protected void initView() {
-        setToolBar(mToolbar, mTvTitle, "发货列表");
+        setToolBar(mToolbar, mTvTitle, "任务列表");
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -119,7 +119,7 @@ public class TaskListAcitivity extends MVPActivity<MVPContract.View, MVPPresente
         }
         AppBean.DataBean appDataBean = new AppBean.DataBean();
         appDataBean.setUserid(AppData.getUserId());
-        appDataBean.setStart(mStart);
+        appDataBean.setStart(mStart+"");
         Gson gson = new Gson();
         String jsonData = gson.toJson(appDataBean);
         mPresenter.request(UrlUtils.GET_TASKS_LIST, jsonData, MBean.class);
@@ -138,7 +138,7 @@ public class TaskListAcitivity extends MVPActivity<MVPContract.View, MVPPresente
             public void onClick(DialogInterface dialog, int which) {
                 AppBean.DataBean appDataBean = new AppBean.DataBean();
                 appDataBean.setUserid(AppData.getUserId());
-                appDataBean.setId(id);
+                appDataBean.setId(id+"");
                 Gson gson = new Gson();
                 String jsonData = gson.toJson(appDataBean);
                 mPresenter.request(UrlUtils.DO_WITH_TASK, jsonData, MBean.class);

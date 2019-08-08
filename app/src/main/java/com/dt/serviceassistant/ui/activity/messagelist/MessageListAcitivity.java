@@ -121,8 +121,8 @@ public class MessageListAcitivity extends MVPActivity<MVPContract.View, MVPPrese
         }
         AppBean.DataBean appDataBean = new AppBean.DataBean();
         appDataBean.setUserid(AppData.getUserId());
-        appDataBean.setMessagetype(mMessageType);
-        appDataBean.setStart(mStart);
+        appDataBean.setMessagetype(mMessageType+"");
+        appDataBean.setStart(mStart+"");
         Gson gson = new Gson();
         String jsonData = gson.toJson(appDataBean);
         mPresenter.request(UrlUtils.GET_MESSAGE_LIST, jsonData, MessageBean.class);

@@ -1,6 +1,7 @@
 package com.dt.serviceassistant.ui.fragment.information;
 
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -13,6 +14,7 @@ import com.dt.serviceassistant.mvp.MVPContract;
 import com.dt.serviceassistant.mvp.MVPFragment;
 import com.dt.serviceassistant.mvp.MVPPresenter;
 import com.dt.serviceassistant.mywebview.WebViewActivity;
+import com.dt.serviceassistant.ui.activity.InformationDetailActivity;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
 import com.dt.serviceassistant.utils.CommonUtils;
 import com.dt.serviceassistant.utils.UrlUtils;
@@ -84,8 +86,8 @@ public class InformationFragment extends MVPFragment<MVPContract.View, MVPPresen
             @Override
             public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
                 holder.setTextView(R.id.tv_information_time, mDataBeanList.get(position).getRtime());
-                holder.setTextView(R.id.tv_app, mDataBeanList.get(position).getNtitle());
-                holder.setTextView(R.id.tv_information_title, mDataBeanList.get(position).getContent());
+                holder.setTextView(R.id.tv_app, mDataBeanList.get(position).getAuthor());
+                holder.setTextView(R.id.tv_information_title, mDataBeanList.get(position).getNtitle());
             }
         };
         mRecyclerView.setAdapter(mAdapter);
@@ -94,12 +96,20 @@ public class InformationFragment extends MVPFragment<MVPContract.View, MVPPresen
         mAdapter.setOnItemClickListener(new MyBaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int pos) {
-                String url = mDataBeanList.get(pos).getUrl();
-                if (url.startsWith("http")) {
-                    WebViewActivity.loadUrl(getActivity(), url);
-                } else {
-                    WebViewActivity.loadUrl(getActivity(), "http://" + url);
-                }
+
+                Intent intent = new Intent(getActivity(), InformationDetailActivity.class);
+                intent.putExtra(InformationDetailActivity.KEY_TITLE, mDataBeanList.get(pos).getNtitle());
+                intent.putExtra(InformationDetailActivity.KEY_AUTHOR, mDataBeanList.get(pos).getAuthor());
+                intent.putExtra(InformationDetailActivity.KEY_DATE, mDataBeanList.get(pos).getRtime());
+                intent.putExtra(InformationDetailActivity.KEY_CONTENT, mDataBeanList.get(pos).getContent());
+                startActivity(intent);
+
+//                String url = mDataBeanList.get(pos).getUrl();
+//                if (url.startsWith("http")) {
+//                    WebViewActivity.loadUrl(getActivity(), url);
+//                } else {
+//                    WebViewActivity.loadUrl(getActivity(), "http://" + url);
+//                }
 
             }
         });
@@ -136,10 +146,10 @@ public class InformationFragment extends MVPFragment<MVPContract.View, MVPPresen
         }
         AppBean.DataBean appDataBean = new AppBean.DataBean();
         appDataBean.setUserid(AppData.getUserId());
-        appDataBean.setStart(mStart);
+        appDataBean.setStart(mStart + "");
         Gson gson = new Gson();
         String jsonData = gson.toJson(appDataBean);
-        mPresenter.request(UrlUtils.GET_NEWS_LIST, jsonData,MessageBean.class);
+        mPresenter.request(UrlUtils.GET_NEWS_LIST, jsonData, MessageBean.class);
     }
 
     @Override

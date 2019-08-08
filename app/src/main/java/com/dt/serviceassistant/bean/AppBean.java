@@ -41,19 +41,19 @@ public class AppBean extends CodeBean {// implements Serializable
         private String password;
         private String headurl;
         private String roletype;
-        private int messagetype;
+        private String messagetype;
         private String keyword;
         private String starttime;
         private String endtime;
-        private int analysistype;
-        private int start;
-        private int id;
+        private String analysistype;
+        private String start;
+        private String id;
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 
@@ -113,11 +113,11 @@ public class AppBean extends CodeBean {// implements Serializable
             this.roletype = roletype;
         }
 
-        public int getMessagetype() {
+        public String getMessagetype() {
             return messagetype;
         }
 
-        public void setMessagetype(int messagetype) {
+        public void setMessagetype(String messagetype) {
             this.messagetype = messagetype;
         }
 
@@ -146,19 +146,19 @@ public class AppBean extends CodeBean {// implements Serializable
             this.endtime = endtime;
         }
 
-        public int getAnalysistype() {
+        public String getAnalysistype() {
             return analysistype;
         }
 
-        public void setAnalysistype(int analysistype) {
+        public void setAnalysistype(String analysistype) {
             this.analysistype = analysistype;
         }
 
-        public int getStart() {
+        public String getStart() {
             return start;
         }
 
-        public void setStart(int start) {
+        public void setStart(String start) {
             this.start = start;
         }
     }

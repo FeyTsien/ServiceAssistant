@@ -76,7 +76,7 @@ public class AnalysisSingleFragment extends MVPFragment<MVPContract.View,MVPPres
 
         AppBean.DataBean appDataBean = new AppBean.DataBean();
         appDataBean.setUserid(AppData.getUserId());
-        appDataBean.setAnalysistype(mAnalysistype);
+        appDataBean.setAnalysistype(mAnalysistype+"");
         Gson gson = new Gson();
         String jsonData = gson.toJson(appDataBean);
         mPresenter.request(UrlUtils.BOSS_ANALYSIS_SINGLE, jsonData,AnalysisBean.class);

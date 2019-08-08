@@ -30,6 +30,19 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+
+    signingConfigs {
+        release {
+            try {
+                storeFile file("../assistant.jks")
+                storePassword "123456"
+                keyAlias "key"
+                keyPassword "123456"
+            } catch (ex) {
+                throw new InvalidUserDataException("You should define KEYSTORE_PASSWORD and KEY_PASSWORD in gradle.properties.")
+            }
+        }
+    }
 }
 
 dependencies {

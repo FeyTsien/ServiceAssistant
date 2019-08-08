@@ -6,15 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.bean.ShipAnalysisBean;
-import com.dt.serviceassistant.bean.TimelyInventoryBean;
 import com.dt.serviceassistant.mvp.MVPContract;
 import com.dt.serviceassistant.mvp.MVPFragment;
 import com.dt.serviceassistant.mvp.MVPPresenter;
@@ -32,16 +31,16 @@ import butterknife.BindView;
 
 
 /**
- * 业务员分析
+ * 船舶分析
  */
 
 public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View {
     private String TAG = getClass().getSimpleName();
 
 
-    private List<ShipAnalysisBean.ShipSetInfoBean> mShipSetInfoList;
-    private List<ShipAnalysisBean.ConfigurationInfoBean> mConfigurationInfoList;
-    private List<ShipAnalysisBean.ShippingInfoBean> mShippingInfoList;
+    private List<ShipAnalysisBean.InfoBean> mShipSetInfoList;
+    private List<ShipAnalysisBean.InfoBean> mConfigurationInfoList;
+    private List<ShipAnalysisBean.InfoBean> mShippingInfoList;
 
     private MyBaseAdapter mAdapter1;
     private MyBaseAdapter mAdapter2;
@@ -101,10 +100,11 @@ public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPrese
         mRecyclerViewConfiguration.setLayoutManager(layoutManager2);
         mRecyclerViewShipping.setLayoutManager(layoutManager3);
 
-        mAdapter1 = new MyBaseAdapter<ShipAnalysisBean.ShipSetInfoBean>(mShipSetInfoList, R.layout.item_ship_analysis) {
+        mAdapter1 = new MyBaseAdapter<ShipAnalysisBean.InfoBean>(mShipSetInfoList, R.layout.item_ship_analysis) {
             @SuppressLint("SetTextI18n")
             @Override
             public void bindView(MyViewHolder holder, int position) {
+                TextView tvAgencyname = holder.getView(R.id.tv_agencyname);
                 TextView tvName = holder.getView(R.id.tv_name);
                 TextView tvLocation = holder.getView(R.id.tv_location);
                 TextView tv1 = holder.getView(R.id.tv1);
@@ -112,6 +112,12 @@ public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPrese
                 TextView tv3 = holder.getView(R.id.tv3);
                 TextView tv4 = holder.getView(R.id.tv4);
 
+                if (!TextUtils.isEmpty(mShipSetInfoList.get(position).getAgencyname())) {
+                    tvAgencyname.setText(mShipSetInfoList.get(position).getAgencyname());
+                    tvAgencyname.setVisibility(View.VISIBLE);
+                } else {
+                    tvAgencyname.setVisibility(View.GONE);
+                }
                 tvName.setText(mShipSetInfoList.get(position).getName());
                 tvLocation.setText(mShipSetInfoList.get(position).getLocation());
                 tv1.setText("合同签订：" + mShipSetInfoList.get(position).getSign_date());
@@ -120,10 +126,11 @@ public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPrese
                 tv4.setText("合同单价：" + mShipSetInfoList.get(position).getUnit_price());
             }
         };
-        mAdapter2 = new MyBaseAdapter<ShipAnalysisBean.ConfigurationInfoBean>(mConfigurationInfoList, R.layout.item_ship_analysis) {
+        mAdapter2 = new MyBaseAdapter<ShipAnalysisBean.InfoBean>(mConfigurationInfoList, R.layout.item_ship_analysis) {
             @SuppressLint("SetTextI18n")
             @Override
             public void bindView(MyViewHolder holder, int position) {
+                TextView tvAgencyname = holder.getView(R.id.tv_agencyname);
                 TextView tvName = holder.getView(R.id.tv_name);
                 TextView tvLocation = holder.getView(R.id.tv_location);
                 TextView tv1 = holder.getView(R.id.tv1);
@@ -131,6 +138,12 @@ public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPrese
                 TextView tv3 = holder.getView(R.id.tv3);
                 TextView tv4 = holder.getView(R.id.tv4);
 
+                if (!TextUtils.isEmpty(mConfigurationInfoList.get(position).getAgencyname())) {
+                    tvAgencyname.setText(mConfigurationInfoList.get(position).getAgencyname());
+                    tvAgencyname.setVisibility(View.VISIBLE);
+                } else {
+                    tvAgencyname.setVisibility(View.GONE);
+                }
                 tvName.setText(mConfigurationInfoList.get(position).getName());
                 tvLocation.setText(mConfigurationInfoList.get(position).getLocation());
                 tv1.setText("合同签订：" + mConfigurationInfoList.get(position).getSign_date());
@@ -139,10 +152,11 @@ public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPrese
                 tv4.setText("配载吨位：" + mConfigurationInfoList.get(position).getConfiguration_tonnage());
             }
         };
-        mAdapter3 = new MyBaseAdapter<ShipAnalysisBean.ShippingInfoBean>(mShippingInfoList, R.layout.item_ship_analysis) {
+        mAdapter3 = new MyBaseAdapter<ShipAnalysisBean.InfoBean>(mShippingInfoList, R.layout.item_ship_analysis) {
             @SuppressLint("SetTextI18n")
             @Override
             public void bindView(MyViewHolder holder, int position) {
+                TextView tvAgencyname = holder.getView(R.id.tv_agencyname);
                 TextView tvName = holder.getView(R.id.tv_name);
                 TextView tvLocation = holder.getView(R.id.tv_location);
                 TextView tv1 = holder.getView(R.id.tv1);
@@ -150,6 +164,13 @@ public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPrese
                 TextView tv3 = holder.getView(R.id.tv3);
                 TextView tv4 = holder.getView(R.id.tv4);
 
+
+                if (!TextUtils.isEmpty(mShippingInfoList.get(position).getAgencyname())) {
+                    tvAgencyname.setText(mShippingInfoList.get(position).getAgencyname());
+                    tvAgencyname.setVisibility(View.VISIBLE);
+                } else {
+                    tvAgencyname.setVisibility(View.GONE);
+                }
                 tvName.setText(mShippingInfoList.get(position).getName());
                 tvLocation.setText(mShippingInfoList.get(position).getLocation());
                 tv1.setText("合同签订：" + mShippingInfoList.get(position).getSign_date());

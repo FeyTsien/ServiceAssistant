@@ -37,7 +37,7 @@ public class LoginPwdActivity extends MVPActivity<MVPContract.View, MVPPresenter
     @BindView(R.id.et_phone)
     EditText mEtPhone;
     @BindView(R.id.et_password)
-    EditText mEtPWD;
+    EditText mEtPassword;
     @BindView(R.id.tv_errors)
     TextView mTvErrors;
 
@@ -70,7 +70,7 @@ public class LoginPwdActivity extends MVPActivity<MVPContract.View, MVPPresenter
     private void request() {
         loginDialog = CommonUtils.showProgressDialog(this, "正在登录");
         mPhoneNumber = mEtPhone.getText().toString();
-        mCode = mEtPWD.getText().toString();
+        mCode = mEtPassword.getText().toString();
         if (!TextUtils.isEmpty(mPhoneNumber) && !TextUtils.isEmpty(mCode)) {
             AppBean.DataBean appDataBean = new AppBean.DataBean();
             appDataBean.setPhone(mPhoneNumber);

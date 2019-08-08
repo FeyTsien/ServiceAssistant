@@ -1,7 +1,5 @@
 package com.dt.serviceassistant.bean;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 public class MessageBean {
@@ -29,6 +27,7 @@ public class MessageBean {
         private String url;
         private String ntitle;
         private String mimage;
+        private String author;
 
 
         public int getId() {
@@ -117,6 +116,14 @@ public class MessageBean {
 
         public void setMimage(String mimage) {
             this.mimage = mimage;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public void setAuthor(String author) {
+            this.author = author;
         }
     }
 }

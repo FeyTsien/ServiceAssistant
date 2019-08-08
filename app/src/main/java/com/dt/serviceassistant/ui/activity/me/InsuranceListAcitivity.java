@@ -125,7 +125,7 @@ public class InsuranceListAcitivity extends MVPActivity<MVPContract.View, MVPPre
         }
         AppBean.DataBean appDataBean = new AppBean.DataBean();
         appDataBean.setUserid(AppData.getUserId());
-        appDataBean.setStart(mStart);
+        appDataBean.setStart(mStart+"");
         Gson gson = new Gson();
         String jsonData = gson.toJson(appDataBean);
         if (TextUtils.equals(AppData.getRoleType(), "1")) {
