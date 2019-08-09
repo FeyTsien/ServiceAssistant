@@ -47,7 +47,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="总库存（吨）"
+                        android:text="总发货（吨）"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
@@ -79,7 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="新增待确认（吨）"
+                        android:text="上月发货（吨）"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
@@ -101,9 +101,9 @@
                     android:background="@color/colorTheme" />
 
                 <TextView
-                    android:layout_width="69dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="流向分析"
+                    android:text="上月流向分析"
                     android:textColor="@color/colorTextTitle"
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
@@ -135,7 +135,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="按客户库存分析"
+                    android:text="按月发货分析"
                     android:textColor="@color/colorTextTitle"
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />

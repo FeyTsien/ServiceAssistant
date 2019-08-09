@@ -30,6 +30,9 @@ import com.dt.serviceassistant.ui.activity.login.LoginPwdActivity;
 import com.dt.serviceassistant.ui.fragment.analysis.AccountsReceivableFragment;
 import com.dt.serviceassistant.ui.fragment.analysis.AnalysisFragment;
 import com.dt.serviceassistant.ui.fragment.analysis.AnalysisSingleFragment;
+import com.dt.serviceassistant.ui.fragment.analysis.ComplexAnalysisFragment;
+import com.dt.serviceassistant.ui.fragment.analysis.CustomerAnalysisFragment;
+import com.dt.serviceassistant.ui.fragment.analysis.FundsAnalysisFragment;
 import com.dt.serviceassistant.ui.fragment.analysis.ShipAnalysisFragment;
 import com.dt.serviceassistant.ui.fragment.analysis.StaffAnalysisFragment;
 import com.dt.serviceassistant.ui.fragment.analysis.TimelyInventoryFragment;
@@ -107,12 +110,12 @@ public class MainBossActivity extends MVPActivity<MVPContract.View, MVPPresenter
      */
     private void setFragment() {
         fragmentList.add(StaffAnalysisFragment.newInstance());
-        fragmentList.add(AnalysisFragment.newInstance());
+        fragmentList.add(CustomerAnalysisFragment.newInstance());
         fragmentList.add(AccountsReceivableFragment.newInstance());
-        fragmentList.add(AnalysisSingleFragment.newInstance());
+        fragmentList.add(FundsAnalysisFragment.newInstance());
         fragmentList.add(TimelyInventoryFragment.newInstance());
         fragmentList.add(ShipAnalysisFragment.newInstance());
-        fragmentList.add(AnalysisFragment.newInstance());
+        fragmentList.add(ComplexAnalysisFragment.newInstance());
         loadFragment(0);
     }
 
@@ -192,7 +195,7 @@ public class MainBossActivity extends MVPActivity<MVPContract.View, MVPPresenter
                 loadFragment(5);
                 break;
             case R.id.nav_item6:
-                toolbar.setTitle("任务信息");
+                toolbar.setTitle("综合分析");
                 loadFragment(6);
                 break;
 //            case R.id.nav_logout:

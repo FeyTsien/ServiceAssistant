@@ -29,7 +29,7 @@
         <item
             android:id="@+id/nav_item6"
             android:icon="@mipmap/icon_renwu"
-            android:title="任务信息" />
+            android:title="综合分析" />
     </group>
 
     <!--<item android:title="其他功能">-->

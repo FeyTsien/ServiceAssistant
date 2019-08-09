@@ -3,14 +3,13 @@ package com.dt.serviceassistant.ui.fragment.analysis;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.TextView;
 
 import com.dt.serviceassistant.R;
 import com.dt.serviceassistant.app.AppData;
 import com.dt.serviceassistant.bean.AnalysisBean;
 import com.dt.serviceassistant.bean.AppBean;
-import com.dt.serviceassistant.bean.MessageBean;
+import com.dt.serviceassistant.bean.CustomerAnalysisBean;
 import com.dt.serviceassistant.mvp.MVPContract;
 import com.dt.serviceassistant.mvp.MVPFragment;
 import com.dt.serviceassistant.mvp.MVPPresenter;
@@ -18,13 +17,10 @@ import com.dt.serviceassistant.ui.activity.mainboss.MainBossActivity;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
 import com.dt.serviceassistant.utils.UrlUtils;
 import com.google.gson.Gson;
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tsienlibrary.bean.CommonBean;
-import com.tsienlibrary.ui.widget.MultiItemDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +29,13 @@ import butterknife.BindView;
 
 
 /**
- * 应收账款
+ * 客户分析
  */
 
-public class AccountsReceivableFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View {
+public class CustomerAnalysisFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View {
     private String TAG = getClass().getSimpleName();
     private int mAnalysistype;
-    private List<AnalysisBean.RankingBean> mDataBeanList;
+    private List<CustomerAnalysisBean.CustomerTonnage> mDataBeanList;
 
     private MyBaseAdapter mAdapter;
 
@@ -49,22 +45,15 @@ public class AccountsReceivableFragment extends MVPFragment<MVPContract.View, MV
     TextView mTvUpdateTime;
     @BindView(R.id.tv_amount)
     TextView mTvAmount;
-    @BindView(R.id.tv_total_shipment)
-    TextView mTvTotalShipment;
-    @BindView(R.id.tv_paid)
-    TextView mTvPaid;
-//    @BindView(R.id.tv_unpaid)
-//    TextView mTvUnpaid;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-
-    public static AccountsReceivableFragment newInstance() {
-        return new AccountsReceivableFragment();
+    public static CustomerAnalysisFragment newInstance() {
+        return new CustomerAnalysisFragment();
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_accounts_receivable;
+        return R.layout.fragment_customer_analysis;
     }
 
     /**
@@ -83,9 +72,9 @@ public class AccountsReceivableFragment extends MVPFragment<MVPContract.View, MV
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new MyBaseAdapter<AnalysisBean.RankingBean>(mDataBeanList, R.layout.item_rank) {
+        mAdapter = new MyBaseAdapter<CustomerAnalysisBean.CustomerTonnage>(mDataBeanList, R.layout.item_customer) {
             @Override
-            public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
+            public void bindView(MyViewHolder holder, int position) {
                 TextView tvRank = holder.getView(R.id.tv_rank);
                 if (position == 0) {
                     tvRank.setTextColor(0xFFF51D1D);
@@ -99,8 +88,7 @@ public class AccountsReceivableFragment extends MVPFragment<MVPContract.View, MV
                 tvRank.setText("NO." + (position + 1));
 
                 holder.setTextView(R.id.tv_client, mDataBeanList.get(position).getClient());
-                holder.setTextView(R.id.tv_money, "￥"+mDataBeanList.get(position).getMoney());
-                holder.setTextView(R.id.tv_days, mDataBeanList.get(position).getDays()+"天");
+                holder.setTextView(R.id.tv_money, ""+mDataBeanList.get(position).getTonnage());
             }
         };
         mRecyclerView.setAdapter(mAdapter);
@@ -126,21 +114,21 @@ public class AccountsReceivableFragment extends MVPFragment<MVPContract.View, MV
         appDataBean.setAnalysistype(mAnalysistype+"");
         Gson gson = new Gson();
         String jsonData = gson.toJson(appDataBean);
-        mPresenter.request(UrlUtils.BOSS_ANALYSIS_SINGLE, jsonData, AnalysisBean.class);
+        mPresenter.request(UrlUtils.BOSS_CUSTOMER_ANALYSIS, jsonData, CustomerAnalysisBean.class);
     }
 
     @Override
     public void requestSuccess(String requestUrl, CommonBean commonBean) {
         //关闭下拉
         smartRefreshLayout.finishRefresh();
-        AnalysisBean analysisBean = (AnalysisBean) commonBean.getData();
+        CustomerAnalysisBean analysisBean = (CustomerAnalysisBean) commonBean.getData();
         mTvUpdateTime.setText(analysisBean.getUpdatetime());
-        mTvAmount.setText(analysisBean.getUnpaid());//未收总账
-        mTvTotalShipment.setText(analysisBean.getTotalshipment());
-        mTvPaid.setText(analysisBean.getPaid());
+        mTvAmount.setText(String.valueOf(analysisBean.getTotalshipment()));//总出货量
+//        mTvTotalShipment.setText(analysisBean.getTotalshipment());
+//        mTvPaid.setText(analysisBean.getPaid());
 //        mTvUnpaid.setText(analysisBean.getUnpaid());
         mDataBeanList.clear();
-        mDataBeanList.addAll(analysisBean.getRanking());
+        mDataBeanList.addAll(analysisBean.getCustomer_analysis());
         mAdapter.notifyDataSetChanged();
     }
 

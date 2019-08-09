@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.dt.serviceassistant.R;
-import com.dt.serviceassistant.bean.TimelyInventoryBean;
+import com.dt.serviceassistant.bean.ComplexAnalysisBean;
 import com.dt.serviceassistant.mvp.MVPContract;
 import com.dt.serviceassistant.mvp.MVPFragment;
 import com.dt.serviceassistant.mvp.MVPPresenter;
@@ -23,23 +23,25 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tsienlibrary.bean.CommonBean;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 /**
- * 实时库存
+ * 综合分析
  */
 
-public class TimelyInventoryFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View{
+public class ComplexAnalysisFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View{
     private String TAG = getClass().getSimpleName();
 
 
-    private List<TimelyInventoryBean.FlowAnalysisBean> mFlowAnalysisList;
-    private List<TimelyInventoryBean.CustomerInventoryBean> mCustomerInventoryList;
+    private List<ComplexAnalysisBean.InventoryBean> mFlowAnalysisList;
+    private List<ComplexAnalysisBean.CustomerMonthTonnage> mCustomerInventoryList;
+    private  double totalTonnage = 1 ;
+    private  double monthTonnage = 1 ;
 
     private View mRootView;
     private MyBaseAdapter mAdapterFlow;
@@ -55,8 +57,8 @@ public class TimelyInventoryFragment extends MVPFragment<MVPContract.View, MVPPr
     RecyclerView mRecyclerViewFlow;
     @BindView(R.id.recycler_view_inventory)
     RecyclerView mRecyclerViewInventory;
-    public static TimelyInventoryFragment newInstance() {
-        return new TimelyInventoryFragment();
+    public static ComplexAnalysisFragment newInstance() {
+        return new ComplexAnalysisFragment();
     }
 
 
@@ -67,7 +69,7 @@ public class TimelyInventoryFragment extends MVPFragment<MVPContract.View, MVPPr
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_timely_inventory;
+        return R.layout.fragment_complex_analysis;
     }
 
     /**
@@ -78,7 +80,6 @@ public class TimelyInventoryFragment extends MVPFragment<MVPContract.View, MVPPr
         mFlowAnalysisList = new ArrayList<>();
         mCustomerInventoryList = new ArrayList<>();
 
-//        mAnalysistype = getArguments().getInt(MainBossActivity.ANALYSIS_TYPE, 0);
     }
 
 
@@ -91,7 +92,7 @@ public class TimelyInventoryFragment extends MVPFragment<MVPContract.View, MVPPr
         mRecyclerViewFlow.setLayoutManager(layoutManager);
         mRecyclerViewInventory.setLayoutManager(layoutManager2);
 
-        mAdapterFlow = new MyBaseAdapter<TimelyInventoryBean.FlowAnalysisBean>(mFlowAnalysisList, R.layout.item_flow_analysis) {
+        mAdapterFlow = new MyBaseAdapter<ComplexAnalysisBean.InventoryBean>(mFlowAnalysisList, R.layout.item_flow_analysis) {
             @SuppressLint("SetTextI18n")
             @Override
             public void bindView(MyViewHolder holder, int position) {
@@ -100,9 +101,9 @@ public class TimelyInventoryFragment extends MVPFragment<MVPContract.View, MVPPr
                 ProgressBar progressBar = holder.getView(R.id.progress_bar);
 
                 tvCity.setText(mFlowAnalysisList.get(position).getCity());
-                tvWeight.setText(mFlowAnalysisList.get(position).getWeight() + "吨");
+                tvWeight.setText(mFlowAnalysisList.get(position).getWeight().setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "吨");
                 progressBar.setMax(100);
-                int progressValue = (int) (mFlowAnalysisList.get(position).getWeight() / mFlowAnalysisList.get(0).getWeight() * 100);
+                int progressValue = (int) (mFlowAnalysisList.get(position).getWeight().doubleValue() / monthTonnage * 100);
                 if (progressValue > 100) {
                     progressValue = 100;
                 }
@@ -110,20 +111,18 @@ public class TimelyInventoryFragment extends MVPFragment<MVPContract.View, MVPPr
             }
         };
 
-        mAdapterInventory = new MyBaseAdapter<TimelyInventoryBean.CustomerInventoryBean>(mCustomerInventoryList, R.layout.item_customer_inventory) {
+        mAdapterInventory = new MyBaseAdapter<ComplexAnalysisBean.CustomerMonthTonnage>(mCustomerInventoryList, R.layout.item_flow_analysis) {
             @SuppressLint("SetTextI18n")
             @Override
             public void bindView(MyViewHolder holder, int position) {
-                TextView tvName = holder.getView(R.id.tv_name);
+                TextView tvCity = holder.getView(R.id.tv_city);
                 TextView tvWeight = holder.getView(R.id.tv_weight);
-                TextView tvdays = holder.getView(R.id.tv_days);
                 ProgressBar progressBar = holder.getView(R.id.progress_bar);
 
-                tvName.setText(mCustomerInventoryList.get(position).getName());
-                tvWeight.setText(mCustomerInventoryList.get(position).getWeight() + "吨");
-                tvdays.setText(mCustomerInventoryList.get(position).getDays() + "天");
+                tvCity.setText(mCustomerInventoryList.get(position).getMonth());
+                tvWeight.setText(mCustomerInventoryList.get(position).getTonnage().setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "吨");
                 progressBar.setMax(100);
-                int progressValue = (int) (mCustomerInventoryList.get(position).getWeight() / mCustomerInventoryList.get(0).getWeight() * 100);
+                int progressValue = (int) (mCustomerInventoryList.get(position).getTonnage().doubleValue() / totalTonnage * 100);
                 if (progressValue > 100) {
                     progressValue =  100;
                 }
@@ -148,17 +147,7 @@ public class TimelyInventoryFragment extends MVPFragment<MVPContract.View, MVPPr
      * 请求
      */
     private void request() {
-//        AppBean.DataBean appDataBean = new AppBean.DataBean();
-//        appDataBean.setUserid(AppData.getUserId());
-//        appDataBean.setKeyword(mKeyword);
-//        appDataBean.setStarttime(mStartTime);
-//        appDataBean.setEndtime(mEndTime);
-//        appDataBean.setAnalysistype(mAnalysistype);
-//        appDataBean.setStart(mStart);
-//        Gson gson = new Gson();
-//        String jsonData = gson.toJson(appDataBean);
-//        mPresenter.request(UrlUtils.BOSS_ANALYSIS_LIST, jsonData, AnalysisBean.class);
-        mPresenter.request(UrlUtils.BOSS_TIMELY_INVENTORY, "", TimelyInventoryBean.class);
+        mPresenter.request(UrlUtils.BOSS_COMPLEX_ANALYSIS, "", ComplexAnalysisBean.class);
     }
 
     @Override
@@ -166,14 +155,16 @@ public class TimelyInventoryFragment extends MVPFragment<MVPContract.View, MVPPr
         //关闭下拉
         smartRefreshLayout.finishRefresh();
 
-        TimelyInventoryBean timelyInventoryBean = (TimelyInventoryBean) commonBean.getData();
+        ComplexAnalysisBean complexAnalysisBean = (ComplexAnalysisBean) commonBean.getData();
         mFlowAnalysisList.clear();
-        mFlowAnalysisList.addAll(timelyInventoryBean.getFlow_analysis());
+        mFlowAnalysisList.addAll(complexAnalysisBean.getDirection_analysis());
         mCustomerInventoryList.clear();
-        mCustomerInventoryList.addAll(timelyInventoryBean.getCustomer_inventory());
+        mCustomerInventoryList.addAll(complexAnalysisBean.getTonnage_analysis());
 
-        mTvTotalInventory.setText(timelyInventoryBean.getTotal_inventory() + "吨");
-        mTvNewlyIncreased.setText(timelyInventoryBean.getNewly_increased() + "吨");
+        mTvTotalInventory.setText(complexAnalysisBean.getTotalshipment() + "吨");
+        mTvNewlyIncreased.setText(complexAnalysisBean.getMonthshipment() + "吨");
+        totalTonnage = complexAnalysisBean.getTotalshipment();
+        monthTonnage = complexAnalysisBean.getMonthshipment() ;
         mAdapterFlow.notifyDataSetChanged();
         mAdapterInventory.notifyDataSetChanged();
     }

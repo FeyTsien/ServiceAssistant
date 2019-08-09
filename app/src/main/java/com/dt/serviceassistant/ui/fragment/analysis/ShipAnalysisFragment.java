@@ -175,7 +175,7 @@ public class ShipAnalysisFragment extends MVPFragment<MVPContract.View, MVPPrese
                 tvLocation.setText(mShippingInfoList.get(position).getLocation());
                 tv1.setText("合同签订：" + mShippingInfoList.get(position).getSign_date());
                 tv2.setText("起运日期：" + mShippingInfoList.get(position).getShipping_date());
-                tv3.setText("核定载重：" + mShippingInfoList.get(position).getWeight());
+                tv3.setText("单    价：" + mShippingInfoList.get(position).getUnit_price());
                 tv4.setText("配载吨位：" + mShippingInfoList.get(position).getConfiguration_tonnage());
             }
         };

@@ -6,8 +6,10 @@ package com.dt.serviceassistant.utils;
 
 public class UrlUtils {
 
-    //app主链接
-    public static final String BASEURL = "http://114.215.93.127:9001/dtApi/";
+    //app主链接服务器
+//    public static final String BASEURL = "http://114.215.93.127:9001/dtApi/";
+    //本地测试使用
+    public static final String BASEURL = "http://192.168.3.72:9001/dtApi/";
 //    public static final String BASEURL = "https://easydoc.xyz/mock/";
 
     //=================接口=================
@@ -53,5 +55,13 @@ public class UrlUtils {
     public static final String BOSS_TIMELY_INVENTORY = "boss/timelyInventory";
     //实时船运
     public static final String BOSS_SHIP_ANALYSIS = "boss/shipAnalysis";
+    //客户分析
+    public static final String BOSS_CUSTOMER_ANALYSIS = "boss/customerAnalysis.do";
+
+    //资金分析
+    public static final String BOSS_FUNDS_ANALYSIS = "boss/fundsAnalysis.do";
+
+    //综合分析
+    public static final String BOSS_COMPLEX_ANALYSIS = "boss/complexAnalysis.do";
 
 }
