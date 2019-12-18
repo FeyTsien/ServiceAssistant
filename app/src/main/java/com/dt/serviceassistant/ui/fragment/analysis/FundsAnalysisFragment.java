@@ -23,6 +23,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tsienlibrary.bean.CommonBean;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,14 +92,14 @@ public class FundsAnalysisFragment extends MVPFragment<MVPContract.View, MVPPres
 //                tvRank.setText("NO." + (position + 1));
 
 //                holder.setTextView(R.id.tv_client, dateToString(mDataBeanList.get(position).getRdate()));
-//                if(position==0){
-//                    holder.setTextView(R.id.tv_rdate, "入账时间");
-//                    holder.setTextView(R.id.tv_inbill, "入账");
-//                    holder.setTextView(R.id.tv_outbill, "出账");
-//                    holder.setTextView(R.id.tv_otherinbill, "其他入账");
-//                    holder.setTextView(R.id.tv_otheroutbill, "其他入账");
+                if(position==0){
+                    holder.setTextView(R.id.tv_rdate, "入账时间");
+                    holder.setTextView(R.id.tv_inbill, "入账");
+                    holder.setTextView(R.id.tv_outbill, "出账");
+                    holder.setTextView(R.id.tv_otherinbill, "其他入账");
+                    holder.setTextView(R.id.tv_otheroutbill, "其他入账");
 //                    holder.setTextView(R.id.tv_balance, "余额");
-//                }
+                }
                 holder.setTextView(R.id.tv_rdate, ""+mDataBeanList.get(position).getRdate());
                 holder.setTextView(R.id.tv_inbill, ""+mDataBeanList.get(position).getInbill().setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue());
                 holder.setTextView(R.id.tv_outbill, ""+mDataBeanList.get(position).getOutbill().setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue());
@@ -140,10 +141,8 @@ public class FundsAnalysisFragment extends MVPFragment<MVPContract.View, MVPPres
         smartRefreshLayout.finishRefresh();
         FundsAnalysisBean analysisBean = (FundsAnalysisBean) commonBean.getData();
         mTvUpdateTime.setText(analysisBean.getUpdatetime());
-        mTvAmount.setText(String.valueOf(analysisBean.getAmount()));//现有资金
-//        mTvTotalShipment.setText(analysisBean.getTotalshipment());
-//        mTvPaid.setText(analysisBean.getPaid());
-//        mTvUnpaid.setText(analysisBean.getUnpaid());
+        DecimalFormat df = new DecimalFormat("0.00");
+        mTvAmount.setText(df.format(analysisBean.getAmount()));//现有资金
         mDataBeanList.clear();
         mDataBeanList.addAll(analysisBean.getFunds_analysis());
         mAdapter.notifyDataSetChanged();
