@@ -99,13 +99,15 @@ public class FundsAnalysisFragment extends MVPFragment<MVPContract.View, MVPPres
                     holder.setTextView(R.id.tv_otherinbill, "其他入账");
                     holder.setTextView(R.id.tv_otheroutbill, "其他入账");
 //                    holder.setTextView(R.id.tv_balance, "余额");
+                }else{
+                    holder.setTextView(R.id.tv_rdate, ""+mDataBeanList.get(position).getRdate());
+                    holder.setTextView(R.id.tv_inbill, ""+mDataBeanList.get(position).getInbill().setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue());
+                    holder.setTextView(R.id.tv_outbill, ""+mDataBeanList.get(position).getOutbill().setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue());
+                    holder.setTextView(R.id.tv_otherinbill, ""+mDataBeanList.get(position).getOtherinbill().setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue());
+                    holder.setTextView(R.id.tv_otheroutbill, ""+mDataBeanList.get(position).getOtheroutbill().setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue());
+
                 }
-                holder.setTextView(R.id.tv_rdate, ""+mDataBeanList.get(position).getRdate());
-                holder.setTextView(R.id.tv_inbill, ""+mDataBeanList.get(position).getInbill().setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue());
-                holder.setTextView(R.id.tv_outbill, ""+mDataBeanList.get(position).getOutbill().setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue());
-                holder.setTextView(R.id.tv_otherinbill, ""+mDataBeanList.get(position).getOtherinbill().setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue());
-                holder.setTextView(R.id.tv_otheroutbill, ""+mDataBeanList.get(position).getOtheroutbill().setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue());
-//                holder.setTextView(R.id.tv_balance, ""+mDataBeanList.get(position).getBalance().setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue());
+               //                holder.setTextView(R.id.tv_balance, ""+mDataBeanList.get(position).getBalance().setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue());
             }
         };
         mRecyclerView.setAdapter(mAdapter);

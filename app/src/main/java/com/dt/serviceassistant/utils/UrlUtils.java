@@ -9,7 +9,7 @@ public class UrlUtils {
     //app主链接服务器
     public static final String BASEURL = "http://27.191.130.130:9001/dtApi/";
     //本地测试使用
-//    public static final String BASEURL = "http://192.168.3.72:9001/dtApi/";
+//    public static final String BASEURL = "http://192.168.10.236:9001/dtApi/";
 //    public static final String BASEURL = "https://easydoc.xyz/mock/";
 
     //=================接口=================

@@ -328,7 +328,15 @@ public class StaffAnalysisFragment extends MVPFragment<MVPContract.View, MVPPres
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                String data = "" + mValuesList.get(0).getValues().get((int) value).getData();
+                //todo 临时应急处理方案，需要进一步分析核对!
+                int v = (int) value;
+                if(v==-1){
+                    v=0;
+                }
+                String data = "";
+                if(v<mValuesList.get(0).getValues().size()){
+                    data  = "" + mValuesList.get(0).getValues().get(v).getData();
+                }
                 return data;
             }
         });
