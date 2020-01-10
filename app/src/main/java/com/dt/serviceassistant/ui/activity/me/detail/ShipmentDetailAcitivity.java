@@ -51,15 +51,6 @@ public class ShipmentDetailAcitivity extends MVPActivity<MVPContract.View, MVPPr
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
-        initData();
-        initView();
-    }
-
-
-    @Override
     protected void initData() {
         mDataBean = (MBean.MsgBean) getIntent().getSerializableExtra(SHIPMENT_DATA_ITEM);
         mUserid = mDataBean.getUserid();
@@ -73,7 +64,7 @@ public class ShipmentDetailAcitivity extends MVPActivity<MVPContract.View, MVPPr
 
 
     @Override
-    protected void initView() {
+    protected void initView(@Nullable Bundle savedInstanceState) {
         setToolBar(mToolbar, mTvTitle, "发货详情");
         mTvShipmentDate.setText(mRtime);
         mTvShipmentCompany.setText(mShipmentcompany);

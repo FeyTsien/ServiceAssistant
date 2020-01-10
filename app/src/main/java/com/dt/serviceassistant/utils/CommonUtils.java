@@ -40,7 +40,7 @@ public class CommonUtils {
     private static final String TAG = "CommonUtils";
 
     public static Context getContext() {
-        return MyApplication.getContext();
+        return DeviceInfo.getInstance().getContext();
     }
 
     //加载进度的progressDialog
@@ -91,7 +91,7 @@ public class CommonUtils {
      * @return
      */
     public static int getResourseColor(int colorId) {
-        int color = MyApplication.getContext().getResources().getColor(colorId);
+        int color = DeviceInfo.getInstance().getContext().getResources().getColor(colorId);
         return color;
     }
 

@@ -1,6 +1,8 @@
 package com.dt.serviceassistant.ui.activity.me;
 
 import android.content.DialogInterface;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -61,7 +63,7 @@ public class TaskListAcitivity extends MVPActivity<MVPContract.View, MVPPresente
     }
 
     @Override
-    protected void initView() {
+    protected void initView(@Nullable Bundle savedInstanceState) {
         setToolBar(mToolbar, mTvTitle, "任务列表");
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

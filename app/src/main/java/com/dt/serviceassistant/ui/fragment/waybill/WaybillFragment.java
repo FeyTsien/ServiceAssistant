@@ -1,9 +1,8 @@
-package com.dt.serviceassistant.ui.fragment.message;//package com.dt.serviceassistant.ui.fragment.account;
+package com.dt.serviceassistant.ui.fragment.waybill;//package com.dt.serviceassistant.ui.fragment.account;
 
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.dt.serviceassistant.R;
@@ -14,6 +13,7 @@ import com.dt.serviceassistant.mvp.MVPContract;
 import com.dt.serviceassistant.mvp.MVPFragment;
 import com.dt.serviceassistant.mvp.MVPPresenter;
 import com.dt.serviceassistant.ui.activity.MessageListAcitivity;
+import com.dt.serviceassistant.ui.activity.WaybillDetailsActivity;
 import com.dt.serviceassistant.ui.adapter.MyBaseAdapter;
 import com.dt.serviceassistant.utils.CommonUtils;
 import com.dt.serviceassistant.utils.UrlUtils;
@@ -35,19 +35,18 @@ import butterknife.BindView;
  * ==============
  */
 
-public class MessageFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View, XRecyclerView.LoadingListener {
+public class WaybillFragment extends MVPFragment<MVPContract.View, MVPPresenter> implements MVPContract.View, XRecyclerView.LoadingListener {
     private String TAG = getClass().getSimpleName();
 
     private List<MessageBean.MsgBean> mDataBeanList;
 
-    private View mRootView;
     private MyBaseAdapter mAdapter;
 
     @BindView(R.id.xrv_message)
     XRecyclerView mRecyclerView;
 
-    public static MessageFragment newInstance() {
-        return new MessageFragment();
+    public static WaybillFragment newInstance() {
+        return new WaybillFragment();
     }
 
     @Override
@@ -78,7 +77,7 @@ public class MessageFragment extends MVPFragment<MVPContract.View, MVPPresenter>
 
         mAdapter = new MyBaseAdapter<MessageBean.MsgBean>(mDataBeanList, R.layout.item_message) {
             @Override
-            public void bindView(MyBaseAdapter.MyViewHolder holder, int position) {
+            public void bindView(MyViewHolder holder, int position) {
                 holder.setTextView(R.id.tv_message_title, mDataBeanList.get(position).getTypename());
                 holder.setTextView(R.id.tv_message_time, mDataBeanList.get(position).getRtime());
                 holder.setTextView(R.id.tv_content, mDataBeanList.get(position).getContent());
@@ -111,7 +110,7 @@ public class MessageFragment extends MVPFragment<MVPContract.View, MVPPresenter>
         mAdapter.setOnItemClickListener(new MyBaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int pos) {
-                Intent intent = new Intent(MessageFragment.this.getActivity(), MessageListAcitivity.class);
+                Intent intent = new Intent(WaybillFragment.this.getActivity(), WaybillDetailsActivity.class);
                 intent.putExtra(MessageListAcitivity.MESSAGE_TYPE_NAME, mDataBeanList.get(pos).getTypename());
                 intent.putExtra(MessageListAcitivity.MESSAGE_TYPE, mDataBeanList.get(pos).getMessagetype());
                 startActivity(intent);

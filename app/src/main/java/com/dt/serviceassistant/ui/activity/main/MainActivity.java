@@ -3,12 +3,12 @@ package com.dt.serviceassistant.ui.activity.main;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -22,8 +22,8 @@ import com.dt.serviceassistant.ui.activity.login.LoginPwdActivity;
 import com.dt.serviceassistant.ui.fragment.information.InformationFragment;
 import com.dt.serviceassistant.ui.fragment.insurance.InsuranceFragment;
 import com.dt.serviceassistant.ui.fragment.me.MeFragment;
-import com.dt.serviceassistant.ui.fragment.message.MessageFragment;
 import com.dt.serviceassistant.ui.fragment.shipments.ShipmentsFragment;
+import com.dt.serviceassistant.ui.fragment.waybill.WaybillFragment;
 import com.tsienlibrary.ui.activity.BaseActivity;
 import com.tsienlibrary.utils.OpenFileUtils;
 
@@ -97,13 +97,13 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(@Nullable Bundle savedInstanceState) {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setTitle(R.string.title_message);
 
         mFragmentList = new ArrayList<>();
-        mFragmentList.add(MessageFragment.newInstance());
+        mFragmentList.add(WaybillFragment.newInstance());
         mFragmentList.add(InformationFragment.newInstance());
         mFragmentList.add(ShipmentsFragment.newInstance());
         mFragmentList.add(InsuranceFragment.newInstance());
@@ -112,12 +112,12 @@ public class MainActivity extends BaseActivity {
         mCurrentFragment = mFragmentList.get(0);
 
         if (TextUtils.equals(AppData.getRoleType(), "1")) {
-            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+            BottomNavigationView navigation =  findViewById(R.id.navigation);
             BottomNavigationViewHelper.disableShiftMode(navigation);
             navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
             navigation.setVisibility(View.VISIBLE);
         } else if (TextUtils.equals(AppData.getRoleType(), "3")) {
-            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_three);
+            BottomNavigationView navigation = findViewById(R.id.navigation_three);
             BottomNavigationViewHelper.disableShiftMode(navigation);
             navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
             navigation.setVisibility(View.VISIBLE);

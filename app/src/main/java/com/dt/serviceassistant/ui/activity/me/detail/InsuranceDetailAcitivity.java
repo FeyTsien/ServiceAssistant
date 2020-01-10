@@ -61,7 +61,7 @@ public class InsuranceDetailAcitivity extends MVPActivity<MVPContract.View, MVPP
     }
 
     @Override
-    protected void initView() {
+    protected void initView(@Nullable Bundle savedInstanceState) {
 
         setToolBar(mToolbar, mTvTitle, "保险明细");
         mTvInsuranceDate.setText(mItime);

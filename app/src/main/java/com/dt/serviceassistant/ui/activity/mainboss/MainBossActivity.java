@@ -2,6 +2,7 @@ package com.dt.serviceassistant.ui.activity.mainboss;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -90,7 +91,7 @@ public class MainBossActivity extends MVPActivity<MVPContract.View, MVPPresenter
     }
 
     @Override
-    protected void initView() {
+    protected void initView(@Nullable Bundle savedInstanceState) {
         //标题栏
 //        toolbar.setLogo(R.drawable.ic_insurance);
         toolbar.setTitle("业务员分析");

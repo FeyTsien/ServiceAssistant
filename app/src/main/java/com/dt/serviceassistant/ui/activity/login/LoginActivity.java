@@ -4,6 +4,7 @@ package com.dt.serviceassistant.ui.activity.login;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -60,7 +61,7 @@ public class LoginActivity extends MVPActivity<MVPContract.View, MVPPresenter> i
     }
 
     @Override
-    protected void initView() {
+    protected void initView(@Nullable Bundle savedInstanceState) {
         setToolBar(mToolbar, mTvTitle, "登录");
         mCdbCode.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -55,14 +55,6 @@ public class ShipmentListAcitivity extends MVPActivity<MVPContract.View, MVPPres
         return R.layout.activity_shipment_or_insurance_list;
     }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
-        initData();
-        initView();
-    }
-
     /**
      * 初始化数据
      */
@@ -73,7 +65,7 @@ public class ShipmentListAcitivity extends MVPActivity<MVPContract.View, MVPPres
     }
 
     @Override
-    protected void initView() {
+    protected void initView(@Nullable Bundle savedInstanceState) {
         setToolBar(mToolbar, mTvTitle, "发货列表");
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

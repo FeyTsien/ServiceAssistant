@@ -8,6 +8,8 @@ import android.support.multidex.MultiDex;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
+import com.dt.serviceassistant.BuildConfig;
+import com.dt.serviceassistant.utils.DeviceInfo;
 
 /**
  * @author :   FeyTsien
@@ -15,12 +17,6 @@ import com.blankj.utilcode.util.Utils;
  */
 
 public class MyApplication extends Application {
-
-    private static Context mContext = null;
-
-    public static Context getContext() {
-        return mContext;
-    }
 
     @Override
     public void onCreate() {
@@ -36,7 +32,8 @@ public class MyApplication extends Application {
                 .setLogSwitch(false)
                 .setConsoleSwitch(false);
 
-        mContext = getApplicationContext();
+        DeviceInfo.getInstance().setContext(getApplicationContext());
+        DeviceInfo.getInstance().initDevice(BuildConfig.DEBUG);
     }
 
     /**

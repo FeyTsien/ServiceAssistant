@@ -3,9 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.dt.serviceassistant">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--允许程序打开网络套接字-->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--允许程序设置内置sd卡的写权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--允许程序获取网络状态-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--允许程序访问WiFi网络信息-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--允许程序读写手机状态和身份-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!--定位包、导航包需要的额外权限（注：基础权限也需要）-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:name=".app.MyApplication"
@@ -40,7 +53,7 @@
             android:launchMode="singleTask" />
 
         <!--消息列表-->
-        <activity android:name=".ui.activity.messagelist.MessageListAcitivity" />
+        <activity android:name=".ui.activity.MessageListAcitivity" />
         <!--发货列表-->
         <activity android:name=".ui.activity.me.ShipmentListAcitivity" />
         <!--发货明细-->
@@ -53,6 +66,8 @@
         <activity android:name=".ui.activity.me.TaskListAcitivity" />
         <!--资讯详情-->
         <activity android:name=".ui.activity.InformationDetailActivity" />
+        <!--运单详情-->
+        <activity android:name=".ui.activity.WaybillDetailsActivity" />
 
         <!--webview-->
         <activity
@@ -61,7 +76,10 @@
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait" />
 
-
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="79864630d441a7311f27c984ab1a283b"/>
+        <service android:name="com.amap.api.location.APSService"/>
     </application>
 
 </manifest>

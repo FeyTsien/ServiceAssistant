@@ -1,6 +1,8 @@
 package com.dt.serviceassistant.ui.activity.me;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -64,7 +66,7 @@ public class InsuranceListAcitivity extends MVPActivity<MVPContract.View, MVPPre
 
 
     @Override
-    protected void initView() {
+    protected void initView(@Nullable Bundle savedInstanceState) {
 
         setToolBar(mToolbar, mTvTitle, "保险列表");
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

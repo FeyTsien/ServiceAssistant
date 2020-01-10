@@ -1,6 +1,8 @@
 package com.dt.serviceassistant.ui.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import com.dt.serviceassistant.R;
@@ -40,7 +42,7 @@ public class InformationDetailActivity extends MVPActivity<MVPContract.View, MVP
     }
 
     @Override
-    protected void initView() {
+    protected void initView(@Nullable Bundle savedInstanceState) {
         Intent intent = getIntent();
         tvTitle.setText("资讯详情");
         tvNTitle.setText(intent.getStringExtra(KEY_TITLE));

@@ -10,6 +10,13 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //高德地图配置开始
+        ndk {
+            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","x86_64"
+        }
+        //高德地图配置结束
     }
     buildTypes {
         release {
@@ -80,4 +87,15 @@ dependencies {
     implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //高德地图配置====开始=======
+    //2D地图so及jar
+//    implementation 'com.amap.api:map2d:latest.integration'
+    //3D地图so及jar
+    implementation 'com.amap.api:3dmap:latest.integration'
+//    //定位功能
+    implementation 'com.amap.api:location:latest.integration'
+//    //搜索功能
+//    implementation 'com.amap.api:search:latest.integration'
+    //高德地图配置=====结束========
 }
